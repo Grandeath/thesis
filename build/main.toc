@@ -1,0 +1,85 @@
+\xpg@aux {}{polish}
+\contentsline {chapter}{\numberline {1}Wstęp}{7}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Cel i zakres pracy}{8}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Uzasadnienie wyboru tematu}{9}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Przegląd technologii chmurowych w kontekście mikroserwisów}{10}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Struktura pracy}{11}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Teoretyczne podstawy architektury mikroserwisowej}{12}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Architektura monolityczna a mikroserwisowa}{12}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Charakterystyka mikroserwisów}{14}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Komunikacja synchroniczna i asynchroniczna}{15}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Komunikacja synchroniczna --- REST}{15}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Komunikacja asynchroniczna i architektura sterowana zdarzeniami}{15}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Wzorce projektowe w systemach mikroserwisowych}{16}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Konteneryzacja i rola orkiestracji}{17}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Kubernetes jako platforma uruchomieniowa mikroserwisów}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Podstawowe obiekty Kubernetes}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Zarządzanie konfiguracją i skalowaniem}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Trwałe składowanie danych}{21}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Obserwowalność: Prometheus i Grafana}{22}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Mechanizmy bezpieczeństwa w Kubernetes}{23}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Amazon Web Services jako środowisko chmurowe}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Charakterystyka AWS i jego architektury globalnej}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Amazon EKS --- zarządzana usługa Kubernetes}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Usługi powiązane wykorzystane w projekcie}{26}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Amazon EC2 jako warstwa obliczeniowa}{26}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Amazon RDS for PostgreSQL jako warstwa danych}{27}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Amazon ECR --- rejestr obrazów kontenerów}{27}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Amazon Cognito --- uwierzytelnianie użytkowników}{27}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Amazon S3 i CloudFront --- hosting aplikacji webowej}{28}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Amazon VPC, ALB i architektura sieciowa}{28}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}IAM i Secrets Manager}{28}{subsection.4.3.7}%
+\contentsline {chapter}{\numberline {5}Projekt systemu obsługi zamówień}{30}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Opis funkcjonalny systemu}{30}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Model domenowy}{31}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Architektura mikroserwisowa systemu}{33}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Projekt API REST/JSON oraz kontraktów zdarzeń}{34}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Interfejsy REST}{34}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Kontrakty zdarzeń}{35}{subsection.5.4.2}%
+\contentsline {section}{\numberline {5.5}Wybór technologii implementacyjnych --- Go i Vue 3}{36}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Projekt bazy danych i persystencji --- PostgreSQL}{37}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Asynchroniczna wymiana zdarzeń --- Apache Kafka}{39}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Projekt uwierzytelniania i autoryzacji}{39}{section.5.8}%
+\contentsline {chapter}{\numberline {6}Implementacja mikroserwisów}{41}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Struktura projektu i wspólne wzorce serwisów}{41}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Serwis zamówień - logika biznesowa, maszyna stanów i idempotencja}{42}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Serwis produktów - katalog i rezerwacja stanów magazynowych}{44}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Serwis płatności - transakcyjna obsługa procesu płatności}{44}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Publikacja i konsumpcja zdarzeń Kafka}{45}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Walidacja tokenów JWT i integracja z Cognito}{45}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Obserwowalność serwisów}{46}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Konteneryzacja serwisów}{47}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Testy jednostkowe i integracyjne}{48}{section.6.9}%
+\contentsline {chapter}{\numberline {7}Implementacja portalu obsługi zamówień}{49}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Architektura aplikacji frontendowej}{49}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Główne widoki i przepływy użytkownika}{49}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Warstwa komunikacji z API}{53}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Logowanie użytkownika --- OAuth 2.0 z PKCE}{54}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Budowa środowiska chmurowego --- infrastruktura jako kod}{57}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Terraform i zarządzanie stanem infrastruktury}{57}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Konfiguracja sieci VPC}{57}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Utworzenie klastra EKS i grup węzłów}{59}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Warstwa danych --- RDS PostgreSQL i Secrets Manager}{61}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Wdrożenie mikroserwisów i brokera Kafka do klastra}{62}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Routing ruchu --- CloudFront, ALB i reverse proxy}{63}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Wdrożenie monitoringu --- Prometheus i Grafana}{65}{section.8.7}%
+\contentsline {section}{\numberline {8.8}Skalowanie aplikacji i zarządzanie cyklem życia}{67}{section.8.8}%
+\contentsline {chapter}{\numberline {9}Testy i analiza działania systemu}{69}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Metodyka testowania}{69}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Testy funkcjonalne systemu}{70}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Testy wydajnościowe i skalowalność}{71}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Czasy odpowiedzi i efekt rozgrzania}{71}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Opóźnienie asynchronicznej walidacji}{71}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}Automatyczne skalowanie pod obciążeniem}{72}{subsection.9.3.3}%
+\contentsline {section}{\numberline {9.4}Analiza kosztowa wykorzystania usług AWS}{73}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}Profilowanie procesora}{74}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}Zidentyfikowane wąskie gardła}{76}{subsection.9.4.2}%
+\contentsline {chapter}{\numberline {10}Wnioski i podsumowanie}{78}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Stopień realizacji celów pracy}{78}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Napotkane trudności i sposoby ich rozwiązania}{79}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Rekomendacje dotyczące dalszego rozwoju systemu}{79}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Podsumowanie końcowe}{80}{section.10.4}%
+\contentsline {chapter}{Spis ilustracji}{84}{chapter*.44}%
+\contentsline {chapter}{Spis tabel}{85}{chapter*.45}%
+\contentsline {chapter}{Spis listingów}{86}{chapter*.46}%
+\contentsline {chapter}{Bibliografia}{87}{chapter*.47}%

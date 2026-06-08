@@ -1,0 +1,206 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Budowa środowiska chmurowego --- infrastruktura jako kod}{57}{chapter.8}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:infrastruktura}{{8}{57}{Budowa środowiska chmurowego --- infrastruktura jako kod}{chapter.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Terraform i zarządzanie stanem infrastruktury}{57}{section.8.1}\protected@file@percent }
+\newlabel{sec:terraform-stan}{{8.1}{57}{Terraform i zarządzanie stanem infrastruktury}{section.8.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}Konfiguracja sieci VPC}{57}{section.8.2}\protected@file@percent }
+\newlabel{sec:konfiguracja-vpc}{{8.2}{57}{Konfiguracja sieci VPC}{section.8.2}{}}
+\newlabel{lst:vpc-tagi}{{8.1}{58}{Definicja podsieci prywatnych z tagami Kubernetes (vpc.tf)}{lstlisting.8.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.1}{\ignorespaces Definicja podsieci prywatnych z tagami Kubernetes (vpc.tf)}}{58}{lstlisting.8.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Topologia sieci VPC. Komponenty brzegowe (ALB, bramy NAT) działają w~podsieciach publicznych, a~węzły klastra i~baza danych --- w~prywatnych, pozbawionych bezpośredniej łączności z~Internetem. Zasoby rozmieszczono w~dwóch strefach dostępności. Baza danych w~środowisku pracuje jednostrefowo; wariant standby zaznaczono jako~opcję trybu Multi-AZ.}}{58}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:topologia-sieci}{{8.1}{58}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Topologia sieci VPC. Komponenty brzegowe (ALB, bramy NAT) działają w~podsieciach publicznych, a~węzły klastra i~baza danych --- w~prywatnych, pozbawionych bezpośredniej łączności z~Internetem. Zasoby rozmieszczono w~dwóch strefach dostępności. Baza danych w~środowisku pracuje jednostrefowo; wariant standby zaznaczono jako~opcję trybu Multi-AZ}{figure.caption.21}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.3}Utworzenie klastra EKS i grup węzłów}{59}{section.8.3}\protected@file@percent }
+\newlabel{sec:utworzenie-eks}{{8.3}{59}{Utworzenie klastra EKS i grup węzłów}{section.8.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Konsola Amazon EKS: klaster \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{order-portal-prod-eks} w~wersji Kubernetes~1.32, w~stanie aktywnym.}}{59}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:cluster-eks}{{8.2}{59}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Konsola Amazon EKS: klaster \code {order-portal-prod-eks} w~wersji Kubernetes~1.32, w~stanie aktywnym}{figure.caption.22}{}}
+\newlabel{lst:prefix-delegation}{{8.2}{59}{Dodatek VPC CNI z delegacją prefiksów (eks.tf)}{lstlisting.8.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.2}{\ignorespaces Dodatek VPC CNI z delegacją prefiksów (eks.tf)}}{59}{lstlisting.8.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8.3}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Cztery węzły grupy \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{order-portal-prod-ng} (instancje \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{t3.small}) w~stanie \emph  {Ready}. Wykorzystanie pamięci (56--68\%) wyraźnie przewyższa wykorzystanie procesora (21--34\%) --- co~potwierdza ustalenie z~rozdziału~\ref {chap:testy-i-analiza}, że~to~pamięć, a~nie~procesor, jest~czynnikiem ograniczającym gęstość podów.}}{60}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:nodes-eks}{{8.3}{60}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Cztery węzły grupy \code {order-portal-prod-ng} (instancje \code {t3.small}) w~stanie \emph {Ready}. Wykorzystanie pamięci (56--68\%) wyraźnie przewyższa wykorzystanie procesora (21--34\%) --- co~potwierdza ustalenie z~rozdziału~\ref {chap:testy-i-analiza}, że~to~pamięć, a~nie~procesor, jest~czynnikiem ograniczającym gęstość podów}{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.4}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Zarządzane dodatki klastra EKS --- agent Pod Identity, VPC CNI, sterownik EBS CSI, CoreDNS oraz metrics-server --- wszystkie w~stanie aktywnym.}}{60}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:addons-eks}{{8.4}{60}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Zarządzane dodatki klastra EKS --- agent Pod Identity, VPC CNI, sterownik EBS CSI, CoreDNS oraz metrics-server --- wszystkie w~stanie aktywnym}{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.4}Warstwa danych --- RDS PostgreSQL i Secrets Manager}{61}{section.8.4}\protected@file@percent }
+\newlabel{sec:warstwa-danych-rds}{{8.4}{61}{Warstwa danych --- RDS PostgreSQL i Secrets Manager}{section.8.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.5}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Konsola Amazon RDS: instancja PostgreSQL \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{order-portal-prod-pg} klasy \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{db.t4g.micro} w~strefie \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{eu-central-1b}, w~stanie dostępnym.}}{61}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:postgreSQL-RDS}{{8.5}{61}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Konsola Amazon RDS: instancja PostgreSQL \code {order-portal-prod-pg} klasy \code {db.t4g.micro} w~strefie \code {eu-central-1b}, w~stanie dostępnym}{figure.caption.25}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.5}Wdrożenie mikroserwisów i brokera Kafka do klastra}{62}{section.8.5}\protected@file@percent }
+\newlabel{sec:wdrozenie-do-klastra}{{8.5}{62}{Wdrożenie mikroserwisów i brokera Kafka do klastra}{section.8.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.6}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Trzy mikroserwisy wdrożone w~przestrzeni nazw \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{order-portal} jako obiekty Deployment --- każdy w~stanie gotowości (1~Ready / 1~Desired).}}{62}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:serices-eks}{{8.6}{62}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Trzy mikroserwisy wdrożone w~przestrzeni nazw \code {order-portal} jako obiekty Deployment --- każdy w~stanie gotowości (1~Ready / 1~Desired)}{figure.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.7}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Broker Apache Kafka (\lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{apache/kafka:4.3.0}) uruchomiony w~klastrze jako pojedynczy pod, ze~strategią \emph  {Recreate} --- zgodnie z~projektem jednowęzłowego brokera w~trybie KRaft.}}{62}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:kafka-eks}{{8.7}{62}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Broker Apache Kafka (\code {apache/kafka:4.3.0}) uruchomiony w~klastrze jako pojedynczy pod, ze~strategią \emph {Recreate} --- zgodnie z~projektem jednowęzłowego brokera w~trybie KRaft}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.6}Routing ruchu --- CloudFront, ALB i reverse proxy}{63}{section.8.6}\protected@file@percent }
+\newlabel{sec:routing-ruchu}{{8.6}{63}{Routing ruchu --- CloudFront, ALB i reverse proxy}{section.8.6}{}}
+\newlabel{lst:spa-router}{{8.3}{63}{Funkcja CloudFront przepisująca trasy SPA (cloudfront.tf)}{lstlisting.8.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.3}{\ignorespaces Funkcja CloudFront przepisująca trasy SPA (cloudfront.tf)}}{63}{lstlisting.8.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8.8}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Dystrybucja CloudFront \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{order-portal-prod-cdn} z~dwoma originami: bucketem S3 (aplikacja SPA, dostęp przez~Origin Access Control) oraz~load balancerem ALB (ruch API).}}{63}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:cloudfront}{{8.8}{63}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Dystrybucja CloudFront \code {order-portal-prod-cdn} z~dwoma originami: bucketem S3 (aplikacja SPA, dostęp przez~Origin Access Control) oraz~load balancerem ALB (ruch API)}{figure.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.9}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Reguły zachowań (\emph  {behaviors}) CloudFront: ścieżki \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{/api/*} oraz~\lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{/grafana*} kierowane są~do~ALB z~wyłączonym buforowaniem, a~pozostałe --- domyślnie do~bucketa S3 z~buforowaniem zoptymalizowanym.}}{64}{figure.caption.29}\protected@file@percent }
+\newlabel{fig:cloudfront-paths}{{8.9}{64}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Reguły zachowań (\emph {behaviors}) CloudFront: ścieżki \code {/api/*} oraz~\code {/grafana*} kierowane są~do~ALB z~wyłączonym buforowaniem, a~pozostałe --- domyślnie do~bucketa S3 z~buforowaniem zoptymalizowanym}{figure.caption.29}{}}
+\newlabel{lst:origin-verify}{{8.4}{64}{Reguła ALB wymagająca nagłówka weryfikacyjnego (alb.tf)}{lstlisting.8.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.4}{\ignorespaces Reguła ALB wymagająca nagłówka weryfikacyjnego (alb.tf)}}{64}{lstlisting.8.4}\protected@file@percent }
+\newlabel{lst:nginx-routing}{{8.5}{64}{Reguły routingu wewnętrznego proxy nginx (fragment)}{lstlisting.8.5}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.5}{\ignorespaces Reguły routingu wewnętrznego proxy nginx (fragment)}}{64}{lstlisting.8.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8.10}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Pod wewnętrznego proxy nginx (Deployment \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{router}) w~przestrzeni \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{order-portal} --- pojedyncza replika trasująca ruch API do~mikroserwisów na~podstawie prefiksu ścieżki.}}{65}{figure.caption.30}\protected@file@percent }
+\newlabel{fig:nginx}{{8.10}{65}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Pod wewnętrznego proxy nginx (Deployment \code {router}) w~przestrzeni \code {order-portal} --- pojedyncza replika trasująca ruch API do~mikroserwisów na~podstawie prefiksu ścieżki}{figure.caption.30}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.11}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Przepływ żądania API przez warstwy systemu. CloudFront kieruje ruch \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{/api/*} do load balancera, natomiast pozostałe trasy obsługuje bucket S3 z aplikacją SPA. Dostęp do ALB ograniczają tajny nagłówek \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{X-Origin-Verify} oraz prefix list CloudFront. Wewnętrzne proxy nginx trasuje żądanie do właściwego mikroserwisu na podstawie prefiksu ścieżki.}}{65}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:przeplyw-zadania}{{8.11}{65}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Przepływ żądania API przez warstwy systemu. CloudFront kieruje ruch \code {/api/*} do load balancera, natomiast pozostałe trasy obsługuje bucket S3 z aplikacją SPA. Dostęp do ALB ograniczają tajny nagłówek \code {X-Origin-Verify} oraz prefix list CloudFront. Wewnętrzne proxy nginx trasuje żądanie do właściwego mikroserwisu na podstawie prefiksu ścieżki}{figure.caption.31}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.7}Wdrożenie monitoringu --- Prometheus i Grafana}{65}{section.8.7}\protected@file@percent }
+\newlabel{sec:wdrozenie-monitoringu}{{8.7}{65}{Wdrożenie monitoringu --- Prometheus i Grafana}{section.8.7}{}}
+\newlabel{lst:prometheus-scrape}{{8.6}{66}{Odkrywanie celów pomiarowych na podstawie adnotacji (prometheus.yml)}{lstlisting.8.6}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.6}{\ignorespaces Odkrywanie celów pomiarowych na podstawie adnotacji (prometheus.yml)}}{66}{lstlisting.8.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8.12}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Podsystem monitoringu w~przestrzeni nazw \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{monitoring}: wdrożenia Prometheus i~Grafana, oba w~stanie gotowości.}}{67}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:prometheus-eks}{{8.12}{67}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Podsystem monitoringu w~przestrzeni nazw \code {monitoring}: wdrożenia Prometheus i~Grafana, oba w~stanie gotowości}{figure.caption.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.13}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Interfejs Grafany udostępniony pod~ścieżką \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{/grafana} dystrybucji CloudFront, z~osobnym kokpitem dla~każdego z~trzech mikroserwisów.}}{67}{figure.caption.33}\protected@file@percent }
+\newlabel{fig:grafana}{{8.13}{67}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Interfejs Grafany udostępniony pod~ścieżką \code {/grafana} dystrybucji CloudFront, z~osobnym kokpitem dla~każdego z~trzech mikroserwisów}{figure.caption.33}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.8}Skalowanie aplikacji i zarządzanie cyklem życia}{67}{section.8.8}\protected@file@percent }
+\newlabel{sec:skalowanie-i-cykl-zycia}{{8.8}{67}{Skalowanie aplikacji i zarządzanie cyklem życia}{section.8.8}{}}
+\@setckpt{rozdzialy/8_infrastruktura}{
+\setcounter{page}{69}
+\setcounter{equation}{0}
+\setcounter{enumi}{0}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{0}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{8}
+\setcounter{section}{8}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{13}
+\setcounter{table}{0}
+\setcounter{LT@tables}{0}
+\setcounter{LT@chunks}{0}
+\setcounter{float@type}{8}
+\setcounter{parentequation}{0}
+\setcounter{caption@flags}{2}
+\setcounter{continuedfloat}{0}
+\setcounter{lstnumber}{1}
+\setcounter{section@level}{0}
+\setcounter{Item}{0}
+\setcounter{Hfootnote}{0}
+\setcounter{Hy@AnnotLevel}{0}
+\setcounter{bookmark@seq@number}{65}
+\setcounter{tabx@nest}{0}
+\setcounter{listtotal}{0}
+\setcounter{listcount}{0}
+\setcounter{liststart}{0}
+\setcounter{liststop}{0}
+\setcounter{citecount}{0}
+\setcounter{citetotal}{0}
+\setcounter{multicitecount}{0}
+\setcounter{multicitetotal}{0}
+\setcounter{instcount}{36}
+\setcounter{maxnames}{2}
+\setcounter{minnames}{1}
+\setcounter{maxitems}{3}
+\setcounter{minitems}{1}
+\setcounter{citecounter}{0}
+\setcounter{maxcitecounter}{0}
+\setcounter{savedcitecounter}{0}
+\setcounter{uniquelist}{0}
+\setcounter{uniquename}{0}
+\setcounter{refsection}{0}
+\setcounter{refsegment}{0}
+\setcounter{maxextratitle}{0}
+\setcounter{maxextratitleyear}{0}
+\setcounter{maxextraname}{0}
+\setcounter{maxextradate}{0}
+\setcounter{maxextraalpha}{0}
+\setcounter{abbrvpenalty}{50}
+\setcounter{highnamepenalty}{50}
+\setcounter{lownamepenalty}{25}
+\setcounter{maxparens}{3}
+\setcounter{parenlevel}{0}
+\setcounter{blx@maxsection}{0}
+\setcounter{mincomprange}{10}
+\setcounter{maxcomprange}{100000}
+\setcounter{mincompwidth}{1}
+\setcounter{afterword}{0}
+\setcounter{savedafterword}{0}
+\setcounter{annotator}{0}
+\setcounter{savedannotator}{0}
+\setcounter{author}{0}
+\setcounter{savedauthor}{0}
+\setcounter{bookauthor}{0}
+\setcounter{savedbookauthor}{0}
+\setcounter{commentator}{0}
+\setcounter{savedcommentator}{0}
+\setcounter{editor}{0}
+\setcounter{savededitor}{0}
+\setcounter{editora}{0}
+\setcounter{savededitora}{0}
+\setcounter{editorb}{0}
+\setcounter{savededitorb}{0}
+\setcounter{editorc}{0}
+\setcounter{savededitorc}{0}
+\setcounter{foreword}{0}
+\setcounter{savedforeword}{0}
+\setcounter{holder}{0}
+\setcounter{savedholder}{0}
+\setcounter{introduction}{0}
+\setcounter{savedintroduction}{0}
+\setcounter{namea}{0}
+\setcounter{savednamea}{0}
+\setcounter{nameb}{0}
+\setcounter{savednameb}{0}
+\setcounter{namec}{0}
+\setcounter{savednamec}{0}
+\setcounter{translator}{0}
+\setcounter{savedtranslator}{0}
+\setcounter{shortauthor}{0}
+\setcounter{savedshortauthor}{0}
+\setcounter{shorteditor}{0}
+\setcounter{savedshorteditor}{0}
+\setcounter{labelname}{0}
+\setcounter{savedlabelname}{0}
+\setcounter{institution}{0}
+\setcounter{savedinstitution}{0}
+\setcounter{lista}{0}
+\setcounter{savedlista}{0}
+\setcounter{listb}{0}
+\setcounter{savedlistb}{0}
+\setcounter{listc}{0}
+\setcounter{savedlistc}{0}
+\setcounter{listd}{0}
+\setcounter{savedlistd}{0}
+\setcounter{liste}{0}
+\setcounter{savedliste}{0}
+\setcounter{listf}{0}
+\setcounter{savedlistf}{0}
+\setcounter{location}{0}
+\setcounter{savedlocation}{0}
+\setcounter{organization}{0}
+\setcounter{savedorganization}{0}
+\setcounter{origlocation}{0}
+\setcounter{savedoriglocation}{0}
+\setcounter{origpublisher}{0}
+\setcounter{savedorigpublisher}{0}
+\setcounter{publisher}{0}
+\setcounter{savedpublisher}{0}
+\setcounter{language}{0}
+\setcounter{savedlanguage}{0}
+\setcounter{origlanguage}{0}
+\setcounter{savedoriglanguage}{0}
+\setcounter{pageref}{0}
+\setcounter{savedpageref}{0}
+\setcounter{textcitecount}{0}
+\setcounter{textcitetotal}{0}
+\setcounter{textcitemaxnames}{0}
+\setcounter{biburlbigbreakpenalty}{100}
+\setcounter{biburlbreakpenalty}{200}
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
+\setcounter{smartand}{1}
+\setcounter{bbx:relatedcount}{0}
+\setcounter{bbx:relatedtotal}{0}
+\setcounter{lstlisting}{6}
+}

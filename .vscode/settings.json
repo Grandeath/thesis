@@ -1,0 +1,46 @@
+{
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (XeLaTeX + biber)",
+      "tools": ["latexmk"]
+    },
+    {
+      "name": "XeLaTeX + biber (x2)",
+      "tools": ["xelatex", "biber", "xelatex", "xelatex"]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-xelatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": ["--output-directory=%OUTDIR%", "%DOCFILE%"]
+    }
+  ],
+  "latex-workshop.latex.recipe.default": "latexmk (XeLaTeX + biber)",
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.outDir": "./build",
+  "latex-workshop.view.pdf.viewer": "tab"
+}

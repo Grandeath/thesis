@@ -1,0 +1,138 @@
+\chapter{Amazon Web Services jako środowisko chmurowe}
+\label{chap:aws}
+
+Amazon Web Services (AWS) jest największą pod względem udziału w~rynku platformą chmury publicznej, oferującą
+kilkaset usług. Od surowych zasobów obliczeniowych, przez zarządzane bazy danych i~platformy kontenerowe, po
+wyspecjalizowane usługi analityczne. Rozdział ten charakteryzuje platformę AWS oraz omawia usługi, z~których
+zbudowano środowisko uruchomieniowe zrealizowanego systemu, a~kończy się porównaniem Amazon EKS z~konkurencyjnymi
+zarządzanymi usługami Kubernetes.
+
+\section{Charakterystyka AWS i jego architektury globalnej}
+\label{sec:charakterystyka-aws}
+
+Infrastruktura AWS jest podzielona \textbf{regiony}. Są to geograficznie odseparowane lokalizacje (np. \code{eu-central-1} we Frankfurcie).
+Każdy z~nich jest oddzielną domeną awarii i~osobnym miejscem przechowywania danych. Każdy region składa się
+z~co najmniej trzech \textbf{stref dostępności} (\emph{Availability Zones}, AZ). Są to fizycznie rozdzielone 
+centra danych o~niezależnym zasilaniu i łączności. Połączone są one ze sobą łączami o~niskich opóźnieniach.
+Rozmieszczenie komponentów systemu w~wielu strefach dostępności jest podstawową techniką zapewniania
+wysokiej dostępności. Awaria pojedynczej strefy nie przerywa działania systemu \cite{awsdocs}.
+
+Model rozliczeń AWS ma wiele form. W podstawowej wersji opłaty naliczane są za faktyczne zużycie zasobów
+(czas działania instancji, pojemność, transfer danych). Bez zobowiązań wstępnych. W tym projekcie wykorzystana
+została pula bezpłatnych zasobów (\emph{Free Tier}), udostępniona czasowo dla nowych kont. Z tego powodu
+wiele decyzji co do doboru parametrów środowiska została podjęta w zakresie bezpłatnego poziomu.
+
+Istotnym elementem charakterystyki platformy jest \textbf{model odpowiedzialności współdzielonej} (\emph{shared
+responsibility model}). AWS odpowiada za bezpieczeństwo \emph{samej chmury}. Czyli infrastruktury fizycznej, hipernadzorcy,
+oprogramowania usług zarządzanych. Natomiast klient za bezpieczeństwo \emph{w~chmurze}. Czyli konfigurację sieci
+i~uprawnień, ochronę danych oraz poprawność własnych aplikacji \cite{awsdocs}.
+
+\section{Amazon EKS --- zarządzana usługa Kubernetes}
+\label{sec:amazon-eks}
+
+Amazon Elastic Kubernetes Service (EKS) udostępnia klaster Kubernetes. Płaszczyzna sterowania jest w~całości
+zarządzana przez AWS. Użytkownik widzi tylko punkt końcowy API \cite{awsdocs}. Użytkownik odpowiada
+za dobór wezłów roboczych oraz uruchomienie obciążenia. EKS wykorzystuje niezmodyfikowaną, certyfikowaną 
+dystrybucję Kubernetes, dzięki czemu obciążenia i~manifesty pozostają przenośne pomiędzy środowiskami.
+
+Warstwę obliczeniową klastra EKS można zrealizować na dwa sposoby. Jako samodzielnie zarządzane instancje EC2
+\textbf{zarządzane grupy węzłów} (\emph{managed node groups}). W~których AWS automatyzuje provisionowanie,
+aktualizacje i~wymianę instancji EC2. AWS Fargate, model bezserwerowy, w~którym pojedyncze pody
+uruchamiane są bez jawnie widocznych węzłów. W~zrealizowanym systemie wybrano zarządzane grupy węzłów: w~odróżnieniu
+od Fargate zachowują one pełną kontrolę nad typem instancji.
+
+Integralną częścią EKS są \textbf{dodatki} (\emph{add-ons}). Zarządzame przez AWS komponenty systemowe klastra.
+Przykładem takiej wtyczki może być sieciowa VPC CNI. Przydziela ona podom adresy IP bezpośrednio z~puli
+adresowej sieci VPC. Bez niej liczba podów na weźle jest ograniczona liczbą interfejsów sieciowych instacji.
+W tym projekcie użyłem małych instacji co stanowiłob bariere przy wdrożeniu wszystkich komponentów.
+
+Tożsamość i~dostęp do klastra EKS realizowane są poprzez integrację z~systemem IAM. Zarówno administratorzy, jak
+i~węzły robocze uwierzytelniają się wobec API Kubernetes przy użyciu tożsamości IAM (sekcja~\ref{sec:bezpieczenstwo-kubernetes}).
+
+\section{Usługi powiązane wykorzystane w projekcie}
+\label{sec:uslugi-powiazane}
+
+\subsection{Amazon EC2 jako warstwa obliczeniowa}
+\label{subsec:ec2}
+
+Amazon Elastic Compute Cloud (EC2) dostarcza maszyny wirtualne (\emph{instancje}). Mają one zróżnicowane zasoby
+opisane typami instancji. W zrealizowanym systemie użyte zostały jako węzły EKS. Stanowią one wartswe obliczeniową klastra.
+W celu zmieszczenia w darmowym programie użyte zostały instacje \code{t3.small} w~trybie \emph{on-demand}.
+Grupa węzłów posiada konfigurowalny przedział wielkości (minimalna,pożądana i~maksymalna liczba instancji). 
+Stanowi to infrastrukturalny fundament skalowania klastra.
+
+\subsection{Amazon RDS for PostgreSQL jako warstwa danych}
+\label{subsec:rds}
+
+Amazon Relational Database Service (RDS) jest zarządzaną usługą relacyjnych baz danych, przejmującą od użytkownika
+instalację, łatanie, kopie zapasowe i~odtwarzanie silnika bazodanowego. W~realizowanym systemie użyto RDS PosgreSQL.
+Korzystają z~niej wszystkie 3 mikroserwisy. Instacja umieszczona jest w~podsieci prywatnej. Z~grupą bezpieczeństwa,
+która umożliwia dostęp tylko z sieci klastra. Decyzja użycia RDS zamiast bazy uruchamianej w~klastrze, wynika
+z~dostarczenia wszystkich potrzebnych mechanizmów dla bazy produkcyjnej przez serwis.
+
+\subsection{Amazon ECR --- rejestr obrazów kontenerów}
+\label{subsec:ecr}
+
+Amazon Elastic Container Registry (ECR) jest prywatnym rejestrem obrazów kontenerów, zintegrowanym z~systemem
+uprawnień IAM. W~zrealizowanym systemie utworzono po jednym repozytorium dla każdego mikroserwisu, z~włączonym
+automatycznym skanowaniem obrazów pod kątem znanych podatności oraz polityką cyklu życia ograniczającą liczbę
+przechowywanych wersji obrazu (koszt składowania rośnie z~każdą wersją, a~starsze obrazy szybko tracą użyteczność).
+Węzły klastra pobierają obrazy na mocy roli IAM z~uprawnieniem tylko do odczytu, bez jakichkolwiek statycznych
+poświadczeń.
+
+Amazon Elastic Container Registry (ECR) jest prywatnym rejestrem obrazów kontenerów. W systemie utworzono repozytorium
+dla serwisu z skanowaniem obrazów pod kątem podatności. Ustawiono również cykl życia ograniczającą liczbę przechowywanych wersji
+obrazó∑. System ten zintegrowany jest z IAM. EKS za pomocą roli tylko do odczytu pobiera podczas deploymentu ostatnią wersje obrazu.
+
+\subsection{Amazon Cognito --- uwierzytelnianie użytkowników}
+\label{subsec:cognito}
+
+Amazon Cognito jest zarządzaną usługą tożsamości użytkowników końcowych. Jej centralnym pojęciem jest \emph{pula
+użytkowników} (\emph{user pool}). Jest to katalog kont wraz z~mechanizmem rejestracji, logowania, polityki haseł
+i~weryfikacji adresów e-mail. Po poprawnym uwierzytelnieniu wydaje podpisane cyfrowo tokeny JWT. Za ich pomocą
+serwisy mogą obsłużyć logowanie. Każdy token może być zweryfikowany na podstawie publicznych kluczy udostępnianych
+przez usługę. Serwis udostępnia również interfejs logowania (\emph{Hosted UI}). Dzięki niemu aplikacja webowa nie 
+musi mieć formularza do logowania tylko korzysta z udostępnionego przez AWS. Szczegóły projektu uwierzytelniania 
+przedstawiono w~rozdziale~\ref{chap:projekt-systemu}.
+
+\subsection{Amazon S3 i CloudFront --- hosting aplikacji webowej}
+\label{subsec:s3-cloudfront}
+
+Amazon Simple Storage Service (S3) jest obiektowym magazynem danych o~praktycznie nieograniczonej pojemności.
+Amazon CloudFront jest siecią dystrybucji treści (CDN) serwującą zawartość z~lokalizacji brzegowych położonych
+blisko użytkowników. Połączenie obu usług stanowi wzorcową architekturę hostingu aplikacji jednostronicowych
+(SPA). Zbudowane statyczne artefakty przechowywane są w S3, a~CloudFront udostępnia je użytkownikom.
+Bucket w którym przechowywana jest strona jest prywatny. Z tego powodu publiczny dostęp jest tylko z serwisu
+CloudFront. Dostęp do niego CDN ma przez mechanizm emph{Origin Access Control} (OAC). Cloudfront
+pełni w~systemie również role pojedyńczego punktu wejścia dla API który kieruje ruch do load balancera.
+Cloudfront cacheuje również statyczne dane na lokalizacjach brzegowych, więc ogranicza on zapytania do S3
+i przyspiesza dostarczenia strony. Konfigurację tę omówiono w~rozdziale~\ref{chap:infrastruktura}.
+
+\subsection{Amazon VPC, ALB i architektura sieciowa}
+\label{subsec:vpc-alb}
+
+Amazon Virtual Private Cloud (VPC) udostępnia logicznie izolowaną sieć wirtualną o~adresacji definiowanej przez
+użytkownika, dzieloną na podsieci rozmieszczone w~strefach dostępności. Podstawowym wzorcem zastosowanym
+w zrealizowanym systemie jest podział na podsieci publicze i prywatne. Sieć publiczna ma dostęp do internetu
+dzięki temu może dostać ruch sieciowy. Sieć prywatna za to go nie ma i ruch do niej przechodzi przez bramę NAT.
+Z tego powodu generalną praktyką jest wysyłanie ruchu internetowego do sieci publicznej i z sieci publicznej przez
+NAT do prywatnej. Ruch sieciowy filtrowany jest przez \textbf{grupy bezpieczeństwa} (\emph{security groups}).
+Są to tanowe zapory przypisywane zasobom, zezwalające wyłącznie na jawnie zdefiniowane przepływy.
+
+Application Load Balancer (ALB) jest balancerem warstwy siódmej, trasującym żądania HTTP do zarejestrowanych celów
+i~weryfikującym ich zdrowie. W~zrealizowanym systemie ALB przyjmuje ruch API od CloudFront i~kieruje go do węzłów
+klastra. Dostęp do balancera ograniczono do zakresów adresowych CloudFront, a~żądania pozbawione ustawianego przez
+CloudFront nagłówka weryfikacyjnego są odrzucane. Wymusza przepływ całego ruchu przez warstwę brzegową.
+
+\subsection{IAM i Secrets Manager}
+\label{subsec:iam-secrets-manager}
+
+AWS Identity and Access Management (IAM) jest systemem zarządzania tożsamością i~uprawnieniami obejmującym całą
+platformę. Uprawnienia działają na zasadzie polityk przypisywanych użytkownikom i i~\textbf{rolom}.
+Role to tożsamości przyjmowane tymczasowo przez usługi i procesy. Działają na zasadzie najmnijeszych 
+uprawnień (\emph{principle of least privilege}). Każda tożsamość powinna posiadać wyłącznie uprawnienia niezbędne do swoich zadań. 
+W~zrealizowanym systemie role IAM posiadają m.in.: płaszczyzna sterowania klastra, węzły robocze, sterownik EBS CSI.
+
+AWS Secrets Manager uzupełnia IAM o~scentralizowane przechowywanie sekretów aplikacyjnych jak haseł, kluczy
+i~parametrów połączeń. Główną zaletą tego systemu jest szyfrowanie, kontrola dostępu i~audyt przechowanych sekretów.
+Pozwala to nie trzymać haseł w kodzie źródłowym, a w pełni bezpiecznym środowisku.

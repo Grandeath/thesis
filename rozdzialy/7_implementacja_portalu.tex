@@ -1,0 +1,191 @@
+\chapter{Implementacja portalu obsługi zamówień}
+\label{chap:implementacja-portalu}
+
+Interfejs użytkownika systemu stanowi portal obsługi zamówień. Aplikacja jednostronicowa (SPA) działająca
+w~przeglądarce, realizująca pełny przepływ zakupowy. Od przeglądania katalogu, przez koszyk i~złożenie zamówienia,
+po płatność i~wgląd w~historię zamówień. Rozdział omawia architekturę aplikacji, jej widoki, warstwę komunikacji
+z~interfejsami REST mikroserwisów, implementację logowania w~przepływie OAuth~2.0 z~PKCE oraz testy.
+
+\section{Architektura aplikacji frontendowej}
+\label{sec:architektura-frontendu}
+
+Aplikację zbudowano we frameworku Vue~3 z~językiem TypeScript w~trybie ścisłym (\code{strict}), z~użyciem
+kompozycyjnego API. Kod podzielony jest na warstwy o~jasno określonych odpowiedzialnościach. Katalog
+\code{views} zawiera widoki powiązane z~trasami routera. Katalog \code{components} zawiera współdzielone komponenty powłoki
+aplikacji, Ścieżka \code{stores} zawiera magazyny stanu Pinia, a \code{services} warstwę dostępu do API.
+Na koniec \code{composables} ma funkcje kompozycyjne wielokrotnego użytku. Warstwę
+prezentacji ostylowano biblioteką Tailwind CSS z~paletą i~typografią wzorowaną na Material Design~3.
+Nawigację obsługuje Vue Router z~dziewięcioma trasami. 
+
+Globalny stan aplikacji ograniczono do dwóch magazynów Pinia. Magazyn \code{auth} przechowuje dane zalogowanego
+użytkownika. Magazyn \code{cart} przechowuje pozycje koszyka jako pary identyfikator-ilość i~synchronizuje je reaktywnie
+z~pamięcią \code{localStorage} pod kluczem \code{oms.cart}. Dzięki czemu koszyk przetrwa odświeżenie strony
+i~ponowne otwarcie przeglądarki. Koszyk celowo nie przechowuje cen ani nazw produktów. Przy każdym wyświetleniu
+funkcja kompozycyjna \code{useCartDetails} łączy pozycje koszyka z~aktualnymi danymi katalogu, więc prezentowane
+ceny i~dostępność są zawsze bieżące.
+
+\section{Główne widoki i przepływy użytkownika}
+\label{sec:widoki-i-przeplywy}
+
+Przepływ zakupowy przebiega przez kolejne widoki aplikacji. 
+
+\textbf{Katalog} (\code{CatalogView}) prezentuje
+stronicowaną listę produktów z~filtrowaniem po kategorii, przedziale cenowym i~dostępności. Przy czym produkty 
+o~wyczerpanym stanie magazynowym mają zablokowaną możliwość dodania do koszyka. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{ProductView.png}
+    \caption{Widok katalogu produktów zrealizowanego serwisu.}
+    \label{fig:product-view}
+\end{figure}
+
+\textbf{Koszyk} (\code{CartView}) umożliwia edycję ilości i~usuwanie pozycji,
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{CartView.png}
+    \caption{Widok koszyka zrealizowanego serwisu.}
+    \label{fig:cart-view}
+\end{figure}
+
+\textbf{Finalizacja} (\code{CheckoutView}) zbiera adres dostawy i~składa zamówienie. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{CheckoutView.png}
+    \caption{Widok finalizacji zamówienia zrealizowanego serwisu.}
+    \label{fig:checkout-view}
+\end{figure}
+
+Po jego utworzeniu użytkownik przechodzi do \textbf{szczegółów zamówienia} (\code{OrderDetailsView}).
+Prezentujących pozycje, adres, bieżący status wraz z~wizualizacją postępu w~cyklu życia. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{OrderDetailsView.png}
+    \caption{Widok szczegółów zamówienia zrealizowanego serwisu.}
+    \label{fig:order-details-view}
+\end{figure}
+
+Przycisk rozpoczęcia płatności prowadzi do \textbf{widoku płatności} (\code{PaymentView}) z~symulowanym formularzem zapłaty.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{PaymentView.png}
+    \caption{Widok płatności zrealizowanego serwisu.}
+    \label{fig:payment-view}
+\end{figure}
+
+Historię zamówień prezentuje \code{OrdersView},
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{OrderHistory.png}
+    \caption{Widok historii zamówień zrealizowanego serwisu.}
+    \label{fig:order-history-view}
+\end{figure}
+
+\textbf{Pulpit} (\code{DashboardView}) pokzuje podsumowanie. Czyli liczbę aktywnych zamówień
+i~ostatnią płatność. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{DashboardView.png}
+    \caption{Widok pulpitu zrealizowanego serwisu.}
+    \label{fig:dashboard-view}
+\end{figure}
+
+Całość spina powłoka aplikacji ze~stałym panelem nawigacyjnym.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{NavigationPanel.png}
+    \caption{Widok paneluj nawigacyjnego zrealizowanego serwisu.}
+    \label{fig:navigation-panel}
+\end{figure}
+
+\section{Warstwa komunikacji z API}
+\label{sec:warstwa-komunikacji-api}
+
+Implementacje HTTP oparto na natywnym interfejsie \code{fetch}, bez zewnętrznych bibliotek. Odpowiedzi backendu
+mapowane są na jawnie zadeklarowane typy aplikacji. Błędy mapowane są na komunikaty czytelne dla użytkownika. Nagłówki
+uwierzytelniające dostarcza wstrzykiwana funkcja zwrotna powiązana z~dostawcą tożsamości, dzięki czemu warstwa
+HTTP nie zna szczegółów mechanizmu logowania. Składanie zamówienia generuje po stronie przeglądarki klucz
+idempotencji (listing~\ref{lst:create-order-http}), współpracując z~mechanizmem opisanym w~sekcji~\ref{sec:order-service}.
+
+\begin{lstlisting}[caption={Złożenie zamówienia z kluczem idempotencji (fragment http.ts)},label={lst:create-order-http}]
+async create(req: CreateOrderRequest): Promise<OrderDetail> {
+  const res = await fetch(this.basePath, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Idempotency-Key': crypto.randomUUID(),
+      ...this.authHeaders(),
+    },
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) throw new Error(`Nie udalo sie zlozyc zamowienia (HTTP ${res.status}).`)
+  return toOrderDetail((await res.json()) as BackendOrder)
+}
+\end{lstlisting}
+
+Adresy API są względne (\code{/api/orders}, \code{/api/products}, \code{/api/v1/payments}. Portal nie zna
+topologii backendu, a~rozdziałem żądań pomiędzy mikroserwisy zajmuje się warstwa brzegowa systemu
+(rozdział~\ref{chap:infrastruktura}). Eliminuje to problemy współdzielenia zasobów między domenami (CORS).
+
+\section{Logowanie użytkownika --- OAuth 2.0 z PKCE}
+\label{sec:logowanie-pkce}
+
+Logowanie zaimplementowano zgodnie z~projektem przedstawionym w~sekcji~\ref{sec:projekt-uwierzytelniania}.
+W~przepływie \emph{authorization code} z~rozszerzeniem PKCE, wobec hostowanego interfejsu logowania Cognito.
+Rozpoczynając logowanie, aplikacja generuje kryptograficznie losowy weryfikator oraz jego skrót SHA-256
+(listing~\ref{lst:pkce-helpers}), korzystając wyłącznie z~natywnych interfejsów Web Crypto. Bez zewnętrznych
+bibliotek kryptograficznych. Weryfikator, wraz z~losowym parametrem \code{state} (chroniącym przed atakami CSRF)
+i~docelową trasą po zalogowaniu, zapisywany jest w~\code{sessionStorage}. Po czym przeglądarka przekierowywana
+jest na punkt końcowy autoryzacji Cognito z~parametrami \code{code\_challenge} i~\code{code\_challenge\_method=S256}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{HomeView.png}
+    \caption{Widok strony przekierowującej do logowania.}
+    \label{fig:home-view}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{CognitoLogin.png}
+    \caption{Widok logowania Cognito.}
+    \label{fig:cognito-login-view}
+\end{figure}
+
+\begin{lstlisting}[caption={Generowanie weryfikatora i wyzwania PKCE (Web Crypto)},label={lst:pkce-helpers}]
+function randomString(byteLength: number): string {
+  const bytes = new Uint8Array(byteLength)
+  crypto.getRandomValues(bytes)
+  return base64UrlEncode(bytes)
+}
+
+async function pkceChallenge(verifier: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(verifier),
+  )
+  return base64UrlEncode(new Uint8Array(digest))
+}
+\end{lstlisting}
+
+Po uwierzytelnieniu Cognito zwraca przeglądarkę na zarejestrowaną trasę zwrotną z~kodem autoryzacyjnym. Widok
+\code{AuthCallbackView} weryfikuje zgodność parametru \code{state} z~zapamiętanym, a~następnie wymienia kod na
+tokeny żądaniem POST do punktu \code{/oauth2/token}. Przedstawiając oryginalny weryfikator, co domyka
+mechanizm PKCE. Otrzymane tokeny (identyfikacyjny, dostępowy i~odświeżający, wraz z~wyliczonym czasem wygaśnięcia)
+zapisywane są w~\code{localStorage}. Dzięki czemu sesja przetrwa odświeżenie strony. Dane użytkownika odczytywane 
+są z~ładunku tokenu identyfikacyjnego. Portal celowo nie weryfikuje podpisu tokenu. 
+Właściwa weryfikacja kryptograficzna następuje w~każdym mikroserwisie przy każdym żądaniu
+(sekcja~\ref{sec:implementacja-auth}). Bezpieczeństwo systemu nie opiera się więc na kodzie działającym
+w~przeglądarce. Wylogowanie usuwa tokeny z~pamięci lokalnej i~przekierowuje na punkt końcowy wylogowania Cognito,
+unieważniając również sesję po stronie dostawcy tożsamości.
+
+Pełny przebieg tego procesu przedstawiono na~rysunku~\ref{fig:pkce} w~rozdziale~\ref{chap:projekt-systemu}.

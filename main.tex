@@ -1,0 +1,281 @@
+\documentclass[12pt,a4paper]{report}
+
+% Tabele
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+
+\usepackage{microtype}
+\usepackage{xstring}
+
+\setlength{\emergencystretch}{3em}
+
+% Aby wykresy mogły znajdować się pomiędzy tekstem
+\usepackage{float}
+
+% Marginesy - standard 2.5 cm
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% Interlinia 1,5
+\usepackage{setspace}
+\onehalfspacing
+
+% Język polski
+\usepackage{polyglossia}
+\setmainlanguage{polish}
+
+% Cudzysłowy itp.
+\usepackage{csquotes}
+
+% Czcionki - Times New Roman / Arial
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Courier New}
+
+% Małe wcięcia dla lepszego wyglądu
+\setlength{\parindent}{24pt}
+
+% Drobne przerwy pomiędzy akapitami
+\setlength{\parskip}{0.5\baselineskip}
+
+% Matematyka
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Diagramy (TikZ)
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,fit,calc,backgrounds,automata}
+
+% Rysunki
+\usepackage{graphicx}
+\graphicspath{{rysunki/}{wykresy/}}
+
+% Tabele
+\usepackage{booktabs}
+
+% Podpisy rysunków i tabel - mała czcionka, wyrównanie do lewej
+\usepackage[singlelinecheck=false,justification=raggedright,font=small]{caption}
+\addto\captionspolish{
+  \renewcommand{\figurename}{Ilustracja}
+  \renewcommand{\listfigurename}{Spis ilustracji}
+  \renewcommand{\tableautorefname}{Tabela}
+  \renewcommand{\figureautorefname}{Ilustracja}
+}
+\renewcommand{\tablename}{Tabela}
+\renewcommand{\listfigurename}{Spis ilustracji}
+
+\usepackage{listings}
+
+% Ustawienia globalne dla dużych bloków (lstinputlisting / begin{lstlisting})
+% Te ustawienia dają: ramkę, numery linii, stałą szerokość znaków
+\lstset{
+  basicstyle=\ttfamily\small,
+  numbers=left,            % Numery linii po lewej
+  numberstyle=\tiny,       % Małe cyferki
+  stepnumber=1,            % Numeruj każdą linię
+  numbersep=5pt,           % Odstęp numerów
+  captionpos=b,            % Podpis pod kodem
+  frame=single,            % Ramka
+  breaklines=true,         % Łamanie linii
+  breakatwhitespace=false, 
+  keepspaces=true,
+  showstringspaces=false,
+  columns=fixed            % W blokach stała szerokość wygląda lepiej (wyrównanie)
+}
+
+% Definicja \code{} dla tekstu ciągłego
+\newcommand{\code}[1]{%
+    \lstinline[%
+        basicstyle=\ttfamily,      % Normalna wielkość czcionki (nie small)
+        numbers=none,              % Bez numerów linii
+        frame=none,                % Bez ramki
+        columns=fullflexible,      % Naturalne odstępy w tekście
+        breaklines=true,           % Włącz łamanie linii
+        breakatwhitespace=false,   % Łam wszędzie
+        literate={_}{\_}{1}        % KLUCZOWE: Traktuj _ jako znak, po którym wolno łamać linię
+    ]{#1}%
+}
+
+\renewcommand{\lstlistingname}{Listing}
+\renewcommand{\lstlistlistingname}{Spis listingów}
+
+% Wielopoziomowe nagłówki: 1., 1.1., 1.1.1.
+\usepackage[indentafter]{titlesec}  % Dodać wcięcie również w pierwszym akapicie
+\titleformat{\chapter}[hang]{\bfseries\Large}{\thechapter.}{1em}{}
+\titleformat{\section}[hang]{\bfseries\large}{\thesection}{1em}{}
+\titleformat{\subsection}[hang]{\bfseries\normalsize}{\thesubsection}{1em}{}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Numer strony w prawym dolnym rogu - wszędzie
+\usepackage{fancyhdr}
+
+% domyślny styl stron
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% pierwsze strony rozdziałów, spis treści itd. (styl \enquote{plain})
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[R]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+% Linki
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\renewcommand{\figureautorefname}{Ilustracja}
+
+% Bibliografia - IEEE
+\usepackage[style=ieee,sorting=none]{biblatex}
+\addbibresource{bibliografia.bib}
+
+% Ułatw LaTeX'owi łamanie linków w bibliografii
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
+
+% =============================================
+% WYCISZANIE OSTRZEŻEŃ (Overfull/Underfull)
+% =============================================
+
+% 1. Underfull (zbyt luźne odstępy)
+\hbadness=5500      % Wyłącza "Underfull \hbox" (poziome - tekst)
+\vbadness=5500      % Wyłącza "Underfull \vbox" (pionowe - strony)
+
+% 2. Overfull (wystawanie poza margines)
+\hfuzz=5pt          % Ignoruj wystawanie tekstu o mniej niż 15 punktów
+\vfuzz=5pt          % Ignoruj "wystawanie" treści w pionie (np. za długa tabela na stronie)
+
+\begin{document}
+
+% ======================
+% STRONA TYTUŁOWA
+% ======================
+\begin{titlepage}
+    \thispagestyle{empty}
+
+    % Logo PJATK - centrowane na górze
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{pjatk-logo.png}
+    \end{center}
+
+    \vspace{2.5cm}
+
+    % Nazwa wydziału / katedry / specjalizacji
+    \begin{center}
+        {\bfseries Programowanie aplikacji biznesowych}\\[1cm]
+        {\bfseries Katedra Inżynierii Oprogramowania}\\[0.5cm]
+        Wydział Informatyki
+    \end{center}
+
+    \vspace{1.5cm}
+
+    % Imię, nazwisko, nr albumu
+    \begin{center}
+        {\bfseries Jakub Głocki}\\[0.5cm]
+        s26523
+    \end{center}
+
+    \vspace{0.5cm}
+
+    % Tytuł pracy
+    \begin{center}
+        {\bfseries\Large Wytworzenie systemu obsługi zamówień z~użyciem technologii chmurowych oraz mikroserwisów}
+    \end{center}
+
+    \vspace{2.0cm}
+
+    % Rodzaj pracy + promotor - blok po prawej
+    \begin{flushright}
+        Praca Inżynierska\\[1cm]
+        Promotor:\\
+        dr Krzysztof Barteczko
+    \end{flushright}
+
+    \vfill
+
+    % Miejsce, miesiąc rok obrony - wyśrodkowane na dole
+    \begin{center}
+        Warszawa, x 2026
+    \end{center}
+
+\end{titlepage}
+
+% Strona tytułowa bez numeru, numeracja od 2
+\setcounter{page}{2}
+
+% ======================
+% STRESZCZENIE (PL) - strona 2, poza spisem treści
+% ======================
+\chapter*{Streszczenie}
+
+Niniejsza praca przedstawia projekt, implementację oraz wdrożenie w~chmurze publicznej kompletnego systemu obsługi
+zamówień, zbudowanego w~architekturze mikroserwisowej. System składa się z~trzech mikroserwisów napisanych
+w~języku Go --- odpowiedzialnych za~zamówienia, katalog produktów oraz~płatności --- komunikujących się
+synchronicznie poprzez~interfejsy REST oraz~asynchronicznie poprzez~zdarzenia domenowe publikowane do~brokera
+Apache Kafka, a~także z~aplikacji webowej (Vue~3) stanowiącej interfejs użytkownika. Warstwę danych zrealizowano
+na~bazie PostgreSQL, a~uwierzytelnianie --- w~oparciu o~protokół OAuth~2.0 z~rozszerzeniem PKCE i~usługę Amazon
+Cognito.
+
+System uruchomiono na~zarządzanym klastrze Kubernetes (Amazon EKS), w~ramach infrastruktury zdefiniowanej
+w~całości jako~kod (Terraform), objętej automatyzacją wdrożeń (GitHub Actions) oraz~monitoringiem (Prometheus,
+Grafana). Działanie systemu zweryfikowano w~docelowym środowisku chmurowym testami funkcjonalnymi
+i~wydajnościowymi; w~teście obciążeniowym system obsłużył kilkaset żądań na~sekundę bez~błędów, automatycznie
+skalując liczbę replik. Pracę uzupełniają analiza kosztów utrzymania środowiska oraz~identyfikacja wąskich gardeł
+wraz z~rekomendacjami optymalizacji.
+
+\noindent\textbf{Słowa kluczowe:} mikroserwisy, Kubernetes, Amazon Web Services, architektura sterowana
+zdarzeniami, infrastruktura jako kod, Go
+
+\clearpage
+
+
+% ======================
+% SPIS TREŚCI
+% ======================
+\tableofcontents
+\clearpage
+
+% ======================
+% ROZDZIAŁY - pliki w katalogu \enquote{rozdzialy}
+% ======================
+\include{rozdzialy/1_wstep}
+\include{rozdzialy/2_podstawy_mikroserwisow}
+\include{rozdzialy/3_kubernetes}
+\include{rozdzialy/4_aws}
+\include{rozdzialy/5_projekt_systemu}
+\include{rozdzialy/6_implementacja_mikroserwisow}
+\include{rozdzialy/7_implementacja_portalu}
+\include{rozdzialy/8_infrastruktura}
+\include{rozdzialy/9_testy}
+\include{rozdzialy/10_wnioski}
+
+% ======================
+% SPIS RYSUNKÓW, TABEL, LISTINGÓW - przed bibliografią
+% ======================
+\clearpage
+\listoffigures
+\addcontentsline{toc}{chapter}{Spis ilustracji}
+
+\clearpage
+\listoftables
+\addcontentsline{toc}{chapter}{Spis tabel}
+
+\clearpage
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{Spis listingów}
+
+% ======================
+% BIBLIOGRAFIA (IEEE)
+% ======================
+\clearpage
+\printbibliography[heading=bibintoc,title={Bibliografia}]
+
+\end{document}

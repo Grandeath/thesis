@@ -1,0 +1,473 @@
+\chapter{Budowa środowiska chmurowego --- infrastruktura jako kod}
+\label{chap:infrastruktura}
+
+Całość środowiska uruchomieniowego systemu zdefiniowano deklaratywnie w~narzędziu Terraform.
+Środowisko jest w~pełni odtwarzalne. Pojedyncze wykonanie \code{terraform apply}
+buduje je od zera, bez jakichkolwiek czynności ręcznych w~konsoli AWS. Rozdział omawia kolejne warstwy tej
+infrastruktury w~porządku, w~jakim są tworzone. System uruchomiono w~regionie \code{eu-central-1} (Frankfurt).
+
+\section{Terraform i zarządzanie stanem infrastruktury}
+\label{sec:terraform-stan}
+
+Terraform przechowuje stan infrastruktury. W pliku stanu odwzorowano zasoby zadeklarowane w~kodzie na zasoby istniejące
+w~chmurze. W przypadku pracy zespołowej i~automatyzacji musi być składowany zdalnie. Wykorzystano, więc
+backend S3. Stan trafia do dedykowanego bucketa z~włączonym wersjonowaniem (możliwość odtworzenia wcześniejszych
+wersji stanu), szyfrowaniem oraz całkowitą blokadą dostępu publicznego. Równoległe modyfikacje wyklucza
+mechanizm blokady plików.
+
+Projekt wykorzystuje trzech dostawców. (\emph{Providers}) \code{aws} dla zasobów chmurowych. \code{Kubernetes}
+dla obiektów wewnątrz klastra. \code{Random} do generowania sekretów.
+Objęcie jednym narzędziem obu warstw pozwala wyrażać zależności pomiędzy nimi wprost w~kodzie. Manifesty Kubernetes 
+odwołują się do atrybutów zasobów AWS. Kolejność tworzenia wyznacza graf zależności Terraform. 
+Parametry środowiska wyniesiono do zmiennych z~wartościami w~pliku \code{terraform.tfvars}.
+Dzięki czemu odtworzenie środowiska o~innych parametrach (np. większych instancjach)
+sprowadza się do zmiany pliku zmiennych.
+
+\section{Konfiguracja sieci VPC}
+\label{sec:konfiguracja-vpc}
+
+Sieć systemu obejmuje VPC o~adresacji \code{10.0.0.0/16}, rozpiętą na dwie strefy dostępności. W~każdej strefie
+wydzielono po dwie podsieci \code{/24}.
+Publiczną (\code{10.0.0.0/24}, \code{10.0.1.0/24}) oraz prywatną (\code{10.0.100.0/24}, \code{10.0.101.0/24}).
+Podsieci publiczne posiadają trasę do bramy internetowej. Posiadają tylko elemety brzegowe: load balancer
+oraz bramę NAT. W~podsieciach prywatnych działają węzły klastra i~baza danych, których ruch wychodzący
+kierowany jest przez NAT (rysunek~\ref{fig:topologia-sieci}). Ze~względów kosztowych zastosowano pojedynczą bramę NAT.
+
+Podsieci opatrzono tagami, którymi posługuje się integracja Kubernetes z~AWS przy wyborze podsieci dla load
+balancerów (listing~\ref{lst:vpc-tagi}). Filtrowanie ruchu realizują grupy bezpieczeństwa opisane
+w~sekcji~\ref{sec:routing-ruchu}.
+
+\begin{lstlisting}[caption={Definicja podsieci prywatnych z tagami Kubernetes (vpc.tf)},label={lst:vpc-tagi}]
+resource "aws_subnet" "private" {
+  count             = length(local.azs)
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 100)
+  availability_zone = local.azs[count.index]
+
+  tags = {
+    Name                                          = "${local.name}-private-${local.azs[count.index]}"
+    "kubernetes.io/role/internal-elb"             = "1"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+  }
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        font=\scriptsize,
+        >={Stealth[length=1.6mm]},
+        box/.style={rectangle, rounded corners, draw, thick, align=center,
+                    minimum height=6mm, minimum width=20mm},
+        pub/.style={box, fill=black!4},
+        priv/.style={box, fill=black!10},
+        sub/.style={rectangle, draw, densely dashed, inner sep=3mm, rounded corners},
+    ]
+        \node[box, fill=black!3] (igw) {Internet Gateway};
+
+        % AZ A
+        \node[pub, below left=10mm and 2mm of igw] (alba) {ALB / NAT};
+        \node[priv, below=8mm of alba] (nodea) {Węzły EKS};
+        \node[priv, below=6mm of nodea] (rdsa) {RDS (primary)};
+        \begin{scope}[on background layer]
+            \node[sub, fill=black!2, fit=(alba)] (pubA) {};
+            \node[sub, fill=black!6, fit=(nodea)(rdsa)] (privA) {};
+        \end{scope}
+
+        % AZ B
+        \node[pub, below right=10mm and 2mm of igw] (albb) {NAT (zapas)};
+        \node[priv, below=8mm of albb] (nodeb) {Węzły EKS};
+        \node[priv, below=6mm of nodeb] (rdsb) {RDS (standby)};
+        \begin{scope}[on background layer]
+            \node[sub, fill=black!2, fit=(albb)] (pubB) {};
+            \node[sub, fill=black!6, fit=(nodeb)(rdsb)] (privB) {};
+        \end{scope}
+
+        \node[font=\scriptsize\itshape, above=1mm of pubA] {strefa A};
+        \node[font=\scriptsize\itshape, above=1mm of pubB] {strefa B};
+        \node[font=\scriptsize, left=1mm of pubA] {publ.};
+        \node[font=\scriptsize, left=1mm of privA] {pryw.};
+
+        \draw[->, thick] (igw) -- (alba);
+        \draw[->, thick] (igw) -- (albb);
+        \draw[->, thick] (alba) -- (nodea);
+        \draw[->, thick, densely dashed] (nodea) -- (rdsa);
+        \draw[->, thick, densely dashed] (nodeb) -- (rdsb);
+
+        \begin{scope}[on background layer]
+            \node[sub, draw=black!50, fit=(igw)(pubA)(privA)(pubB)(privB),
+                  inner sep=5mm, label={[font=\scriptsize\bfseries]above:VPC 10.0.0.0/16}] {};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Topologia sieci VPC. Komponenty brzegowe (ALB, bramy NAT) działają w~podsieciach publicznych, a~węzły klastra i~baza danych --- w~prywatnych, pozbawionych bezpośredniej łączności z~Internetem. Zasoby rozmieszczono w~dwóch strefach dostępności. Baza danych w~środowisku pracuje jednostrefowo; wariant standby zaznaczono jako~opcję trybu Multi-AZ.}
+    \label{fig:topologia-sieci}
+\end{figure}
+
+\section{Utworzenie klastra EKS i grup węzłów}
+\label{sec:utworzenie-eks}
+
+Klaster EKS utworzono z~płaszczyzną sterowania rozpiętą na podsieci prywatne obu stref
+dostępności. Uprawnienia administracyjne do klastra nadawane są wpisami
+dostępu powiązanymi z~tożsamościami IAM, bez ręcznej edycji map konfiguracyjnych wewnątrz klastra.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{ClusterEKS.png}
+    \caption{Konsola Amazon EKS: klaster \code{order-portal-prod-eks} w~wersji Kubernetes~1.32, w~stanie aktywnym.}
+    \label{fig:cluster-eks}
+\end{figure}
+
+Warstwę obliczeniową stanowi zarządzana grupa węzłów. Cztery instancje \code{t3.small} (2~vCPU, 2~GiB RAM każda)
+z~obrazem AL2023, w~trybie \emph{on-demand}, z~dyskami 20~GiB, rozmieszczane w~podsieciach prywatnych. Aktualizacje
+grupy przebiegają z~ograniczeniem \code{max\_unavailable = 1}, czyli wymianą najwyżej jednego węzła naraz. Dla tak
+małych instancji krytyczna okazała się konfiguracja wtyczki sieciowej VPC CNI (listing~\ref{lst:prefix-delegation}).
+Domyślnie liczba podów na węźle ograniczona jest pulą adresów IP interfejsów sieciowych instancji
+co uniemożliwiłoby zmieszczenie wszystkich komponentów systemu wraz z~podami systemowymi. Włączenie delegacji 
+prefiksów (\code{ENABLE\_PREFIX\_DELEGATION}) przydziela interfejsom całe prefiksy \code{/28} zamiast pojedynczych adresów, podnosząc limit wielokrotnie.
+
+\begin{lstlisting}[caption={Dodatek VPC CNI z delegacją prefiksów (eks.tf)},label={lst:prefix-delegation}]
+resource "aws_eks_addon" "vpc_cni" {
+  cluster_name                = aws_eks_cluster.this.name
+  addon_name                  = "vpc-cni"
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+
+  configuration_values = jsonencode({
+    env = {
+      ENABLE_PREFIX_DELEGATION = "true"
+      WARM_PREFIX_TARGET       = "1"
+    }
+  })
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{NodesEKS.png}
+    \caption{Cztery węzły grupy \code{order-portal-prod-ng} (instancje \code{t3.small}) w~stanie \emph{Ready}. Wykorzystanie pamięci (56--68\%) wyraźnie przewyższa wykorzystanie procesora (21--34\%) --- co~potwierdza ustalenie z~rozdziału~\ref{chap:testy-i-analiza}, że~to~pamięć, a~nie~procesor, jest~czynnikiem ograniczającym gęstość podów.}
+    \label{fig:nodes-eks}
+\end{figure}
+
+Funkcjonalność klastra dopełniają zarządzane dodatki (\emph{add-ons}). Są to komponenty systemowe instalowane
+i~aktualizowane przez EKS, lecz działające jako zwykłe pody wewnątrz klastra. W~zrealizowanym systemie
+wykorzystano cztery takie dodatki. \code{CoreDNS} pełni rolę wewnętrznego serwera DNS klastra. To dzięki niemu
+mikroserwisy odnajdują się nawzajem po~stabilnych nazwach (np. \code{order-service}) zamiast po~zmiennych adresach
+IP podów. \code{kube-proxy} programuje na~każdym węźle reguły sieciowe realizujące obiekty Service, czyli
+kierujące ruch z~nazwy usługi do~jej aktualnych replik. Agent \textbf{EKS Pod Identity} umożliwia nadawanie podom
+uprawnień do~usług AWS. Sterownik \textbf{EBS CSI} odpowiada za~trwałe składowanie danych: na~żądanie aplikacji
+(obiekt PersistentVolumeClaim) automatycznie tworzy w~AWS wolumin EBS i~podłącza go do~poda.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{AddonsEKS.png}
+    \caption{Zarządzane dodatki klastra EKS --- agent Pod Identity, VPC CNI, sterownik EBS CSI, CoreDNS oraz metrics-server --- wszystkie w~stanie aktywnym.}
+    \label{fig:addons-eks}
+\end{figure}
+
+Sterownik EBS CSI, aby tworzyć woluminy, musi mieć uprawnienia do~odpowiednich operacji w~API AWS.
+KLonto usługi sterownika powiązano mechanizmem Pod Identity z~dedykowaną
+rolą IAM o~minimalnym zakresie uprawnień (sekcja~\ref{sec:bezpieczenstwo-kubernetes}). Dzięki temu sterownik
+otrzymuje automatycznie rotowane poświadczenia krótkoterminowe, których ewentualny wyciek ma znikome konsekwencje,
+a~w~repozytorium ani w~obrazach kontenerów nie~przechowuje się żadnych trwałych kluczy.
+
+Na~potrzeby woluminów trwałych zdefiniowano klasę pamięci, wskazującą
+sterownikowi, jakie woluminy tworzyć. Są~to woluminy typu gp3, szyfrowane w~spoczynku, z~możliwością późniejszego
+powiększenia. Zastosowano tryb wiązania \emph{WaitForFirstConsumer}. Utworzenie woluminu jest~wstrzymywane do~chwili,
+aż~Kubernetes zdecyduje, na~którym węźle uruchomić korzystający z~niego pod. Ma~to istotne znaczenie w~środowisku
+wielostrefowym. Wolumin EBS jest~przypisany do~jednej strefy dostępności i~nie~może być~podłączony do~poda
+działającego w~innej. Odroczenie utworzenia woluminu gwarantuje, że~powstanie on~w~tej~samej strefie, co~pod,
+który ma~go używać.
+
+\section{Warstwa danych --- RDS PostgreSQL i Secrets Manager}
+\label{sec:warstwa-danych-rds}
+
+Bazę danych utworzono jako instancję RDS PostgreSQL~18 klasy \code{db.t4g.micro} z~20~GiB szyfrowanego składowania gp3.
+Wytworzono go w~podsieciach prywatnych. Dostęp sieciowy ogranicza dedykowana grupa
+bezpieczeństwa, przepuszczająca port 5432 wyłącznie z~grupy bezpieczeństwa węzłów klastra. Baza nie jest
+osiągalna ani z~Internetu, ani z~podsieci publicznych. W~środowisku przyjęto jednodniową retencję kopii zapasowych
+i~tryb jednostrefowy.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{PosgreSQL.png}
+    \caption{Konsola Amazon RDS: instancja PostgreSQL \code{order-portal-prod-pg} klasy \code{db.t4g.micro} w~strefie \code{eu-central-1b}, w~stanie dostępnym.}
+    \label{fig:postgreSQL-RDS}
+\end{figure}
+
+Hasło użytkownika bazy generowane jest zasobem \code{random\_password} i nie występuje w~kodzie źródłowym.
+Komplet poświadczeń zapisywany jest w~usłudze Secrets Manager.
+
+\section{Wdrożenie mikroserwisów i brokera Kafka do klastra}
+\label{sec:wdrozenie-do-klastra}
+
+Komponenty aplikacyjne działają w~dedykowanej przestrzeni nazw \code{order-portal}. Deploymenty trzech
+mikroserwisów generowane są z~jednej definicji. Pętlą po mapie usług. Zasoby serwisów ograniczono do 100m~CPU / 128~MiB żądanie i~500m~CPU / 512~MiB limit.
+
+Konfiguracja każdej usługi składana jest w~Terraformie do pliku \code{.env}, przechowywanego jako Secret i~montowanego 
+do kontenera jako wolumin tylko do odczytu. Szablony wdrożeniowe niosą również adnotacje
+\code{prometheus.io/scrape}, \code{prometheus.io/port} i~\code{prometheus.io/path}, włączające pody do monitoringu
+(sekcja~\ref{sec:wdrozenie-monitoringu}). Każdej usłudze towarzyszy obiekt Service typu ClusterIP, udostępniający
+ją pod stabilną nazwą DNS.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{ServicesEKS.png}
+    \caption{Trzy mikroserwisy wdrożone w~przestrzeni nazw \code{order-portal} jako obiekty Deployment --- każdy w~stanie gotowości (1~Ready / 1~Desired).}
+    \label{fig:serices-eks}
+\end{figure}
+
+Broker Kafka uruchomiono jako Deployment z~obrazem \code{apache/kafka:4.3.0}, Dziennik zdarzeń składowany jest na 
+trwałym woluminie 5~GiB klasy \code{ebs-gp3}. Z tego powodu dane przetrwają
+restart i~przeniesienie poda. Tematy \code{order.events} i~\code{product.events} tworzy jednorazowy Job inicjalizacyjny,
+wykonujący narzędzie \code{kafka-topics} po starcie brokera.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Kafka.png}
+    \caption{Broker Apache Kafka (\code{apache/kafka:4.3.0}) uruchomiony w~klastrze jako pojedynczy pod, ze~strategią \emph{Recreate} --- zgodnie z~projektem jednowęzłowego brokera w~trybie KRaft.}
+    \label{fig:kafka-eks}
+\end{figure}
+
+\section{Routing ruchu --- CloudFront, ALB i reverse proxy}
+\label{sec:routing-ruchu}
+
+Jedynym publicznym punktem wejścia do systemu jest dystrybucja CloudFront z~dwoma originami. Domyślne zachowanie
+kieruje żądania do prywatnego bucketa S3 z~aplikacją webową, z~polityką agresywnego buforowania i~kompresją. Ponieważ trasy SPA (np.
+\code{/orders/123}) nie odpowiadają obiektom w~S3, do zachowania dołączono funkcję CloudFront wykonywaną przy
+każdym żądaniu (listing~\ref{lst:spa-router}). Żądania bez rozszerzenia pliku przepisywane są na \code{/index.html}, 
+dzięki czemu głębokie odnośniki i~odświeżenie strony działają poprawnie.
+
+\begin{lstlisting}[caption={Funkcja CloudFront przepisująca trasy SPA (cloudfront.tf)},label={lst:spa-router}]
+function handler(event) {
+  var request = event.request;
+  var uri = request.uri;
+  // No file extension (i.e. an app route, not an asset) -> serve the SPA.
+  if (uri === "/" || uri.indexOf(".") === -1) {
+    request.uri = "/index.html";
+  }
+  return request;
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Cloudfront.png}
+    \caption{Dystrybucja CloudFront \code{order-portal-prod-cdn} z~dwoma originami: bucketem S3 (aplikacja SPA, dostęp przez~Origin Access Control) oraz~load balancerem ALB (ruch API).}
+    \label{fig:cloudfront}
+\end{figure}
+
+Żądania pasujące do wzorców \code{/api/*} oraz \code{/grafana*} obsługuje drugi origin Application Load
+Balancer. Dostępu do samego ALB strzegą dwa niezależne mechanizmy. Po pierwsze, grupa bezpieczeństwa balancera dopuszcza ruch wyłącznie
+z~zarządzanej listy prefiksów adresowych infrastruktury brzegowej CloudFront. Żądania spoza sieci CloudFront
+nie nawiążą nawet połączenia TCP. Po drugie, CloudFront dokleja do żądań kierowanych do ALB tajny nagłówek
+\code{X-Origin-Verify} (o~wartości generowanej zasobem \code{random\_password}), a~jedyna przepuszczająca reguła
+nasłuchu wymaga jego obecności (listing~\ref{lst:origin-verify}). Żądania bez poprawnego nagłówka np.
+z~cudzej dystrybucji CloudFront otrzymują odpowiedź odmowną. Wymusza to przepływ całego ruchu przez warstwę
+brzegową, wraz z~jej terminacją TLS i~ochroną przed atakami wolumetrycznymi.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{CloudfrontPaths.png}
+    \caption{Reguły zachowań (\emph{behaviors}) CloudFront: ścieżki \code{/api/*} oraz~\code{/grafana*} kierowane są~do~ALB z~wyłączonym buforowaniem, a~pozostałe --- domyślnie do~bucketa S3 z~buforowaniem zoptymalizowanym.}
+    \label{fig:cloudfront-paths}
+\end{figure}
+
+\begin{lstlisting}[caption={Reguła ALB wymagająca nagłówka weryfikacyjnego (alb.tf)},label={lst:origin-verify}]
+resource "aws_lb_listener_rule" "from_cloudfront" {
+  listener_arn = aws_lb_listener.http.arn
+  priority     = 10
+
+  condition {
+    http_header {
+      http_header_name = "X-Origin-Verify"
+      values           = [random_password.origin_secret.result]
+    }
+  }
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app.arn
+  }
+}
+\end{lstlisting}
+
+Celem ALB jest grupa docelowa obejmująca węzły klastra
+na porcie \code{NodePort} 30080, pod którym działa wewnętrzne odwrócone proxy. Proxy rozdziela ruch
+na podstawie prefiksu ścieżki do usług klastra (listing~\ref{lst:nginx-routing}). Odpowiada na ścieżce
+\code{/healthz} na potrzeby kontroli zdrowia ALB. Udostępnia również pod ścieżką \code{/grafana} interfejs
+Grafany. Żądania niepasujące do żadnej reguły odrzuca. Pełna droga żądania API przebiega więc: przeglądarka
+$\rightarrow$ CloudFront $\rightarrow$ ALB $\rightarrow$ NodePort $\rightarrow$ Proxy $\rightarrow$ Service
+$\rightarrow$ pod mikroserwisu, co~ilustruje rysunek~\ref{fig:przeplyw-zadania}.
+
+\begin{lstlisting}[caption={Reguły routingu wewnętrznego proxy nginx (fragment)},label={lst:nginx-routing}]
+location = /healthz {
+  add_header Content-Type text/plain;
+  return 200 'ok';
+}
+
+location /api/v1/payments { proxy_pass http://payment-service:9003; }
+location /api/orders      { proxy_pass http://order-service:9002; }
+location /api/products    { proxy_pass http://product-service:9001; }
+
+location / {
+  add_header Content-Type text/plain;
+  return 404 'not found';
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Nginx.png}
+    \caption{Pod wewnętrznego proxy nginx (Deployment \code{router}) w~przestrzeni \code{order-portal} --- pojedyncza replika trasująca ruch API do~mikroserwisów na~podstawie prefiksu ścieżki.}
+    \label{fig:nginx}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        font=\scriptsize,
+        >={Stealth[length=2.2mm]},
+        layer/.style={
+            rectangle,
+            rounded corners=3pt,
+            draw=black!45,
+            thick,
+            align=center,
+            minimum height=11mm,
+            minimum width=22mm,
+            fill=#1
+        },
+        note/.style={
+            align=center,
+            font=\scriptsize,
+            text=black!65
+        },
+        flow/.style={->, thick, draw=black!75},
+        altflow/.style={->, thick, densely dashed, draw=black!60},
+        lab/.style={
+            midway,
+            above,
+            font=\scriptsize,
+            fill=white,
+            inner sep=1.5pt,
+            align=center
+        },
+        node distance=11mm and 13mm
+    ]
+
+        % Main path
+        \node[layer=blue!7] (br) {Przeglądarka};
+        \node[layer=orange!10, right=of br] (cf) {CloudFront};
+        \node[layer=green!9, right=of cf] (alb) {ALB};
+        \node[layer=purple!8, right=of alb] (ng) {nginx\\NodePort};
+        \node[layer=gray!10, right=of ng] (svc) {Mikroserwis};
+
+        % API arrows
+        \draw[flow] (br) -- node[lab] {HTTPS} (cf);
+        \draw[flow] (cf) -- node[lab] {\texttt{/api/*}\\+ nagłówek} (alb);
+        \draw[flow] (alb) -- node[lab] {\texttt{:30080}} (ng);
+        \draw[flow] (ng) -- node[lab] {prefiks\\ścieżki} (svc);
+
+        % SPA / S3 branch
+        \node[layer=yellow!13, below=16mm of cf] (s3)
+            {S3\\SPA};
+
+        \draw[altflow] (cf) -- node[right, font=\scriptsize, fill=white, inner sep=1.5pt, align=center]
+            {pozostałe\\trasy} (s3);
+
+        % Security note
+        \node[note, below=9mm of alb] (sec)
+            {\textit{Ochrona dostępu do ALB}\\
+             \texttt{X-Origin-Verify} + prefix list CloudFront};
+
+        \draw[altflow] (sec.north) -- (alb.south);
+
+        % Optional grouping labels
+        \node[above=4mm of br, font=\scriptsize\bfseries, text=black!65]
+            {Klient};
+
+        \node[above=4mm of cf, font=\scriptsize\bfseries, text=black!65]
+            {Edge};
+
+        \node[above=4mm of alb, font=\scriptsize\bfseries, text=black!65]
+            {Wejście do klastra};
+
+        \node[above=4mm of ng, font=\scriptsize\bfseries, text=black!65]
+            {Routing wewnętrzny};
+
+        \node[above=4mm of svc, font=\scriptsize\bfseries, text=black!65]
+            {Aplikacja};
+
+    \end{tikzpicture}
+
+    \caption{Przepływ żądania API przez warstwy systemu. CloudFront kieruje ruch \code{/api/*} do load balancera, natomiast pozostałe trasy obsługuje bucket S3 z aplikacją SPA. Dostęp do ALB ograniczają tajny nagłówek \code{X-Origin-Verify} oraz prefix list CloudFront. Wewnętrzne proxy nginx trasuje żądanie do właściwego mikroserwisu na podstawie prefiksu ścieżki.}
+    \label{fig:przeplyw-zadania}
+\end{figure}
+
+\section{Wdrożenie monitoringu --- Prometheus i Grafana}
+\label{sec:wdrozenie-monitoringu}
+
+Podsystem monitoringu działa w~osobnej przestrzeni nazw \code{monitoring}. Serwer Prometheus skonfigurowano
+z~15-sekundowym interwałem pomiarowym i~dynamicznym odkrywaniem celów poprzez API Kubernetes.
+Reguły przeetykietowania (listing~\ref{lst:prometheus-scrape}) pozostawiają wyłącznie pody,
+które jawnie zgłosiły się adnotacją \code{prometheus.io/scrape}. Czyli kierują pomiar na port i~ścieżkę wskazane
+adnotacjami oraz wzbogacają metryki o~etykiety przestrzeni nazw i~poda. Objęcie monitoringiem nowej usługi nie
+wymaga więc żadnych zmian po stronie Prometheusa. Wystarczą adnotacje w~jej szablonie poda. Uprawnienia do
+odczytu metadanych podów nadano dedykowanemu kontu usługi poprzez rolę klastrową RBAC, a~baza szeregów czasowych
+składowana jest na trwałym woluminie \code{ebs-gp3} o~pojemności 5~GiB.
+
+\begin{lstlisting}[caption={Odkrywanie celów pomiarowych na podstawie adnotacji (prometheus.yml)},label={lst:prometheus-scrape}]
+scrape_configs:
+  - job_name: kubernetes-pods
+    kubernetes_sd_configs:
+      - role: pod
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: "true"
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+\end{lstlisting}
+
+Grafanę provisionowano w~pełni deklaratywnie: źródło danych (wewnątrzklastrowy adres Prometheusa).
+ Interfejs Grafany udostępniono pod ścieżką \code{/grafana} publicznej dystrybucji CloudFront (poprzez regułę proxy z~sekcji~\ref{sec:routing-ruchu}), dzięki
+czemu wgląd w~stan systemu nie wymaga dostępu administracyjnego do klastra.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{PrometheusEKS.png}
+    \caption{Podsystem monitoringu w~przestrzeni nazw \code{monitoring}: wdrożenia Prometheus i~Grafana, oba w~stanie gotowości.}
+    \label{fig:prometheus-eks}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Grafana.png}
+    \caption{Interfejs Grafany udostępniony pod~ścieżką \code{/grafana} dystrybucji CloudFront, z~osobnym kokpitem dla~każdego z~trzech mikroserwisów.}
+    \label{fig:grafana}
+\end{figure}
+
+\section{Skalowanie aplikacji i zarządzanie cyklem życia}
+\label{sec:skalowanie-i-cykl-zycia}
+
+Skalowanie poziome zdefiniowano obiektami HorizontalPodAutoscaler dla serwisów zamówień i~produktów. Usług
+przyjmujących główny ruch systemu. Liczba replik zmienia się w~przedziale od~1 do~2 tak, aby średnie wykorzystanie
+procesora utrzymywało się poniżej progu zadanego jako odsetek wartości żądanej (\emph{request}). Próg ten jest
+parametrem infrastruktury (zmienna \code{hpa\_cpu\_target}). Wartość początkową 80\% obniżono do 60\% na
+podstawie testów obciążeniowych. Przy wyższym progu skalowanie nie wyzwalało się przed nasyceniem węzłów.
+Niższy próg pozwala dołożyć replikę z~wyprzedzeniem, zanim rosnący ruch wyczerpie zapas mocy
+(proces strojenia opisano w~rozdziale~\ref{chap:testy-i-analiza}). Źródłem metryk dla HPA jest komponent
+\code{metrics-server}, który nie wchodzi w~skład domyślnej instalacji EKS. Zainstalowano go jako zarządzany dodatek EKS (\emph{community add-on}) zasobem
+\code{aws\_eks\_addon}, analogicznie do pozostałych dodatków klastra. Wąski przedział replik jest konsekwencją pojemności
+środowiska. Czterowęzłowy klaster instancji \code{t3.small} mieści ograniczoną liczbę podów. Zachowanie HPA pod
+obciążeniem zbadano w~rozdziale~\ref{chap:testy-i-analiza}.
+
+Cykl życia aplikacji zarządzany jest przez zmiany w~kodzie infrastruktury. Nowa wersja obrazu wskazywana jest
+zmienną \code{image\_tag}, a~\code{terraform apply} aktualizuje Deploymenty.

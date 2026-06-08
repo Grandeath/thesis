@@ -1,0 +1,113 @@
+\chapter{Wnioski i podsumowanie}
+\label{chap:wnioski}
+
+Rozdział podsumowuje pracę: ocenia stopień realizacji postawionych celów, omawia najistotniejsze trudności
+napotkane w~trakcie wytwarzania systemu wraz z~przyjętymi rozwiązaniami oraz wskazuje kierunki dalszego rozwoju.
+
+\section{Stopień realizacji celów pracy}
+\label{sec:stopien-realizacji-celow}
+
+Cel główny pracy - zaprojektowanie, implementacja oraz wdrożenie w~chmurze Amazon Web Services systemu obsługi
+zamówień opartego na architekturze mikroserwisowej, został osiągnięty. Powstał działający system, którego
+poprawność i~wydajność zweryfikowano w~docelowym środowisku chmurowym (rozdział~\ref{chap:testy-i-analiza}).
+Realizację celów szczegółowych, postawionych w~sekcji~\ref{sec:cel-i-zakres-pracy}, podsumowuje
+tabela~\ref{tab:realizacja-celow}.
+
+\begin{table}[H]
+    \centering
+    \caption{Realizacja celów szczegółowych pracy}
+    \label{tab:realizacja-celow}
+    \begin{tabular}{p{10.5cm}c}
+        \toprule
+        \textbf{Cel szczegółowy} & \textbf{Realizacja} \\
+        \midrule
+        Analiza teoretycznych podstaw mikroserwisów i~technologii chmurowych & rozdz.\ \ref{chap:podstawy-mikroserwisow}--\ref{chap:aws} \\
+        Projekt modelu domenowego, architektury i~kontraktów komunikacyjnych & rozdz.\ \ref{chap:projekt-systemu} \\
+        Implementacja mikroserwisów (zamówienia, produkty, płatności) & rozdz.\ \ref{chap:implementacja-mikroserwisow} \\
+        Implementacja aplikacji webowej (portal) & rozdz.\ \ref{chap:implementacja-portalu} \\
+        Budowa środowiska chmurowego jako infrastruktury jako kod & rozdz.\ \ref{chap:infrastruktura} \\
+        Testy systemu oraz analiza działania i~kosztów & rozdz.\ \ref{chap:testy-i-analiza} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Zakres pracy zrealizowano zgodnie z~założeniami, z~jednym świadomym ograniczeniem. Spośród pierwotnie rozważanych
+usług pomocniczych zaimplementowano trzy serwisy realizujące rdzeń procesu zakupowego, pozostawiając usługi
+powiadomień i~analityki jako kierunek dalszego rozwoju (sekcja~\ref{sec:rekomendacje-rozwoju}). Decyzja ta
+pozwoliła skupić wysiłek na~kompletności pionowej systemu. Od~interfejsu użytkownika, przez logikę biznesową,
+po~infrastrukturę. Zamiast na~zwielokrotnianiu podobnych do~siebie usług.
+
+\section{Napotkane trudności i sposoby ich rozwiązania}
+\label{sec:napotkane-trudnosci}
+
+Wytwarzanie systemu wiązało się z~szeregiem problemów, których rozwiązania okazały się pouczające.
+
+\textbf{Limit adresów IP na~węzłach.} Dobór niewielkich instancji \code{t3.small} ze~względów kosztowych
+zderzył się z~ograniczeniem wtyczki sieciowej VPC~CNI. Domyślnie węzeł takiej klasy mieści zaledwie~11~podów,
+co~uniemożliwiało uruchomienie wszystkich komponentów systemu. Problem rozwiązano włączeniem delegacji prefiksów
+(sekcja~\ref{sec:utworzenie-eks}), wielokrotnie podnoszącej ten~limit.
+
+\textbf{Brak komponentu metrics-server.} Automatyczne skalowanie oparte na~zużyciu procesora wymaga komponentu
+\code{metrics-server}, który nie~wchodzi w~skład domyślnej instalacji~EKS. Wobec~czego HorizontalPodAutoscaler
+pozostawał bezczynny, raportując nieznane wykorzystanie zasobów. Zachowując zasadę utrzymania całości
+infrastruktury jako~kod, komponent zainstalowano jako~zarządzany dodatek~EKS, a~nie~ręcznie
+(sekcja~\ref{sec:skalowanie-i-cykl-zycia}).
+
+\textbf{Strojenie progu skalowania.} Pierwotny próg HPA na~poziomie~80\% wykorzystania procesora okazał się
+zbyt~wysoki. W~teście \emph{stress} skalowanie nie~uruchomiło się mimo~znaczącego obciążenia
+(sekcja~\ref{subsec:skalowanie-pod-obciazeniem}). Na~podstawie obserwacji próg obniżono do~60\%, tak~aby
+dokładanie replik wyprzedzało nasycenie. Co~zilustrowało wartość empirycznego strojenia parametrów wobec
+przyjmowania ich~,,na~wyczucie''.
+
+\textbf{Bezpieczne odizolowanie warstwy aplikacyjnej.} Wystawienie systemu na~świat wyłącznie przez~CloudFront,
+przy~jednoczesnym uniemożliwieniu dostępu do~load balancera z~pominięciem warstwy brzegowej, wymagało połączenia
+dwóch mechanizmów. Ograniczenia grupy bezpieczeństwa do~zakresów adresowych CloudFront oraz~tajnego nagłówka
+weryfikacyjnego wstrzykiwanego przez~CDN i~wymaganego przez~regułę load balancera (sekcja~\ref{sec:routing-ruchu}).
+
+\textbf{Spójność danych w~systemie rozproszonym.} Utrzymanie spójności stanu rozproszonego pomiędzy~usługami
+rozwiązano dwojako. Warunkowymi, niepodzielnymi operacjami bazodanowymi odpornymi na~współbieżność (sekcje~\ref{sec:product-service},
+\ref{sec:payment-service}). Oraz~idempotentnym przetwarzaniem zarówno żądań~HTTP, jak~i~zdarzeń Kafki.
+
+\section{Rekomendacje dotyczące dalszego rozwoju systemu}
+\label{sec:rekomendacje-rozwoju}
+
+Zrealizowany system stanowi kompletną, działającą całość, lecz~jako~projekt o~charakterze demonstracyjnym pozostawia
+przestrzeń do~rozwoju w~kierunku wdrożenia produkcyjnego. Najistotniejsze rekomendacje są~następujące.
+
+\begin{itemize}
+    \item \textbf{Domknięcie choreografii zdarzeń.} Należy uczynić order-service konsumentem tematu
+    \code{product.events}, eliminując przejściowe rozwiązanie, w~którym product-service zapisuje status zamówienia
+    bezpośrednio (sekcja~\ref{sec:product-service}). Co~przywróci pełną wyłączność własności danych.
+
+    \item \textbf{Rozdzielenie warstwy danych.} Przydzielenie każdej usłudze własnej bazy oraz~zastąpienie
+    transakcyjnej, międzydomenowej finalizacji płatności wzorcem sagi przywróciłoby pełną zgodność ze~wzorcem
+    \emph{database-per-service}.
+
+    \item \textbf{Wysoka dostępność komponentów stanowych.} Pojedynczy broker Kafka oraz~jednostrefowa baza danych
+    powinny zostać zastąpione konfiguracjami wysokodostępnymi (klaster Kafka lub~Amazon~MSK, tryb~Multi-AZ~RDS),
+    a~wewnętrzne proxy zreplikowane i~objęte autoskalowaniem.
+
+    \item \textbf{Rozbudowa funkcjonalna.} Naturalnym rozszerzeniem jest~implementacja usług powiadomień
+    i~analityki. Dzięki~architekturze sterowanej zdarzeniami, mogą~dołączyć jako~kolejni konsumenci
+    istniejących zdarzeń bez~zmian w~usługach produkujących.
+
+    \item \textbf{Optymalizacje wydajnościowe i~kosztowe.} W~razie~wzrostu obciążenia procesora wskazane jest
+    buforowanie wyniku weryfikacji tokenów~JWT (sekcja~\ref{subsec:profilowanie}).
+\end{itemize}
+
+\section{Podsumowanie końcowe}
+\label{sec:podsumowanie-koncowe}
+
+W~ramach pracy zaprojektowano, zaimplementowano i~wdrożono w~chmurze publicznej kompletny system obsługi zamówień
+oparty na~architekturze mikroserwisowej. Powstał system złożony z~trzech mikroserwisów w~języku~Go, komunikujących
+się synchronicznie poprzez~REST oraz~asynchronicznie poprzez~zdarzenia domenowe. Powstał z aplikacji webowej~Vue, oraz~brokera komunikatów. 
+Wszystkie te komponenty uruchomionych na~klastrze Kubernetes w~usłudze Amazon~EKS. Moduł perzystencji danych został postawiony w usłudze
+Amazon RDS. Infrastruktura została zdefiniowana w~całości jako~kod i~objęta monitoringiem.
+
+Praca wykazała, że~zbudowanie tej~klasy systemu rozproszonego skalowalnego, obserwowalnego i~bezpiecznego
+jest~dziś w~zasięgu pojedynczego inżyniera. Głównym kosztem architektury mikroserwisowej pozostaje nie~tyle
+implementacja samych usług, co~złożoność operacyjna ich~środowiska. Sieci, orkiestracji, wdrażania i~obserwowalności.
+To~właśnie zarządzane usługi chmurowe i~podejście infrastruktury jako~kod okazały się~czynnikiem, który~tę~złożoność
+czyni możliwą do~opanowania. Przeprowadzone testy potwierdziły, że~zrealizowany system mimo~celowo minimalnych
+zasobów, obsługuje setki żądań na~sekundę bezbłędnie. Jego architektura, wraz ze~wskazanymi kierunkami rozwoju,
+stanowi solidną podstawę do~ewentualnego wdrożenia produkcyjnego.

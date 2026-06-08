@@ -1,0 +1,274 @@
+\chapter{Implementacja mikroserwisów}
+\label{chap:implementacja-mikroserwisow}
+
+Rozdział ten przedstawia implementację trzech mikroserwisów systemu w~języku Go. Omówiono wspólną strukturę
+i~wzorce dzielone przez wszystkie usługi, a~następnie logikę biznesową każdej z~nich, warstwę zdarzeń, mechanizm
+uwierzytelniania, obserwowalność, konteneryzację oraz testy. Prezentowane listingi pochodzą bezpośrednio z~kodu
+źródłowego systemu.
+
+\section{Struktura projektu i wspólne wzorce serwisów}
+\label{sec:struktura-projektu}
+
+Wszystkie trzy serwisy zbudowano według tego samego szablonu, opartego na architekturze heksagonalnej
+(\emph{ports and adapters}). Logika domenowa stanowi rdzeń niezależny od technologii. Komunikacja ze światem
+zewnętrznym przebiega przez HTTP. Baza danych, broker komunikatów odbywa się poprzez wymienne adaptery, sprzęgnięte
+z~rdzeniem wyłącznie interfejsami. Strukturę katalogów serwisu zamówień przedstawia listing~\ref{lst:struktura-serwisu}.
+
+\begin{lstlisting}[caption={Struktura katalogów serwisu zamówień},label={lst:struktura-serwisu}]
+order-service/
+|-- main.go               # punkt wejścia, złożenie zależności
+|-- Dockerfile
+`-- internal/
+    |-- auth/             # weryfikacja JWT (Cognito)
+    |-- config/           # konfiguracja ze zmiennych środowiskowych
+    |-- db/               # pula połączeń PostgreSQL, migracje
+    |-- metrics/          # definicje metryk Prometheus
+    |-- producer/         # producent zdarzeń Kafka
+    |-- server/           # serwery HTTP: API i techniczny
+    `-- order/            # kontekst domenowy
+        |-- domain/       # encje, maszyna stanów, niezmienniki
+        |-- service/      # przypadki użycia (logika aplikacyjna)
+        |-- repository/   # adapter PostgreSQL
+        |-- events/       # definicje zdarzeń domenowych
+        `-- api/          # handlery HTTP, DTO, walidacja wejścia
+\end{lstlisting}
+
+Zależności składane są jawnie w~funkcji \code{main}, bezwstrzykiwania zależności. Granice pomiędzy
+warstwami wyznaczają małe interfejsy definiowane po stronie konsumenta, co jest idiomatycznym wzorcem języka Go.
+Tworzy to pakiety bez zewnętrznych zależoności co pozwala testować logikę biznesową w odpowiedniej izolacji.
+
+Każdy serwis uruchamia dwa niezależne serwery HTTP na oddzielnych portach. Serwer \textbf{API} obsługuje ruch biznesowy. Serwer
+\textbf{techniczny} udostępnia punkty końcowe eksploatacyjne: \code{/ping} (kontrola zdrowia), 
+\code{/metrics} (metryki Prometheus), \code{/version} oraz \code{/debug/pprof} (profilowanie procesu).
+Rozdzielenie portów gwarantuje, że dane eksploatacyjne nigdy nie sąosiągalne ścieżką publiczną, nawet przy błędnej konfiguracji routingu.
+
+Konfiguracja serwisów realizuje wzorzec konfiguracji zewnętrznej (sekcja~\ref{sec:wzorce-projektowe}). Wszystkie
+parametry wczytywane są ze zmiennych środowiskowych do struktur Go.
+
+\section{Serwis zamówień - logika biznesowa, maszyna stanów i idempotencja}
+\label{sec:order-service}
+
+Serwis zamówień realizuje utworzenie zamówienia oraz pobranie i~listowanie zamówień klienta.
+Tworząc zamówienie, warstwa domenowa egzekwuje niezmienniki: niepustą listę pozycji,
+dodatnie ilości, poprawny kod waluty oraz zgodność kwoty całkowitej z~sumą pozycji.
+
+Centralnym elementem domeny jest maszyna stanów zamówienia. Dozwolone przejścia zakodowano jako strukturę danych.
+Mapę stanów osiągalnych z~każdego stanu, dzięki czemu cykl życia zamówienia opisany jest w~jednym miejscu kodu 
+i~bezpośrednio odpowiada diagramowi z~projektu (sekcja~\ref{sec:model-domenowy}). Implementację przedstawia 
+listing~\ref{lst:maszyna-stanow}. Stany terminalne nie posiadają wpisu w~mapie, więc żadne przejście z~nich nie jest możliwe.
+
+\begin{lstlisting}[caption={Implementacja maszyny stanów zamówienia},label={lst:maszyna-stanow},language=Go]
+// allowedTransitions defines the order lifecycle.
+//
+//  NEW -> VALIDATED -> PAYMENT_PENDING -> PAID -> PROCESSING -> SHIPPED
+//  plus CANCELLED / FAILED reachable from any non-terminal state.
+var allowedTransitions = map[OrderStatus]map[OrderStatus]struct{}{
+    OrderStatusNew:            {OrderStatusValidated: {}, OrderStatusCancelled: {}, OrderStatusFailed: {}},
+    OrderStatusValidated:      {OrderStatusPaymentPending: {}, OrderStatusCancelled: {}, OrderStatusFailed: {}},
+    OrderStatusPaymentPending: {OrderStatusPaid: {}, OrderStatusCancelled: {}, OrderStatusFailed: {}},
+    OrderStatusPaid:           {OrderStatusProcessing: {}, OrderStatusCancelled: {}, OrderStatusFailed: {}},
+    OrderStatusProcessing:     {OrderStatusShipped: {}, OrderStatusCancelled: {}, OrderStatusFailed: {}},
+}
+
+func CanTransition(from, to OrderStatus) bool {
+    if from == to {
+        return false
+    }
+    next, ok := allowedTransitions[from]
+    if !ok {
+        return false
+    }
+    _, ok = next[to]
+    return ok
+}
+\end{lstlisting}
+
+Każde wykonane przejście dopisywane jest do historii zamówienia (stan poprzedni, nowy, znacznik czasu, opcjonalny
+powód), utrwalanej w~kolumnie \code{JSONB}. Daje to pełny ślad audytowy cyklu życia każdego zamówienia.
+
+Idempotencję operacji utworzenia zamówienia zrealizowano na poziomie bazy danych, w~sposób odporny na wyścigi
+współbieżnych żądań (listing~\ref{lst:idempotencja}). Klucz z~nagłówka \code{Idempotency-Key} zapisywany jest
+instrukcją \code{INSERT} z~klauzulą \code{ON CONFLICT}. Jeśli klucz został już zajęty, zapytanie zamiast
+zakończyć się błędem zwraca identyfikator zamówienia utworzonego pierwotnie, a~serwis odpowiada klientowi tym
+właśnie zamówieniem. Rozstrzygnięcie kolizji następuje zatem atomowo w~jednym zapytaniu, bez okna czasowego
+pomiędzy sprawdzeniem a~zapisem klucza.
+
+\begin{lstlisting}[caption={Atomowe zajęcie klucza idempotencji},label={lst:idempotencja},language=Go]
+func (r *Postgres) SaveIdempotencyKey(ctx context.Context, key, orderID string) (string, error) {
+    var stored string
+    err := r.pool.QueryRow(ctx, `
+        INSERT INTO idempotency_keys (key, order_id) VALUES ($1, $2)
+        ON CONFLICT (key) DO UPDATE SET key = idempotency_keys.key
+        RETURNING order_id
+    `, key, orderID).Scan(&stored)
+    if err != nil {
+        return "", fmt.Errorf("save idempotency key: %w", err)
+    }
+    if stored != orderID {
+        return stored, domain.ErrIdempotencyExists
+    }
+    return "", nil
+}
+\end{lstlisting}
+
+Po utrwaleniu zamówienia serwis publikuje zdarzenie \code{order.created}.
+
+\section{Serwis produktów - katalog i rezerwacja stanów magazynowych}
+\label{sec:product-service}
+
+Serwis produktów pełni dwie role. Synchronicznie obsługuje katalog (listowanie z~filtrowaniem po kategorii,
+przedziale cenowym i~dostępności, obsługę zdjęć przechowywanych w~kolumnie \code{BYTEA}).
+Oraz asynchronicznie uczestniczy w~walidacji zamówień jako konsument zdarzeń.
+
+Rezerwacja stanów magazynowych realizowana jest operacją wsadową obejmującą wszystkie pozycje zamówienia w~jednej
+transakcji bazodanowej. Rezerwacja jest więc niepodzielna. Nie istnieje stan, w~którym część pozycji zamówienia
+została zarezerwowana, a~część nie. Samo przesunięcie ilości pomiędzy pulami wykonywane jest warunkową instrukcją
+\code{UPDATE}. Warunek (\code{qty >= \$2}) gwarantuje poprawność również przy współbieżnej rezerwacji tego
+samego produktu przez dwa zamówienia. Przegrywające zapytanie nie zmodyfikuje żadnego wiersza, co serwis
+interpretuje jako niewystarczający stan magazynowy.
+
+Po otrzymaniu zdarzenia \code{order.created} konsument dekoduje je, waliduje i~podejmuje próbę rezerwacji.
+W~zależności od wyniku publikuje \code{order.validated} albo \code{order.reservation\_failed}.
+
+Rozwiązaniem przejściowym, jest sposób domknięcia pętli walidacji. Docelowo order-service powinien 
+konsumować temat \code{product.events} i~sam zmieniać status zamówienia. W~bieżącej
+wersji systemu konsument ten nie istnieje. Product-service aktualizuje więc status zamówienia
+(\code{VALIDATED} lub \code{CANCELLED}) bezpośrednio w~tabeli zamówień, równolegle z~publikacją zdarzenia.
+Kompromis ten narusza zasadę wyłącznej własności danych (sekcja~\ref{sec:charakterystyka-mikroserwisow})
+i~został świadomie przyjęty jako etap pośredni. Jego usunięcie wskazano jako kierunek rozwoju
+w~rozdziale~\ref{chap:wnioski}.
+
+\section{Serwis płatności - transakcyjna obsługa procesu płatności}
+\label{sec:payment-service}
+
+Serwis płatności obsługuje utworzenie żądania płatności dla zamówienia (zwracając klientowi adres URL płatności)
+oraz jej finalizację. Finalizacja jest najbardziej krytyczną operacją systemu. Musi jednocześnie i~niepodzielnie
+przenieść zarezerwowane ilości wszystkich pozycji zamówienia do puli opłaconych, oznaczyć zamówienie jako
+\code{PAID} oraz płatność jako \code{SUCCEEDED}. Zrealizowano ją jako pojedynczą transakcję bazodanową
+z~blokadami wierszy.
+
+Transakcja rozpoczyna się pobraniem płatności i~zamówienia z~klauzulą \code{FOR UPDATE}, co wyklucza równoległą
+finalizację tej samej płatności. Następnie weryfikowane są warunki: przynależność płatności i~zamówienia do
+uwierzytelnionego klienta, poprawność pozycji oraz to, czy zamówienie znajduje się w~stanie dopuszczającym
+zapłatę. Przy czym ponowna finalizacja płatności już zakończonej nie jest błędem, lecz zwraca jej bieżący stan
+(operacja jest idempotentna). Dla każdej pozycji zamówienia wykonywane jest warunkowe przesunięcie ilości
+(listing~\ref{lst:platnosc-update}). Niepowodzenie któregokolwiek przesunięcia wycofuje całą transakcję.
+
+\begin{lstlisting}[caption={Warunkowe przesunięcie ilości w transakcji płatności},label={lst:platnosc-update},language=Go]
+tag, err := tx.Exec(ctx, `
+    UPDATE products
+    SET reserved_qty = reserved_qty - $2,
+        paid_qty = paid_qty + $2
+    WHERE id = $1 AND reserved_qty >= $2
+`, item.ProductID, item.Quantity)
+\end{lstlisting}
+
+Transakcja ta obejmuje tabele trzech kontekstów domenowych (płatności, zamówień i~produktów), co stanowi opisany
+w~sekcji~\ref{sec:architektura-systemu} świadomy kompromis względem wzorca \emph{database-per-service}.
+Współdzielenie jednej instancji baz gwarantujący silną spójność najbardziej wrażliwej operacji
+systemu bez implementacji rozproszonej sagi.
+
+\section{Publikacja i konsumpcja zdarzeń Kafka}
+\label{sec:implementacja-kafka}
+
+Warstwę zdarzeń zrealizowano biblioteką \code{franz-go}. Producent serializuje zdarzenia do JSON i~publikuje je
+do skonfigurowanego tematu w~trybie nieblokującym. Publikacja nie wydłuża obsługi żądania HTTP z~buforowaniem
+
+Konsument w~product-service działa w~ramach grupy konsumentów \code{product-service}, dzięki czemu pozycja odczytu
+tematu \code{order.events} jest trwała. Po restarcie serwis wznawia przetwarzanie od ostatniego zatwierdzonego
+przesunięcia, nie gubiąc zdarzeń opublikowanych w~czasie jego niedostępności.
+
+\section{Walidacja tokenów JWT i integracja z Cognito}
+\label{sec:implementacja-auth}
+
+Uwierzytelnianie żądań zrealizowano jako middleware HTTP, włączany przed handlery wszystkich chronionych punktów
+końcowych. Middleware wydobywa token z~nagłówka \code{Authorization}, przekazuje go do weryfikatora, a~po pomyślnej
+weryfikacji umieszcza tożsamość klienta w~kontekście żądania. Skąd odczytują ją handlery, zawężając operacje 
+do zasobów uwierzytelnionego użytkownika.
+
+Produkcyjny weryfikator (listing~\ref{lst:cognito-verify}) opiera się na bibliotece \code{jwx}. Klucze publiczne
+puli użytkowników pobierane są ze~standardowego adresu JWKS i~buforowane lokalnie z~okresowym odświeżaniem
+(od~15~minut do~24~godzin).
+
+\begin{lstlisting}[caption={Weryfikacja tokenu JWT wobec kluczy Cognito},label={lst:cognito-verify},language=Go]
+func (v *CognitoVerifier) Verify(_ context.Context, raw string) (jwt.Token, error) {
+    tok, err := jwt.Parse(
+        []byte(raw),
+        jwt.WithKeySet(v.keySet),
+        jwt.WithValidate(true),
+        jwt.WithIssuer(v.issuer),
+        jwt.WithAcceptableSkew(30*time.Second),
+    )
+    if err != nil {
+        return nil, fmt.Errorf("token verify: %w", err)
+    }
+
+    var tokenUse string
+    if err := tok.Get("token_use", &tokenUse); err != nil {
+        return nil, fmt.Errorf("token_use claim missing: %w", err)
+    }
+    if _, ok := v.allowedTokenUse[tokenUse]; !ok {
+        return nil, fmt.Errorf("token_use %q not allowed", tokenUse)
+    }
+    ...
+}
+\end{lstlisting}
+
+Na potrzeby pracy lokalnej przewidziano tryb deweloperski (\code{COGNITO\_ENABLED=false}), w~którym tożsamość
+klienta przekazywana jest jawnie w~nagłówku żądania. Tryb ten nie jest dostępny w~konfiguracji produkcyjnej.
+
+\section{Obserwowalność serwisów}
+\label{sec:obserwowalnosc-serwisow}
+
+Każdy serwis publikuje metryki Prometheus w~przestrzeni nazw odpowiadającej usłudze (prefiksy \code{order\_},
+\code{product\_}, \code{payment\_}). Warstwa HTTP instrumentowana jest middleware'em zliczającym żądania, mierzącym histogram czasów
+obsługi oraz liczbę żądań w~toku. Obok metryk technicznych serwisy publikują metryki domenowe, które pozwalają obserwować system
+w~kategoriach biznesowych, a~nie wyłącznie infrastrukturalnych.
+
+Logowanie zrealizowano pakietem standardowym \code{slog} z~formatem JSON i~konfigurowalnym poziomem. Serwer
+techniczny każdej usługi udostępnia ponadto kontrolę zdrowia \code{/ping}, informację o~wersji \code{/version}
+oraz profilowanie \code{pprof}, pozwalające diagnozować zużycie procesora i~pamięci działającego procesu.
+
+\section{Konteneryzacja serwisów}
+\label{sec:konteneryzacja-serwisow}
+
+Obrazy kontenerów budowane są wieloetapowo (listing~\ref{lst:dockerfile}). Etap budowania, oparty na obrazie
+\code{golang:alpine}, kompiluje statycznie linkowany plik wykonywalny. Osobne kopiowanie plików
+\code{go.mod} i~\code{go.sum} oraz montowane pamięci podręczne modułów i~kompilatora pozwalają przy niezmienionych
+zależnościach pominąć ich ponowne pobieranie. Obraz docelowy to \code{distroless/static}. Czyli obraz pozbawiony
+powłoki, menedżera pakietów i~jakichkolwiek narzędzi systemowych. Zawierający wyłącznie skompilowany plik binarny
+i~certyfikaty TLS. Uruchamiany jest jako użytkownik nieuprzywilejowany (\code{nonroot}). Minimalizuje to zarówno
+rozmiar obrazu, jak i~powierzchnię ataku.
+
+\begin{lstlisting}[caption={Wieloetapowy Dockerfile serwisu zamówień},label={lst:dockerfile},language=bash]
+FROM golang:1.26.3-alpine AS build
+WORKDIR /src
+
+COPY go.mod go.sum ./
+RUN --mount=type=cache,target=/go/pkg/mod \
+    go mod download
+
+COPY . .
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=0 GOOS=linux go build \
+    -trimpath -ldflags="-s -w" \
+    -o /out/order-service .
+
+FROM gcr.io/distroless/static-debian12:nonroot
+COPY --from=build /out/order-service /order-service
+EXPOSE 9002 9090
+USER nonroot
+ENTRYPOINT ["/order-service"]
+\end{lstlisting}
+
+\section{Testy jednostkowe i integracyjne}
+\label{sec:testy-backend}
+
+Testy serwisów napisano w~standardowym frameworku testowym Go. W~konwencji testów tabelarycznych. Pokrywają one
+dwa poziomy. Poziom domenowy weryfikuje logikę biznesową w~pełnej izolacji.
+
+Testy uruchamiane są z~włączonym detektorem wyścigów (\code{go test -race}) oraz losową kolejnością wykonywania
+(\code{-shuffle=on}). Pozwala to wykrywać odpowiednio błędy współbieżności i~ukryte zależności pomiędzy testami.
+Te same polecenia wykonywane są automatycznie przy każdej zmianie kodu w~potoku ciągłej integracji. 
+Testy obciążeniowe systemu wdrożonego w~środowisku docelowym omówiono odrębnie w~rozdziale~\ref{chap:testy-i-analiza}.

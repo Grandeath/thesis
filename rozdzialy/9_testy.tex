@@ -1,0 +1,262 @@
+\chapter{Testy i analiza działania systemu}
+\label{chap:testy-i-analiza}
+
+Rozdział przedstawia weryfikację systemu wdrożonego w~docelowym środowisku chmurowym. Omówiono metodykę
+testowania, wyniki testów funkcjonalnych oraz testy wydajnościowe i~skalowalności. Rozdział zamykają analiza kosztów
+utrzymania środowiska oraz identyfikacja wąskich gardeł wraz z~rekomendacjami optymalizacji.
+
+\section{Metodyka testowania}
+\label{sec:metodyka-testowania}
+
+Testy wydajnościowe zrealizowano narzędziem \textbf{k6}, generującym ruch HTTP według programowalnych scenariuszy.
+Obciążenie kierowano na \emph{publiczny} punkt wejścia systemu - dystrybucję CloudFront. Dzięki czemu pomiar
+obejmuje całą produkcyjną ścieżkę żądania (sekcja~\ref{sec:routing-ruchu}). Zdefiniowano dwa współbieżne scenariusze odzwierciedlające
+realny ruch. \emph{Przeglądanie} czyli listowanie i~filtrowanie katalogu, przegląd zamówień co stanowi większość żądań. 
+\emph{Zakup} czyli złożenie zamówienia, oczekiwanie na asynchroniczną walidację, utworzenie i~finalizacja płatności. 
+Liczbę wirtualnych użytkowników (VU) zwiększano etapowo według czterech profili zestawionych w~tabeli~\ref{tab:profile-testowe}.
+
+\begin{table}[H]
+    \centering
+    \caption{Profile testów wydajnościowych}
+    \label{tab:profile-testowe}
+    \begin{tabular}{lllp{6.2cm}}
+        \toprule
+        \textbf{Profil} & \textbf{Maks. VU} & \textbf{Czas} & \textbf{Cel} \\
+        \midrule
+        load   & 25  & 8 min  & zachowanie przy ruchu nominalnym \\
+        stress & 115 & 10 min & poszukiwanie granicy wydajności \\
+        max    & 280 & 10 min & wymuszenie automatycznego skalowania \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Kluczową metryką własną jest \emph{opóźnienie walidacji zamówienia}. Jest to czas od~utworzenia zamówienia do
+osiągnięcia przez nią statusu \code{VALIDATED}, mierzony przez cykliczne odpytywanie (co~500~ms). Obejmuje on całą
+ścieżkę asynchronicznej choreografii. Publikację zdarzenia do Kafki, jego konsumpcję przez product-service,
+rezerwację stanów magazynowych i~zapis statusu. Należy zaznaczyć, że rozdzielczość tego pomiaru ograniczona jest
+interwałem odpytywania, co omówiono przy interpretacji wyników. Stan systemu w~trakcie testów obserwowano
+w~Grafanie (metryki techniczne i~domenowe z~Prometheusa) oraz poleceniami \code{kubectl} (stan
+HorizontalPodAutoscaler oraz zużycie zasobów podów). Profile procesora pobierano przez \code{pprof}
+(sekcja~\ref{subsec:profilowanie}). Katalog zasiano produktami o~wysokim stanie magazynowym, aby rezerwacje nie
+wyczerpały zapasów w~trakcie testu.
+
+\section{Testy funkcjonalne systemu}
+\label{sec:testy-funkcjonalne}
+
+Poprawność funkcjonalną zweryfikowano scenariuszami pokrywającymi główne przypadki użycia, wykonanymi zarówno
+manualnie przez portal, jak i masowo jako część scenariusza zakupowego testów wydajnościowych. Wyniki
+zestawia tabela~\ref{tab:testy-funkcjonalne}.
+
+\begin{table}[H]
+    \centering
+    \caption{Scenariusze testów funkcjonalnych}
+    \label{tab:testy-funkcjonalne}
+    \begin{tabular}{p{7.2cm}p{4.5cm}c}
+        \toprule
+        \textbf{Scenariusz} & \textbf{Oczekiwany wynik} & \textbf{Rezultat} \\
+        \midrule
+        Logowanie przez Cognito (OAuth 2.0 + PKCE) & przekierowanie, wydanie tokenu & \checkmark \\
+        Przeglądanie i~filtrowanie katalogu & lista zgodna z~filtrami & \checkmark \\
+        Złożenie zamówienia & status \code{NEW}, zdarzenie \code{order.created} & \checkmark \\
+        Automatyczna walidacja i~rezerwacja & przejście do \code{VALIDATED} & \checkmark \\
+        Powtórzone żądanie z~tym samym kluczem & brak duplikatu zamówienia & \checkmark \\
+        Zamówienie produktu bez stanu & odrzucenie rezerwacji, \code{CANCELLED} & \checkmark \\
+        Pełna płatność za zamówienie & \code{PAID} / \code{SUCCEEDED} & \checkmark \\
+        Dostęp do cudzego zamówienia & odmowa (autoryzacja po~tokenie) & \checkmark \\
+        Próba opłacenia anulowanego zamówienia & odrzucenie (maszyna stanów) & \checkmark \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Szczególnie istotny jest masowy dowód poprawności płynący z~testów wydajnościowych. W~najcięższym profilu
+\emph{max} system przyjął \textbf{7564 zamówienia}, z~których \textbf{wszystkie} przeszły pełny cykl od~utworzenia,
+przez walidację, po~finalizację płatności. Bez ani jednego błędu HTTP, niespójności stanu czy nieudanej
+rezerwacji. Potwierdza to poprawność maszyny stanów, mechanizmu idempotencji oraz transakcyjnej finalizacji
+płatności w~warunkach wysokiej współbieżności.
+
+\section{Testy wydajnościowe i skalowalność}
+\label{sec:testy-wydajnosciowe}
+
+Zbiorcze wyniki czterech profili przedstawia tabela~\ref{tab:wyniki-wydajnosc}. We~wszystkich przebiegach odsetek
+błędnych odpowiedzi HTTP wyniósł \textbf{0\%}, a~wszystkie kryteria akceptacji (progi czasów odpowiedzi i~odsetka
+błędów) zostały spełnione.ń
+
+\begin{table}[H]
+    \centering
+    \caption{Wyniki testów wydajnościowych (czasy w ms)}
+    \label{tab:wyniki-wydajnosc}
+    \small
+    \begin{tabular}{lrrrrrr}
+        \toprule
+        \textbf{Profil} & \textbf{Żądań} & \textbf{Przeł.\ [req/s]} & \textbf{HTTP p95} & \textbf{HTTP p99} & \textbf{Walid.\ med.} & \textbf{Zamówień} \\
+        \midrule
+        load   & 5\,462   & 11{,}2  & 600 & 1\,871 & 543 & 385 \\
+        stress & 19\,921  & 32{,}9  & 118 & 757    & 542 & 981 \\
+        max    & 267\,643 & 445{,}5 & 92  & 185    & 547 & 7\,564 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Czasy odpowiedzi i efekt rozgrzania}
+\label{subsec:czasy-odpowiedzi}
+
+Przy najwyższym obciążeniu (445~req/s, 280~VU) mediana czasu odpowiedzi API wyniosła~49~ms, a~95.~percentyl
+92~ms. Są to wyniki bardzo dobre, zważywszy na minimalne zasoby środowiska (cztery instancje \code{t3.small}).
+
+Uwagę zwraca kontrintuicyjna zależność. Czasy odpowiedzi \emph{malały} wraz ze~wzrostem obciążenia. Zjawisko to wynika
+z~efektu rozgrzania. Profil \emph{load} był pierwszym przebiegiem po~wdrożeniu, wykonywanym na~,,zimnym''
+systemie z~pustymi pulami połączeń do~bazy danych, nieuzupełnionym cache kluczy JWKS oraz niewykorzystanym
+zapasem kredytów procesora instancji. Kolejne przebiegi korzystały już z~rozgrzanych zasobów.
+Wniosek metodyczny konieczność rozgrzania systemu przed pomiarem wydajności odnotowano jako istotny dla
+wiarygodności tego typu testów.
+
+\subsection{Opóźnienie asynchronicznej walidacji}
+\label{subsec:opoznienie-walidacji}
+
+Mediana opóźnienia walidacji zamówienia okazała się \emph{niewrażliwa} na~obciążenie. Wyniosła 543, 542 i~547~ms
+odpowiednio w~profilach \emph{load}, \emph{stress} i~\emph{max}, mimo czterdziestokrotnego wzrostu przepustowości.
+Oznacza to, że asynchroniczna ścieżka oparta na~Kafce nie stała się wąskim gardłem nawet przy~445~req/s ---
+przetwarzanie zdarzeń nadążało za~ich napływem, bez narastania zaległości w~kolejce.
+
+Wartość ta wymaga interpretacji w~świetle metodyki. Status zamówienia odpytywano co~500~ms, mediana
+bliska~540~ms oznacza, że zamówienie było już zwalidowane przy~\emph{pierwszym} odpytaniu (po~ok.~500~ms snu),
+a~rzeczywiste opóźnienie choreografii zdarzeń jest istotnie niższe niż~zmierzone. Pomiar jest skwantowany
+rozdzielczością odpytywania. Wynik należy zatem traktować jako~\emph{górne ograniczenie} faktycznego opóźnienia,
+które sądząc po~niewielkim rozrzucie wartości (95.~percentyl 590~ms w~profilu \emph{max}) mieści się
+w~granicach pojedynczych dziesiątek do~setki milisekund.
+
+\subsection{Automatyczne skalowanie pod obciążeniem}
+\label{subsec:skalowanie-pod-obciazeniem}
+
+Profil \emph{stress} (do~115~VU) system obsłużył bez~uruchomienia skalowania. Przy~progu HorizontalPodAutoscaler
+ustawionym pierwotnie na~80\% wykorzystania procesora względem żądania, obciążenie poszczególnych podów nie
+przekroczyło tej wartości, a~zużycie procesora węzłów sięgnęło~ok.~60\%. Obserwacja ta skłoniła do~obniżenia progu
+HPA do~60\% (sekcja~\ref{sec:skalowanie-i-cykl-zycia}), aby skalowanie wyprzedzało nasycenie.
+
+W~profilu \emph{max} mechanizm zadziałał zgodnie z~projektem. Wraz ze~wzrostem ruchu wykorzystanie procesora
+serwisu produktów przekroczyło próg, co~wyzwoliło zwiększenie liczby replik z~jednej do~dwóch. Analogicznie
+przeskalowany został serwis zamówień. Przebieg skalowania ilustruje listing~\ref{lst:hpa-scaling} ---
+fragment ciągłej obserwacji stanu HPA, na~którym widać przekroczenie progu i~następujące po~nim zwiększenie liczby
+replik.
+
+\begin{lstlisting}[caption={Reakcja HorizontalPodAutoscaler na obciążenie (profil max)},label={lst:hpa-scaling}]
+NAME              REFERENCE                TARGETS        REPLICAS
+product-service   .../product-service      cpu: 41%/60%   1
+product-service   .../product-service      cpu: 79%/60%   1
+product-service   .../product-service      cpu: 109%/60%  2   <- skalowanie
+order-service     .../order-service         cpu: 65%/60%   1
+order-service     .../order-service         cpu: 95%/60%   2   <- skalowanie
+product-service   .../product-service      cpu: 264%/60%  2   <- limit replik
+\end{lstlisting}
+
+Po~osiągnięciu maksymalnej liczby replik (2, ograniczonej pojemnością czterowęzłowego klastra) wykorzystanie
+procesora pojedynczego poda produktów rosło dalej (do~ponad~260\% wartości żądanej). Co~unaocznia granicę
+skalowania poziomego przy~stałej liczbie węzłów. Po~wyczerpaniu limitu replik dalszy wzrost ruchu absorbowany jest
+już~tylko przez~rezerwę wydajności istniejących podów (limit~CPU ustawiono pięciokrotnie powyżej żądania)
+Mimo to system pozostał w~pełni sprawny, bez~błędów i~przy~niskich czasach odpowiedzi. 
+To~potwierdza, że nawet zsumowane obciążenie szczytowe mieściło się w~zapasie mocy obliczeniowej klastra.
+
+Zachowanie systemu w~profilu \emph{max} ilustrują kokpity Grafany. Ilustracja~\ref{fig:grafana-order} przedstawia
+metryki serwisu zamówień: charakterystyczne rozdwojenie wykresu zużycia procesora i~pamięci w~momencie pojawienia
+się drugiej repliki, narastającą przepustowość żądań oraz tempo tworzenia zamówień. Ilustracja~\ref{fig:grafana-product}
+prezentuje analogiczne metryki serwisu produktów wraz z~tempem konsumpcji zdarzeń z~Kafki.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{max-grafana-order.png}
+    \caption{Metryki serwisu zamówień w~profilu \emph{max} (Grafana): zużycie procesora i~pamięci per replika, przepustowość HTTP, opóźnienia oraz tempo tworzenia zamówień. Rozdwojenie krzywych obrazuje moment automatycznego skalowania do~dwóch replik.}
+    \label{fig:grafana-order}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{max-grafana-product.png}
+    \caption{Metryki serwisu produktów w~profilu \emph{max} (Grafana): zużycie zasobów per replika, przepustowość oraz tempo konsumpcji zdarzeń z~Kafki.}
+    \label{fig:grafana-product}
+\end{figure}
+
+\section{Analiza kosztowa wykorzystania usług AWS}
+\label{sec:analiza-kosztowa}
+
+Rzeczywiste koszty utrzymania środowiska, odczytane z~usługi AWS Cost Explorer, przedstawiają
+rysunki~\ref{fig:june-billing} i~\ref{fig:forecast-cost}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{JuneBilling.png}
+    \caption{Rzeczywisty koszt środowiska w~czerwcu 2026 w~podziale na~usługi (AWS Cost Explorer). Dominuje płaszczyzna sterowania EKS (67,90~USD) --- składnik nieobjęty bezpłatnym limitem; pozostałe usługi (EC2, ELB, RDS) generują koszty rzędu pojedynczych dolarów dzięki Free Tier.}
+    \label{fig:june-billing}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{ForecastCost.png}
+    \caption{Podsumowanie kosztów bieżącego miesiąca (AWS Cost Explorer): koszt narosły do~dnia odczytu (93,71~USD) oraz~prognoza na~cały miesiąc (126,20~USD).}
+    \label{fig:forecast-cost}
+\end{figure}
+
+\subsection{Profilowanie procesora}
+\label{subsec:profilowanie}
+
+Profile procesora serwisów, pobrane przez~\code{pprof} w~szczycie obciążenia profilu \emph{max}, wskazują, że~obie
+usługi są~\emph{ograniczone operacjami wejścia--wyjścia}, nie~zaś mocą obliczeniową. Dominującą pozycją w~obu
+profilach są~wywołania systemowe (ok.~18\% próbek dla~serwisu zamówień, ok.~22\% dla~produktów) związane
+z~komunikacją sieciową oraz~zapytaniami do~bazy danych. Całkowite zużycie procesora w~oknie pomiaru pozostawało
+niskie. Oznacza to, że~kod aplikacyjny w~języku~Go nie~jest czynnikiem ograniczającym wydajność.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{order-service-flamegraph.png}
+    \caption{Flamegraph profilu procesora serwisu zamówień (\code{pprof}), zarejestrowany w~szczycie obciążenia profilu \emph{max}. Szerokość słupka odpowiada udziałowi funkcji w~czasie procesora. Widoczne są: obsługa żądań HTTP, weryfikacja tokenu JWT (\code{CognitoVerifier.Verify}), zapytania do~PostgreSQL przez~\code{pgx} oraz~(de)serializacja JSON. Znaczną część stanowią wywołania systemowe związane z~siecią i~bazą danych, co~potwierdza ograniczenie operacjami wejścia--wyjścia, nie~mocą obliczeniową.}
+    \label{fig:order-service-flamegraph}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{product-service-flamegraph.png}
+    \caption{Flamegraph profilu procesora serwisu produktów (\code{pprof}) w~szczycie obciążenia profilu \emph{max}. Podobnie jak w~serwisie zamówień dominują wywołania systemowe (operacje sieciowe i~bazodanowe), a~spośród operacji obliczeniowych wyróżniają się weryfikacja JWT oraz~kodowanie JSON --- profil potwierdza, że~usługa jest~ograniczona wejściem--wyjściem.}
+    \label{fig:product-service-flamegraph}
+\end{figure}
+
+Spośród operacji czysto obliczeniowych w~profilach wyróżniają się dwie. Pierwszą jest~weryfikacja podpisu tokenu
+JWT (operacje arytmetyki wielokrotnej precyzji klucza~RSA, widoczne w~obu serwisach). Powtarzana przy~każdym
+żądaniu, mimo że~ten~sam token powtarza się w~wielu kolejnych żądaniach tego~samego użytkownika. Drugą jest
+serializacja i~deserializacja JSON (ok.~8\% próbek w~serwisie produktów). Obie wskazują konkretne kierunki
+optymalizacji, gdyby~system stał się ograniczony procesorem. Buforowanie wyniku weryfikacji tokenu na~czas jego
+ważności oraz ewentualna zamiana refleksyjnego kodowania JSON na~generowany statycznie.
+
+\subsection{Zidentyfikowane wąskie gardła}
+\label{subsec:waskie-gardla-lista}
+
+Analiza zachowania systemu pod~obciążeniem oraz~jego architektury pozwala wskazać następujące ograniczenia
+i~rekomendacje:
+
+\begin{itemize}
+    \item \textbf{Pamięć węzłów, nie~procesor.} W~spoczynku węzły wykorzystują~53--76\% pamięci przy~znikomym
+    zużyciu procesora; głównym konsumentem pamięci jest broker Kafka (ok.~570~MiB), podczas gdy~mikroserwisy~Go
+    zużywają zaledwie~po~10--35~MiB. Na~instancjach \code{t3.small} (2~GiB) to~pamięć, a~nie~procesor, ogranicza
+    gęstość podów. Co~oznacza, że~skalowane przez~HPA według~procesora repliki mogą~w~skrajnym przypadku
+    nie~znaleźć węzła z~wolną pamięcią.
+
+    \item \textbf{Wewnętrzne proxy jako pojedynczy punkt.} Pod~nginx pełniący rolę reverse proxy
+    (sekcja~\ref{sec:routing-ruchu}) działa w~jednej replice i~w~szczycie obciążenia zużywał~ok.~220~m~CPU.
+    Porównywalnie z~pojedynczą repliką mikroserwisu. Stanowi on~zarówno pojedynczy punkt awarii, jak~i~potencjalne
+    wąskie gardło. Rekomendacją jest~jego replikacja i~objęcie automatycznym skalowaniem.
+
+    \item \textbf{Pojedynczy broker Kafka.} Broker działa w~jednej replice z~woluminem o~dostępie wyłącznym
+    (sekcja~\ref{sec:wdrozenie-do-klastra}). Jego awaria wstrzymuje całą asynchroniczną walidację zamówień.
+    W~środowisku produkcyjnym wymagałby klastra wielowęzłowego lub~usługi zarządzanej (Amazon~MSK).
+
+    \item \textbf{Współdzielona instancja bazy danych.} Wszystkie serwisy korzystają z~jednej instancji RDS
+    (sekcja~\ref{sec:architektura-systemu}), co~przy~rosnącym obciążeniu czyni ją~wspólnym punktem rywalizacji
+    o~zasoby. Wraz z~transakcyjną finalizacją płatności obejmującą tabele wielu domen co jest odstępstwem
+    od~wzorca \emph{database-per-service}.
+
+    \item \textbf{Stała liczba węzłów.} Grupa węzłów pracuje w~konfiguracji stałej, bez~automatycznego skalowania
+    klastra. Po~wyczerpaniu limitu replik podów dalszy wzrost ruchu nie~jest kompensowany dokładaniem węzłów.
+    Wdrożenie mechanizmu skalowania klastra (np.\ Karpenter) zniosłoby to~ograniczenie.
+\end{itemize}
+
+Żadne z~powyższych ograniczeń nie~ujawniło się jako~problem w~zakresie przeprowadzonych testów. System
+obsłużył~445~żądań na~sekundę bezbłędnie. Stanowią one jednak naturalne kierunki rozwoju przy~podnoszeniu
+środowiska do~poziomu produkcyjnego, podjęte w~rozdziale~\ref{chap:wnioski}.
