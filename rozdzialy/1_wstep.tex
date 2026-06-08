@@ -1,4 +1,5 @@
-\chapter{Wstęp}
+\chapter*{Wstęp}
+\addcontentsline{toc}{chapter}{Wstęp}
 \label{chap:wstep}
 
 Handel elektroniczny w ostatniej dekadzie stał się jednym z ~najszybciej rozwijających się
@@ -24,7 +25,8 @@ Zaczynając od analizy i projektu systemu. Idąc przez implementuacje aplikacji 
 infrastruktury chmurowej w~podejściu \emph{infrastructure as code}. Kończąc na testach i analizie działania systemu
 w~środowisku docelowym (chmurowym).
 
-\section{Cel i zakres pracy}
+\section*{Cel i zakres pracy}
+\addcontentsline{toc}{section}{Cel i zakres pracy}
 \label{sec:cel-i-zakres-pracy}
 
 Celem pracy jest zaprojektowanie, implementacja oraz wdrożenie w~chmurze publicznej Amazon Web Services systemu 
@@ -66,13 +68,14 @@ Zakres pracy obejmuje wytworzenie następujących komponentów:
 
 Poza zakresem pracy pozostają zagadnienia integracji z~rzeczywistymi operatorami płatności (proces płatności jest symulowany), 
 obsługa procesów logistycznych następujących po opłaceniu zamówienia oraz implementacja usług pomocniczych --- takich jak 
-powiadomienia czy analityka --- które omówiono jedynie jako kierunki dalszego rozwoju systemu w~rozdziale~\ref{chap:wnioski}.
+powiadomienia czy analityka --- które omówiono jedynie jako kierunki dalszego rozwoju systemu w~podsumowaniu pracy.
 
 Poza zakresem pracy pozostaje implementacja usług pomocniczych jak powiadomienia oraz analityka. Integracja z~rzeczywistymi
 operatorami płatności. Wytworzenie procesów ciągłej integracji za pomocą CI/CD zrealizowanych w GitHub Actions.
-Tematy te zostaną omówione jedynie jako kierunki dalszego rozwoju systemu w~rozdziale~\ref{chap:wnioski}. 
+Tematy te zostaną omówione jedynie jako kierunki dalszego rozwoju systemu w~podsumowaniu pracy. 
 
-\section{Uzasadnienie wyboru tematu}
+\section*{Uzasadnienie wyboru tematu}
+\addcontentsline{toc}{section}{Uzasadnienie wyboru tematu}
 \label{sec:uzasadnienie-wyboru-tematu}
 
 Wybór tematu pracy wynika ze~znaczenia omawianych technologii we współczesnym przemyśle informatycznym.
@@ -90,7 +93,8 @@ Literatura obszernie opisuje poszczególne technologie z~osobna, ale ich integra
 zadaniem wymagającym praktycznego doświadczenia. Zamiarem tej pracy było zweryfikowanie na rzeczywistym przykładzie, jakie kompromisy
 i koszty niesie za sobą ruchomienie takiego systemu w~chmurze publicznej. Udokumentowani
 
-\section{Przegląd technologii chmurowych w kontekście mikroserwisów}
+\section*{Przegląd technologii chmurowych w kontekście mikroserwisów}
+\addcontentsline{toc}{section}{Przegląd technologii chmurowych w kontekście mikroserwisów}
 \label{sec:przeglad-technologii-chmurowych}
 
 Chmura obliczeniowa definiowana jest jako model umożliwiający wygodny, sieciowy dostęp na żądanie do współdzielonej puli konfigurowalnych 
@@ -111,7 +115,8 @@ Podejście to eliminuje ręczną, niepowtarzalną konfigurację środowisk i~umo
 Ostatnią grupą są narzędzia wspierające eksploatację systemów rozproszonych. Takie jak systemy monitoringu i~obserowalności.
 Brokery komunikatów umożliwiające asynchroniczną wymianę zdarzeń. CI/CD automatyzujące zmiany w repozytorium i środowiku produkcyjnym.
 
-\section{Struktura pracy}
+\section*{Struktura pracy}
+\addcontentsline{toc}{section}{Struktura pracy}
 \label{sec:struktura-pracy}
 
 Praca składa się z~jedenastu rozdziałów, które można podzielić na część teoretyczną (rozdziały 2--4), projektową (rozdział 5), 
@@ -130,5 +135,5 @@ backendowych oraz webowego portalu obsługi zamówień. Rozdział~\ref{chap:infr
 chmurowego w~podejściu \emph{infrastructure as code}.
 
 Rozdział~\ref{chap:testy-i-analiza} poświęcony jest testom systemu oraz analizie jego działania w~środowisku docelowym, 
-w~tym analizie kosztów wykorzystania usług chmurowych i~identyfikacji wąskich gardeł. Pracę zamyka rozdział~\ref{chap:wnioski}, 
+w~tym analizie kosztów wykorzystania usług chmurowych i~identyfikacji wąskich gardeł. Pracę zamyka rozdział~\enquote{\nameref{chap:wnioski}},
 zawierający ocenę stopnia realizacji postawionych celów, omówienie napotkanych trudności oraz rekomendacje dotyczące dalszego rozwoju systemu.

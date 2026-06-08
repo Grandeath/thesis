@@ -18,90 +18,53 @@
 
 
 \refsection{0}
-  \datalist[entry]{none/global//global/global/global}
-    \entry{newman2021}{book}{}{}
-      \name{author}{1}{}{%
-        {{hash=b6be43602c2787d279f8522a7d9713db}{%
-           family={Newman},
-           familyi={N\bibinitperiod},
-           given={Sam},
-           giveni={S\bibinitperiod}}}%
+  \datalist[entry]{apa/apasortcite//global/global/global}
+    \entry{awsdocs}{online}{}{}
+      \list{organization}{1}{%
+        {Amazon Web Services}%
       }
-      \list{location}{1}{%
-        {Sebastopol, CA}%
-      }
-      \list{publisher}{1}{%
-        {O'Reilly Media}%
-      }
-      \strng{namehash}{b6be43602c2787d279f8522a7d9713db}
-      \strng{fullhash}{b6be43602c2787d279f8522a7d9713db}
-      \strng{fullhashraw}{b6be43602c2787d279f8522a7d9713db}
-      \strng{bibnamehash}{b6be43602c2787d279f8522a7d9713db}
-      \strng{authorbibnamehash}{b6be43602c2787d279f8522a7d9713db}
-      \strng{authornamehash}{b6be43602c2787d279f8522a7d9713db}
-      \strng{authorfullhash}{b6be43602c2787d279f8522a7d9713db}
-      \strng{authorfullhashraw}{b6be43602c2787d279f8522a7d9713db}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeldatesource}{nodate}
       \field{labeltitlesource}{title}
-      \field{edition}{2}
-      \field{isbn}{978-1-492-03402-5}
-      \field{title}{Building Microservices: Designing Fine-Grained Systems}
-      \field{year}{2021}
-    \endentry
-    \entry{richardson2018}{book}{}{}
-      \name{author}{1}{}{%
-        {{hash=d0740bcf48754b8fa2cd3549a1d73461}{%
-           family={Richardson},
-           familyi={R\bibinitperiod},
-           given={Chris},
-           giveni={C\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Shelter Island, NY}%
-      }
-      \list{publisher}{1}{%
-        {Manning Publications}%
-      }
-      \strng{namehash}{d0740bcf48754b8fa2cd3549a1d73461}
-      \strng{fullhash}{d0740bcf48754b8fa2cd3549a1d73461}
-      \strng{fullhashraw}{d0740bcf48754b8fa2cd3549a1d73461}
-      \strng{bibnamehash}{d0740bcf48754b8fa2cd3549a1d73461}
-      \strng{authorbibnamehash}{d0740bcf48754b8fa2cd3549a1d73461}
-      \strng{authornamehash}{d0740bcf48754b8fa2cd3549a1d73461}
-      \strng{authorfullhash}{d0740bcf48754b8fa2cd3549a1d73461}
-      \strng{authorfullhashraw}{d0740bcf48754b8fa2cd3549a1d73461}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{isbn}{978-1-61729-454-9}
-      \field{title}{Microservices Patterns: With Examples in Java}
-      \field{year}{2018}
+      \field{title}{AWS Documentation}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.aws.amazon.com/
+      \endverb
+      \verb{url}
+      \verb https://docs.aws.amazon.com/
+      \endverb
     \endentry
     \entry{burns2022}{book}{}{}
       \name{author}{4}{}{%
-        {{hash=f81bf4ac2381d4b3bdc662e5d904ceb8}{%
+        {{un=0,uniquepart=base,hash=f81bf4ac2381d4b3bdc662e5d904ceb8}{%
            family={Burns},
            familyi={B\bibinitperiod},
            given={Brendan},
-           giveni={B\bibinitperiod}}}%
-        {{hash=eda44bf2f7c12589ed7065b4a8eb333c}{%
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=eda44bf2f7c12589ed7065b4a8eb333c}{%
            family={Beda},
            familyi={B\bibinitperiod},
            given={Joe},
-           giveni={J\bibinitperiod}}}%
-        {{hash=1b70b429013629d4ac932743e3ff5f8c}{%
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1b70b429013629d4ac932743e3ff5f8c}{%
            family={Hightower},
            familyi={H\bibinitperiod},
            given={Kelsey},
-           giveni={K\bibinitperiod}}}%
-        {{hash=9b31bb1fe9e54cbc95437c8a5d49f5eb}{%
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9b31bb1fe9e54cbc95437c8a5d49f5eb}{%
            family={Evenson},
            familyi={E\bibinitperiod},
            given={Lachlan},
-           giveni={L\bibinitperiod}}}%
+           giveni={L\bibinitperiod},
+           givenun=0}}%
       }
       \list{location}{1}{%
         {Sebastopol, CA}%
@@ -117,8 +80,11 @@
       \strng{authornamehash}{17b433ded7ffa09f701064de70089d7b}
       \strng{authorfullhash}{ce97230b69af5096ed8cb4a6e2ffe325}
       \strng{authorfullhashraw}{ce97230b69af5096ed8cb4a6e2ffe325}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{3}
@@ -130,8 +96,10 @@
       \list{organization}{1}{%
         {Cloud Native Computing Foundation}%
       }
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
       \field{labeltitlesource}{title}
       \field{title}{CNCF Annual Survey 2023}
       \field{urlday}{4}
@@ -146,85 +114,14 @@
       \verb https://www.cncf.io/reports/cncf-annual-survey-2023/
       \endverb
     \endentry
-    \entry{nist2011}{report}{}{}
-      \name{author}{2}{}{%
-        {{hash=eac098e5805fbc204d757a7083c69ac6}{%
-           family={Mell},
-           familyi={M\bibinitperiod},
-           given={Peter},
-           giveni={P\bibinitperiod}}}%
-        {{hash=f32f3f75de51838401f618755c8a6620}{%
-           family={Grance},
-           familyi={G\bibinitperiod},
-           given={Timothy},
-           giveni={T\bibinitperiod}}}%
-      }
-      \list{institution}{2}{%
-        {National Institute of Standards}%
-        {Technology}%
-      }
-      \strng{namehash}{d1f558bbc290d0967925307c14bc2d83}
-      \strng{fullhash}{d1f558bbc290d0967925307c14bc2d83}
-      \strng{fullhashraw}{d1f558bbc290d0967925307c14bc2d83}
-      \strng{bibnamehash}{d1f558bbc290d0967925307c14bc2d83}
-      \strng{authorbibnamehash}{d1f558bbc290d0967925307c14bc2d83}
-      \strng{authornamehash}{d1f558bbc290d0967925307c14bc2d83}
-      \strng{authorfullhash}{d1f558bbc290d0967925307c14bc2d83}
-      \strng{authorfullhashraw}{d1f558bbc290d0967925307c14bc2d83}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{number}{800-145}
-      \field{title}{The {NIST} Definition of Cloud Computing}
-      \field{type}{Special Publication}
-      \field{year}{2011}
-    \endentry
-    \entry{fowler2014}{online}{}{}
-      \name{author}{2}{}{%
-        {{hash=bc0d2dbdc2f0a7a80ec11019d6142dbb}{%
-           family={Lewis},
-           familyi={L\bibinitperiod},
-           given={James},
-           giveni={J\bibinitperiod}}}%
-        {{hash=312ac886938a9b2be4f8eb607567fe4c}{%
-           family={Fowler},
-           familyi={F\bibinitperiod},
-           given={Martin},
-           giveni={M\bibinitperiod}}}%
-      }
-      \strng{namehash}{7931c4b7f23447e896cdfe66059bcd1c}
-      \strng{fullhash}{7931c4b7f23447e896cdfe66059bcd1c}
-      \strng{fullhashraw}{7931c4b7f23447e896cdfe66059bcd1c}
-      \strng{bibnamehash}{7931c4b7f23447e896cdfe66059bcd1c}
-      \strng{authorbibnamehash}{7931c4b7f23447e896cdfe66059bcd1c}
-      \strng{authornamehash}{7931c4b7f23447e896cdfe66059bcd1c}
-      \strng{authorfullhash}{7931c4b7f23447e896cdfe66059bcd1c}
-      \strng{authorfullhashraw}{7931c4b7f23447e896cdfe66059bcd1c}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Microservices: a definition of this new architectural term}
-      \field{urlday}{4}
-      \field{urlmonth}{6}
-      \field{urlyear}{2026}
-      \field{year}{2014}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://martinfowler.com/articles/microservices.html
-      \endverb
-      \verb{url}
-      \verb https://martinfowler.com/articles/microservices.html
-      \endverb
-    \endentry
     \entry{evans2003}{book}{}{}
       \name{author}{1}{}{%
-        {{hash=a8034da9731f447121ee0dbad3354a82}{%
+        {{un=0,uniquepart=base,hash=a8034da9731f447121ee0dbad3354a82}{%
            family={Evans},
            familyi={E\bibinitperiod},
            given={Eric},
-           giveni={E\bibinitperiod}}}%
+           giveni={E\bibinitperiod},
+           givenun=0}}%
       }
       \list{location}{1}{%
         {Boston, MA}%
@@ -240,21 +137,79 @@
       \strng{authornamehash}{a8034da9731f447121ee0dbad3354a82}
       \strng{authorfullhash}{a8034da9731f447121ee0dbad3354a82}
       \strng{authorfullhashraw}{a8034da9731f447121ee0dbad3354a82}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{isbn}{978-0-321-12521-7}
       \field{title}{Domain-Driven Design: Tackling Complexity in the Heart of Software}
       \field{year}{2003}
     \endentry
+    \entry{rfc6749}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=645c23d98c8c0ad0899cb4be651e6a02}{%
+           family={Hardt},
+           familyi={H\bibinitperiod},
+           given={Dick},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Internet Engineering Task Force}%
+      }
+      \strng{namehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{fullhash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{fullhashraw}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{bibnamehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authorbibnamehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authornamehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authorfullhash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authorfullhashraw}{645c23d98c8c0ad0899cb4be651e6a02}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{6749}
+      \field{title}{The {OAuth} 2.0 Authorization Framework}
+      \field{type}{RFC}
+      \field{year}{2012}
+    \endentry
+    \entry{medium}{online}{}{}
+      \list{organization}{1}{%
+        {Medium}%
+      }
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{title}{How Go Became the Language of the Cloud}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://medium.com/@yashbatra11111/how-go-became-the-language-of-the-cloud-fa3b09bd4092
+      \endverb
+      \verb{url}
+      \verb https://medium.com/@yashbatra11111/how-go-became-the-language-of-the-cloud-fa3b09bd4092
+      \endverb
+    \endentry
     \entry{kleppmann2017}{book}{}{}
       \name{author}{1}{}{%
-        {{hash=34b8d5b1d29d175527a6642f3ec8a76d}{%
+        {{un=0,uniquepart=base,hash=34b8d5b1d29d175527a6642f3ec8a76d}{%
            family={Kleppmann},
            familyi={K\bibinitperiod},
            given={Martin},
-           giveni={M\bibinitperiod}}}%
+           giveni={M\bibinitperiod},
+           givenun=0}}%
       }
       \list{location}{1}{%
         {Sebastopol, CA}%
@@ -270,21 +225,260 @@
       \strng{authornamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
       \strng{authorfullhash}{34b8d5b1d29d175527a6642f3ec8a76d}
       \strng{authorfullhashraw}{34b8d5b1d29d175527a6642f3ec8a76d}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{isbn}{978-1-449-37332-0}
       \field{title}{Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems}
       \field{year}{2017}
     \endentry
+    \entry{k8sdocs}{online}{}{}
+      \list{organization}{1}{%
+        {The Kubernetes Authors}%
+      }
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labeldatesource}{nodate}
+      \field{labeltitlesource}{title}
+      \field{title}{Kubernetes Documentation}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/
+      \endverb
+    \endentry
+    \entry{fowler2014}{online}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=bc0d2dbdc2f0a7a80ec11019d6142dbb}{%
+           family={Lewis},
+           familyi={L\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=312ac886938a9b2be4f8eb607567fe4c}{%
+           family={Fowler},
+           familyi={F\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{fullhash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{fullhashraw}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{bibnamehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authorbibnamehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authornamehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authorfullhash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authorfullhashraw}{7931c4b7f23447e896cdfe66059bcd1c}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Microservices: a definition of this new architectural term}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2014}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://martinfowler.com/articles/microservices.html
+      \endverb
+      \verb{url}
+      \verb https://martinfowler.com/articles/microservices.html
+      \endverb
+    \endentry
+    \entry{nist2011}{report}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=eac098e5805fbc204d757a7083c69ac6}{%
+           family={Mell},
+           familyi={M\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f32f3f75de51838401f618755c8a6620}{%
+           family={Grance},
+           familyi={G\bibinitperiod},
+           given={Timothy},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{2}{%
+        {National Institute of Standards}%
+        {Technology}%
+      }
+      \strng{namehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{fullhash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{fullhashraw}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{bibnamehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authorbibnamehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authornamehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authorfullhash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authorfullhashraw}{d1f558bbc290d0967925307c14bc2d83}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{800-145}
+      \field{title}{The {NIST} Definition of Cloud Computing}
+      \field{type}{Special Publication}
+      \field{year}{2011}
+    \endentry
+    \entry{newman2021}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b6be43602c2787d279f8522a7d9713db}{%
+           family={Newman},
+           familyi={N\bibinitperiod},
+           given={Sam},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{fullhash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{fullhashraw}{b6be43602c2787d279f8522a7d9713db}
+      \strng{bibnamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorbibnamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authornamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorfullhash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorfullhashraw}{b6be43602c2787d279f8522a7d9713db}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{isbn}{978-1-492-03402-5}
+      \field{title}{Building Microservices: Designing Fine-Grained Systems}
+      \field{year}{2021}
+    \endentry
+    \entry{prometheusdocs}{online}{}{}
+      \list{organization}{1}{%
+        {Prometheus Authors}%
+      }
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labeldatesource}{nodate}
+      \field{labeltitlesource}{title}
+      \field{title}{Prometheus Documentation}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://prometheus.io/docs/
+      \endverb
+      \verb{url}
+      \verb https://prometheus.io/docs/
+      \endverb
+    \endentry
+    \entry{richardson2018}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d0740bcf48754b8fa2cd3549a1d73461}{%
+           family={Richardson},
+           familyi={R\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Shelter Island, NY}%
+      }
+      \list{publisher}{1}{%
+        {Manning Publications}%
+      }
+      \strng{namehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{fullhash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{fullhashraw}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{bibnamehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authorbibnamehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authornamehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authorfullhash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authorfullhashraw}{d0740bcf48754b8fa2cd3549a1d73461}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-61729-454-9}
+      \field{title}{Microservices Patterns: With Examples in Java}
+      \field{year}{2018}
+    \endentry
+    \entry{rfc7636}{report}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=34e6848475fd66697bfcb80787f2aef0}{%
+           family={Sakimura},
+           familyi={S\bibinitperiod},
+           given={Nat},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=81e40ae87af997090fa9a9696e364c65}{%
+           family={Bradley},
+           familyi={B\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fcdf92d765629e4b261f76bb0fdb326d}{%
+           family={Agarwal},
+           familyi={A\bibinitperiod},
+           given={Naveen},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Internet Engineering Task Force}%
+      }
+      \strng{namehash}{d6af5f57a30d58932af0de30292e9dc9}
+      \strng{fullhash}{475b080445b19e65d4d98c77977283fc}
+      \strng{fullhashraw}{475b080445b19e65d4d98c77977283fc}
+      \strng{bibnamehash}{475b080445b19e65d4d98c77977283fc}
+      \strng{authorbibnamehash}{475b080445b19e65d4d98c77977283fc}
+      \strng{authornamehash}{d6af5f57a30d58932af0de30292e9dc9}
+      \strng{authorfullhash}{475b080445b19e65d4d98c77977283fc}
+      \strng{authorfullhashraw}{475b080445b19e65d4d98c77977283fc}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{7636}
+      \field{title}{Proof Key for Code Exchange by {OAuth} Public Clients}
+      \field{type}{RFC}
+      \field{year}{2015}
+    \endentry
     \entry{twelvefactor}{online}{}{}
       \name{author}{1}{}{%
-        {{hash=78c94d63299ff16130ed37a90dc97dcd}{%
+        {{un=0,uniquepart=base,hash=78c94d63299ff16130ed37a90dc97dcd}{%
            family={Wiggins},
            familyi={W\bibinitperiod},
            given={Adam},
-           giveni={A\bibinitperiod}}}%
+           giveni={A\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{78c94d63299ff16130ed37a90dc97dcd}
       \strng{fullhash}{78c94d63299ff16130ed37a90dc97dcd}
@@ -294,8 +488,11 @@
       \strng{authornamehash}{78c94d63299ff16130ed37a90dc97dcd}
       \strng{authorfullhash}{78c94d63299ff16130ed37a90dc97dcd}
       \strng{authorfullhashraw}{78c94d63299ff16130ed37a90dc97dcd}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{The Twelve-Factor App}
@@ -311,50 +508,15 @@
       \verb https://12factor.net/
       \endverb
     \endentry
-    \entry{k8sdocs}{online}{}{}
-      \list{organization}{1}{%
-        {The Kubernetes Authors}%
-      }
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{labeltitlesource}{title}
-      \field{title}{Kubernetes Documentation}
-      \field{urlday}{4}
-      \field{urlmonth}{6}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://kubernetes.io/docs/
-      \endverb
-      \verb{url}
-      \verb https://kubernetes.io/docs/
-      \endverb
-    \endentry
-    \entry{prometheusdocs}{online}{}{}
-      \list{organization}{1}{%
-        {Prometheus Authors}%
-      }
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{labeltitlesource}{title}
-      \field{title}{Prometheus Documentation}
-      \field{urlday}{4}
-      \field{urlmonth}{6}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://prometheus.io/docs/
-      \endverb
-      \verb{url}
-      \verb https://prometheus.io/docs/
-      \endverb
-    \endentry
+  \enddatalist
+  \datalist[entry]{apa/global//global/global/global}
     \entry{awsdocs}{online}{}{}
       \list{organization}{1}{%
         {Amazon Web Services}%
       }
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeldatesource}{nodate}
       \field{labeltitlesource}{title}
       \field{title}{AWS Documentation}
       \field{urlday}{4}
@@ -368,12 +530,155 @@
       \verb https://docs.aws.amazon.com/
       \endverb
     \endentry
+    \entry{burns2022}{book}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=f81bf4ac2381d4b3bdc662e5d904ceb8}{%
+           family={Burns},
+           familyi={B\bibinitperiod},
+           given={Brendan},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=eda44bf2f7c12589ed7065b4a8eb333c}{%
+           family={Beda},
+           familyi={B\bibinitperiod},
+           given={Joe},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1b70b429013629d4ac932743e3ff5f8c}{%
+           family={Hightower},
+           familyi={H\bibinitperiod},
+           given={Kelsey},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9b31bb1fe9e54cbc95437c8a5d49f5eb}{%
+           family={Evenson},
+           familyi={E\bibinitperiod},
+           given={Lachlan},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{17b433ded7ffa09f701064de70089d7b}
+      \strng{fullhash}{ce97230b69af5096ed8cb4a6e2ffe325}
+      \strng{fullhashraw}{ce97230b69af5096ed8cb4a6e2ffe325}
+      \strng{bibnamehash}{ce97230b69af5096ed8cb4a6e2ffe325}
+      \strng{authorbibnamehash}{ce97230b69af5096ed8cb4a6e2ffe325}
+      \strng{authornamehash}{17b433ded7ffa09f701064de70089d7b}
+      \strng{authorfullhash}{ce97230b69af5096ed8cb4a6e2ffe325}
+      \strng{authorfullhashraw}{ce97230b69af5096ed8cb4a6e2ffe325}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{isbn}{978-1-098-11020-8}
+      \field{title}{Kubernetes: Up and Running: Dive into the Future of Infrastructure}
+      \field{year}{2022}
+    \endentry
+    \entry{cncf2023}{online}{}{}
+      \list{organization}{1}{%
+        {Cloud Native Computing Foundation}%
+      }
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{title}{CNCF Annual Survey 2023}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.cncf.io/reports/cncf-annual-survey-2023/
+      \endverb
+      \verb{url}
+      \verb https://www.cncf.io/reports/cncf-annual-survey-2023/
+      \endverb
+    \endentry
+    \entry{evans2003}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=a8034da9731f447121ee0dbad3354a82}{%
+           family={Evans},
+           familyi={E\bibinitperiod},
+           given={Eric},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Boston, MA}%
+      }
+      \list{publisher}{1}{%
+        {Addison-Wesley}%
+      }
+      \strng{namehash}{a8034da9731f447121ee0dbad3354a82}
+      \strng{fullhash}{a8034da9731f447121ee0dbad3354a82}
+      \strng{fullhashraw}{a8034da9731f447121ee0dbad3354a82}
+      \strng{bibnamehash}{a8034da9731f447121ee0dbad3354a82}
+      \strng{authorbibnamehash}{a8034da9731f447121ee0dbad3354a82}
+      \strng{authornamehash}{a8034da9731f447121ee0dbad3354a82}
+      \strng{authorfullhash}{a8034da9731f447121ee0dbad3354a82}
+      \strng{authorfullhashraw}{a8034da9731f447121ee0dbad3354a82}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0-321-12521-7}
+      \field{title}{Domain-Driven Design: Tackling Complexity in the Heart of Software}
+      \field{year}{2003}
+    \endentry
+    \entry{rfc6749}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=645c23d98c8c0ad0899cb4be651e6a02}{%
+           family={Hardt},
+           familyi={H\bibinitperiod},
+           given={Dick},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Internet Engineering Task Force}%
+      }
+      \strng{namehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{fullhash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{fullhashraw}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{bibnamehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authorbibnamehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authornamehash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authorfullhash}{645c23d98c8c0ad0899cb4be651e6a02}
+      \strng{authorfullhashraw}{645c23d98c8c0ad0899cb4be651e6a02}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{6749}
+      \field{title}{The {OAuth} 2.0 Authorization Framework}
+      \field{type}{RFC}
+      \field{year}{2012}
+    \endentry
     \entry{medium}{online}{}{}
       \list{organization}{1}{%
         {Medium}%
       }
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
       \field{labeltitlesource}{title}
       \field{title}{How Go Became the Language of the Cloud}
       \field{urlday}{4}
@@ -388,51 +693,251 @@
       \verb https://medium.com/@yashbatra11111/how-go-became-the-language-of-the-cloud-fa3b09bd4092
       \endverb
     \endentry
-    \entry{rfc6749}{report}{}{}
+    \entry{kleppmann2017}{book}{}{}
       \name{author}{1}{}{%
-        {{hash=645c23d98c8c0ad0899cb4be651e6a02}{%
-           family={Hardt},
-           familyi={H\bibinitperiod},
-           given={Dick},
-           giveni={D\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=34b8d5b1d29d175527a6642f3ec8a76d}{%
+           family={Kleppmann},
+           familyi={K\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
       }
-      \list{institution}{1}{%
-        {Internet Engineering Task Force}%
+      \list{location}{1}{%
+        {Sebastopol, CA}%
       }
-      \strng{namehash}{645c23d98c8c0ad0899cb4be651e6a02}
-      \strng{fullhash}{645c23d98c8c0ad0899cb4be651e6a02}
-      \strng{fullhashraw}{645c23d98c8c0ad0899cb4be651e6a02}
-      \strng{bibnamehash}{645c23d98c8c0ad0899cb4be651e6a02}
-      \strng{authorbibnamehash}{645c23d98c8c0ad0899cb4be651e6a02}
-      \strng{authornamehash}{645c23d98c8c0ad0899cb4be651e6a02}
-      \strng{authorfullhash}{645c23d98c8c0ad0899cb4be651e6a02}
-      \strng{authorfullhashraw}{645c23d98c8c0ad0899cb4be651e6a02}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{fullhash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{fullhashraw}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{bibnamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorbibnamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authornamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorfullhash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorfullhashraw}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{number}{6749}
-      \field{title}{The {OAuth} 2.0 Authorization Framework}
-      \field{type}{RFC}
-      \field{year}{2012}
+      \field{isbn}{978-1-449-37332-0}
+      \field{title}{Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems}
+      \field{year}{2017}
+    \endentry
+    \entry{k8sdocs}{online}{}{}
+      \list{organization}{1}{%
+        {The Kubernetes Authors}%
+      }
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labeldatesource}{nodate}
+      \field{labeltitlesource}{title}
+      \field{title}{Kubernetes Documentation}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://kubernetes.io/docs/
+      \endverb
+      \verb{url}
+      \verb https://kubernetes.io/docs/
+      \endverb
+    \endentry
+    \entry{fowler2014}{online}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=bc0d2dbdc2f0a7a80ec11019d6142dbb}{%
+           family={Lewis},
+           familyi={L\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=312ac886938a9b2be4f8eb607567fe4c}{%
+           family={Fowler},
+           familyi={F\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{fullhash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{fullhashraw}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{bibnamehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authorbibnamehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authornamehash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authorfullhash}{7931c4b7f23447e896cdfe66059bcd1c}
+      \strng{authorfullhashraw}{7931c4b7f23447e896cdfe66059bcd1c}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Microservices: a definition of this new architectural term}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2014}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://martinfowler.com/articles/microservices.html
+      \endverb
+      \verb{url}
+      \verb https://martinfowler.com/articles/microservices.html
+      \endverb
+    \endentry
+    \entry{nist2011}{report}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=eac098e5805fbc204d757a7083c69ac6}{%
+           family={Mell},
+           familyi={M\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f32f3f75de51838401f618755c8a6620}{%
+           family={Grance},
+           familyi={G\bibinitperiod},
+           given={Timothy},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{2}{%
+        {National Institute of Standards}%
+        {Technology}%
+      }
+      \strng{namehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{fullhash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{fullhashraw}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{bibnamehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authorbibnamehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authornamehash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authorfullhash}{d1f558bbc290d0967925307c14bc2d83}
+      \strng{authorfullhashraw}{d1f558bbc290d0967925307c14bc2d83}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{800-145}
+      \field{title}{The {NIST} Definition of Cloud Computing}
+      \field{type}{Special Publication}
+      \field{year}{2011}
+    \endentry
+    \entry{newman2021}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b6be43602c2787d279f8522a7d9713db}{%
+           family={Newman},
+           familyi={N\bibinitperiod},
+           given={Sam},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{fullhash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{fullhashraw}{b6be43602c2787d279f8522a7d9713db}
+      \strng{bibnamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorbibnamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authornamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorfullhash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorfullhashraw}{b6be43602c2787d279f8522a7d9713db}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{isbn}{978-1-492-03402-5}
+      \field{title}{Building Microservices: Designing Fine-Grained Systems}
+      \field{year}{2021}
+    \endentry
+    \entry{prometheusdocs}{online}{}{}
+      \list{organization}{1}{%
+        {Prometheus Authors}%
+      }
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labeldatesource}{nodate}
+      \field{labeltitlesource}{title}
+      \field{title}{Prometheus Documentation}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://prometheus.io/docs/
+      \endverb
+      \verb{url}
+      \verb https://prometheus.io/docs/
+      \endverb
+    \endentry
+    \entry{richardson2018}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d0740bcf48754b8fa2cd3549a1d73461}{%
+           family={Richardson},
+           familyi={R\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Shelter Island, NY}%
+      }
+      \list{publisher}{1}{%
+        {Manning Publications}%
+      }
+      \strng{namehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{fullhash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{fullhashraw}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{bibnamehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authorbibnamehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authornamehash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authorfullhash}{d0740bcf48754b8fa2cd3549a1d73461}
+      \strng{authorfullhashraw}{d0740bcf48754b8fa2cd3549a1d73461}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-61729-454-9}
+      \field{title}{Microservices Patterns: With Examples in Java}
+      \field{year}{2018}
     \endentry
     \entry{rfc7636}{report}{}{}
       \name{author}{3}{}{%
-        {{hash=34e6848475fd66697bfcb80787f2aef0}{%
+        {{un=0,uniquepart=base,hash=34e6848475fd66697bfcb80787f2aef0}{%
            family={Sakimura},
            familyi={S\bibinitperiod},
            given={Nat},
-           giveni={N\bibinitperiod}}}%
-        {{hash=81e40ae87af997090fa9a9696e364c65}{%
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=81e40ae87af997090fa9a9696e364c65}{%
            family={Bradley},
            familyi={B\bibinitperiod},
            given={John},
-           giveni={J\bibinitperiod}}}%
-        {{hash=fcdf92d765629e4b261f76bb0fdb326d}{%
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fcdf92d765629e4b261f76bb0fdb326d}{%
            family={Agarwal},
            familyi={A\bibinitperiod},
            given={Naveen},
-           giveni={N\bibinitperiod}}}%
+           giveni={N\bibinitperiod},
+           givenun=0}}%
       }
       \list{institution}{1}{%
         {Internet Engineering Task Force}%
@@ -445,14 +950,54 @@
       \strng{authornamehash}{d6af5f57a30d58932af0de30292e9dc9}
       \strng{authorfullhash}{475b080445b19e65d4d98c77977283fc}
       \strng{authorfullhashraw}{475b080445b19e65d4d98c77977283fc}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{number}{7636}
       \field{title}{Proof Key for Code Exchange by {OAuth} Public Clients}
       \field{type}{RFC}
       \field{year}{2015}
+    \endentry
+    \entry{twelvefactor}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=78c94d63299ff16130ed37a90dc97dcd}{%
+           family={Wiggins},
+           familyi={W\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{78c94d63299ff16130ed37a90dc97dcd}
+      \strng{fullhash}{78c94d63299ff16130ed37a90dc97dcd}
+      \strng{fullhashraw}{78c94d63299ff16130ed37a90dc97dcd}
+      \strng{bibnamehash}{78c94d63299ff16130ed37a90dc97dcd}
+      \strng{authorbibnamehash}{78c94d63299ff16130ed37a90dc97dcd}
+      \strng{authornamehash}{78c94d63299ff16130ed37a90dc97dcd}
+      \strng{authorfullhash}{78c94d63299ff16130ed37a90dc97dcd}
+      \strng{authorfullhashraw}{78c94d63299ff16130ed37a90dc97dcd}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Twelve-Factor App}
+      \field{urlday}{4}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2017}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://12factor.net/
+      \endverb
+      \verb{url}
+      \verb https://12factor.net/
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

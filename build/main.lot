@@ -1,17 +1,15 @@
 \addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Porównanie architektury monolitycznej i mikroserwisowej (opracowanie własne na podstawie \blx@tocontentsinit {0}\cite {newman2021,richardson2018})}}{13}{table.caption.3}%
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Stany cyklu życia zamówienia}}{32}{table.caption.5}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Punkty końcowe REST mikroserwisów}}{34}{table.caption.8}%
+\contentsline {table}{\numberline {1.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Porównanie architektury monolitycznej i mikroserwisowej (opracowanie własne na podstawie \blx@tocontentsinit {0}\cite {newman2021,richardson2018})}}{13}{table.caption.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Stany cyklu życia zamówienia}}{29}{table.caption.7}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Punkty końcowe REST mikroserwisów}}{31}{table.caption.10}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {9.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Profile testów wydajnościowych}}{69}{table.caption.34}%
-\contentsline {table}{\numberline {9.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Scenariusze testów funkcjonalnych}}{70}{table.caption.35}%
-\contentsline {table}{\numberline {9.3}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Wyniki testów wydajnościowych (czasy w ms)}}{71}{table.caption.36}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {10.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Realizacja celów szczegółowych pracy}}{78}{table.caption.43}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {8.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Profile testów wydajnościowych}}{61}{table.caption.36}%
+\contentsline {table}{\numberline {8.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Scenariusze testów funkcjonalnych}}{62}{table.caption.37}%
+\contentsline {table}{\numberline {8.3}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Wyniki testów wydajnościowych (czasy w ms)}}{63}{table.caption.38}%
+\contentsline {table}{\numberline {8.4}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Realizacja celów szczegółowych pracy}}{69}{table.caption.47}%

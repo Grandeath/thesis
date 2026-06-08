@@ -1,16 +1,18 @@
-\chapter{Wnioski i podsumowanie}
+\chapter*{Wnioski i podsumowanie}
+\addcontentsline{toc}{chapter}{Wnioski i podsumowanie}
 \label{chap:wnioski}
 
 Rozdział podsumowuje pracę: ocenia stopień realizacji postawionych celów, omawia najistotniejsze trudności
 napotkane w~trakcie wytwarzania systemu wraz z~przyjętymi rozwiązaniami oraz wskazuje kierunki dalszego rozwoju.
 
-\section{Stopień realizacji celów pracy}
+\section*{Stopień realizacji celów pracy}
+\addcontentsline{toc}{section}{Stopień realizacji celów pracy}
 \label{sec:stopien-realizacji-celow}
 
 Cel główny pracy - zaprojektowanie, implementacja oraz wdrożenie w~chmurze Amazon Web Services systemu obsługi
 zamówień opartego na architekturze mikroserwisowej, został osiągnięty. Powstał działający system, którego
 poprawność i~wydajność zweryfikowano w~docelowym środowisku chmurowym (rozdział~\ref{chap:testy-i-analiza}).
-Realizację celów szczegółowych, postawionych w~sekcji~\ref{sec:cel-i-zakres-pracy}, podsumowuje
+Realizację celów szczegółowych, postawionych we~wstępie, podsumowuje
 tabela~\ref{tab:realizacja-celow}.
 
 \begin{table}[H]
@@ -33,11 +35,12 @@ tabela~\ref{tab:realizacja-celow}.
 
 Zakres pracy zrealizowano zgodnie z~założeniami, z~jednym świadomym ograniczeniem. Spośród pierwotnie rozważanych
 usług pomocniczych zaimplementowano trzy serwisy realizujące rdzeń procesu zakupowego, pozostawiając usługi
-powiadomień i~analityki jako kierunek dalszego rozwoju (sekcja~\ref{sec:rekomendacje-rozwoju}). Decyzja ta
+powiadomień i~analityki jako kierunek dalszego rozwoju (sekcja~\enquote{\nameref{sec:rekomendacje-rozwoju}}). Decyzja ta
 pozwoliła skupić wysiłek na~kompletności pionowej systemu. Od~interfejsu użytkownika, przez logikę biznesową,
 po~infrastrukturę. Zamiast na~zwielokrotnianiu podobnych do~siebie usług.
 
-\section{Napotkane trudności i sposoby ich rozwiązania}
+\section*{Napotkane trudności i sposoby ich rozwiązania}
+\addcontentsline{toc}{section}{Napotkane trudności i sposoby ich rozwiązania}
 \label{sec:napotkane-trudnosci}
 
 Wytwarzanie systemu wiązało się z~szeregiem problemów, których rozwiązania okazały się pouczające.
@@ -68,7 +71,8 @@ weryfikacyjnego wstrzykiwanego przez~CDN i~wymaganego przez~regułę load balanc
 rozwiązano dwojako. Warunkowymi, niepodzielnymi operacjami bazodanowymi odpornymi na~współbieżność (sekcje~\ref{sec:product-service},
 \ref{sec:payment-service}). Oraz~idempotentnym przetwarzaniem zarówno żądań~HTTP, jak~i~zdarzeń Kafki.
 
-\section{Rekomendacje dotyczące dalszego rozwoju systemu}
+\section*{Rekomendacje dotyczące dalszego rozwoju systemu}
+\addcontentsline{toc}{section}{Rekomendacje dotyczące dalszego rozwoju systemu}
 \label{sec:rekomendacje-rozwoju}
 
 Zrealizowany system stanowi kompletną, działającą całość, lecz~jako~projekt o~charakterze demonstracyjnym pozostawia
@@ -95,7 +99,8 @@ przestrzeń do~rozwoju w~kierunku wdrożenia produkcyjnego. Najistotniejsze reko
     buforowanie wyniku weryfikacji tokenów~JWT (sekcja~\ref{subsec:profilowanie}).
 \end{itemize}
 
-\section{Podsumowanie końcowe}
+\section*{Podsumowanie końcowe}
+\addcontentsline{toc}{section}{Podsumowanie końcowe}
 \label{sec:podsumowanie-koncowe}
 
 W~ramach pracy zaprojektowano, zaimplementowano i~wdrożono w~chmurze publicznej kompletny system obsługi zamówień

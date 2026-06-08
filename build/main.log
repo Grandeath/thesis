@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.6.4)  8 JUN 2026 20:05
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.6.4)  8 JUN 2026 20:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -841,7 +841,10 @@ Package biblatex Info: ... file 'blx-dm.def' found.
 File: blx-dm.def 2025/07/10 v3.21 biblatex datamodel (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
-Package biblatex Info: ... file 'ieee.dbx' not found.
+Package biblatex Info: ... file 'apa.dbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/apa.dbx
+File: apa.dbx 2025/08/27 v9.20 APA biblatex style data model
+)
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \c@afterword=\count424
@@ -880,38 +883,48 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \c@savedshortauthor=\count457
 \c@shorteditor=\count458
 \c@savedshorteditor=\count459
-\c@labelname=\count460
-\c@savedlabelname=\count461
-\c@institution=\count462
-\c@savedinstitution=\count463
-\c@lista=\count464
-\c@savedlista=\count465
-\c@listb=\count466
-\c@savedlistb=\count467
-\c@listc=\count468
-\c@savedlistc=\count469
-\c@listd=\count470
-\c@savedlistd=\count471
-\c@liste=\count472
-\c@savedliste=\count473
-\c@listf=\count474
-\c@savedlistf=\count475
-\c@location=\count476
-\c@savedlocation=\count477
-\c@organization=\count478
-\c@savedorganization=\count479
-\c@origlocation=\count480
-\c@savedoriglocation=\count481
-\c@origpublisher=\count482
-\c@savedorigpublisher=\count483
-\c@publisher=\count484
-\c@savedpublisher=\count485
-\c@language=\count486
-\c@savedlanguage=\count487
-\c@origlanguage=\count488
-\c@savedoriglanguage=\count489
-\c@pageref=\count490
-\c@savedpageref=\count491
+\c@narrator=\count460
+\c@savednarrator=\count461
+\c@execproducer=\count462
+\c@savedexecproducer=\count463
+\c@execdirector=\count464
+\c@savedexecdirector=\count465
+\c@with=\count466
+\c@savedwith=\count467
+\c@labelname=\count468
+\c@savedlabelname=\count469
+\c@institution=\count470
+\c@savedinstitution=\count471
+\c@lista=\count472
+\c@savedlista=\count473
+\c@listb=\count474
+\c@savedlistb=\count475
+\c@listc=\count476
+\c@savedlistc=\count477
+\c@listd=\count478
+\c@savedlistd=\count479
+\c@liste=\count480
+\c@savedliste=\count481
+\c@listf=\count482
+\c@savedlistf=\count483
+\c@location=\count484
+\c@savedlocation=\count485
+\c@organization=\count486
+\c@savedorganization=\count487
+\c@origlocation=\count488
+\c@savedoriglocation=\count489
+\c@origpublisher=\count490
+\c@savedorigpublisher=\count491
+\c@publisher=\count492
+\c@savedpublisher=\count493
+\c@language=\count494
+\c@savedlanguage=\count495
+\c@origlanguage=\count496
+\c@savedoriglanguage=\count497
+\c@citation=\count498
+\c@savedcitation=\count499
+\c@pageref=\count500
+\c@savedpageref=\count501
 \shorthandwidth=\skip86
 \shortjournalwidth=\skip87
 \shortserieswidth=\skip88
@@ -938,58 +951,58 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
-\c@textcitecount=\count492
-\c@textcitetotal=\count493
-\c@textcitemaxnames=\count494
-\c@biburlbigbreakpenalty=\count495
-\c@biburlbreakpenalty=\count496
-\c@biburlnumpenalty=\count497
-\c@biburlucpenalty=\count498
-\c@biburllcpenalty=\count499
+\c@textcitecount=\count502
+\c@textcitetotal=\count503
+\c@textcitemaxnames=\count504
+\c@biburlbigbreakpenalty=\count505
+\c@biburlbreakpenalty=\count506
+\c@biburlnumpenalty=\count507
+\c@biburlucpenalty=\count508
+\c@biburllcpenalty=\count509
 \biburlbigskip=\muskip19
 \biburlnumskip=\muskip20
 \biburlucskip=\muskip21
 \biburllcskip=\muskip22
-\c@smartand=\count500
+\c@smartand=\count510
 )
-Package biblatex Info: Trying to load bibliography style 'ieee'...
-Package biblatex Info: ... file 'ieee.bbx' found.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-ieee/ieee.bbx
-File: ieee.bbx 2025-08-01 v1.4f biblatex bibliography style
-Package biblatex Info: Trying to load bibliography style 'numeric-comp'...
-Package biblatex Info: ... file 'numeric-comp.bbx' found.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/bbx/numeric-comp.bbx
-File: numeric-comp.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
-Package biblatex Info: Trying to load bibliography style 'numeric'...
-Package biblatex Info: ... file 'numeric.bbx' found.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
-File: numeric.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'apa'...
+Package biblatex Info: ... file 'apa.bbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/apa.bbx
+File: apa.bbx 2025/08/27 v9.20 APA biblatex references style
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
 File: standard.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count501
-\c@bbx:relatedtotal=\count502
-))))
-Package biblatex Info: Trying to load citation style 'ieee'...
-Package biblatex Info: ... file 'ieee.cbx' found.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-ieee/ieee.cbx
-File: ieee.cbx 2025-08-01 v1.4f biblatex citation style
-Package biblatex Info: Trying to load citation style 'numeric-verb'...
-Package biblatex Info: ... file 'numeric-verb.cbx' found.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/cbx/numeric-verb.cbx
-File: numeric-verb.cbx 2025/07/10 v3.21 biblatex citation style (PK/MW)
+\c@bbx:relatedcount=\count511
+\c@bbx:relatedtotal=\count512
+)
+Package biblatex Info: Delimiter 'nameyeardelim' in context 'bib' already defined, overwriting.
+Package biblatex Info: Delimiter 'nameyeardelim' in context 'biblist' already defined, overwriting.
+Package biblatex Info: Delimiter 'nonameyeardelim' in context 'bib' already defined, overwriting.
+Package biblatex Info: Delimiter 'nonameyeardelim' in context 'biblist' already defined, overwriting.
+)
+Package biblatex Info: Trying to load citation style 'apa'...
+Package biblatex Info: ... file 'apa.cbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/apa.cbx
+File: apa.cbx 2025/08/27 v9.20 APA biblatex citation style
+Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined, overwriting.
+Package biblatex Info: Delimiter 'andothersdelim' in context '' already defined, overwriting.
+Package biblatex Info: Redefining '\fullcite'.
+Package biblatex Info: Redefining '\citeauthor'.
+Package biblatex Info: Redefining '\citeyear'.
 Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\cites'.
 Package biblatex Info: Redefining '\parencite'.
-Package biblatex Info: Redefining '\footcite'.
-Package biblatex Info: Redefining '\footcitetext'.
-Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\textcite'.
-Package biblatex Info: Redefining '\supercite'.
 Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcites'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\footcitetexts'.
+Package biblatex Info: Redefining '\smartcite'.
 Package biblatex Info: Redefining '\smartcites'.
+Package biblatex Info: Redefining '\textcite'.
 Package biblatex Info: Redefining '\textcites'.
-))
+)
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/biblatex.cfg
@@ -1012,33 +1025,33 @@ Package csquotes Info: Redefining alias 'default' -> 'polish'.
  (build/main.aux (build/rozdzialy/1_wstep.aux) (build/rozdzialy/2_podstawy_mikroserwisow.aux) (build/rozdzialy/3_kubernetes.aux) (build/rozdzialy/4_aws.aux) (build/rozdzialy/5_projekt_systemu.aux) (build/rozdzialy/6_implementacja_mikroserwisow.aux) (build/rozdzialy/7_implementacja_portalu.aux) (build/rozdzialy/8_infrastruktura.aux) (build/rozdzialy/9_testy.aux) (build/rozdzialy/10_wnioski.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 156.
-LaTeX Font Info:    ... okay on input line 156.
-LaTeX Info: Redefining \microtypecontext on input line 156.
-Package microtype Info: Applying patch `item' on input line 156.
-Package microtype Info: Applying patch `toc' on input line 156.
-Package microtype Info: Applying patch `eqnum' on input line 156.
-Package microtype Info: Applying patch `footnote' on input line 156.
-Package microtype Info: Applying patch `verbatim' on input line 156.
-LaTeX Info: Redefining \microtypesetup on input line 156.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Info: Redefining \microtypecontext on input line 163.
+Package microtype Info: Applying patch `item' on input line 163.
+Package microtype Info: Applying patch `toc' on input line 163.
+Package microtype Info: Applying patch `eqnum' on input line 163.
+Package microtype Info: Applying patch `footnote' on input line 163.
+Package microtype Info: Applying patch `verbatim' on input line 163.
+LaTeX Info: Redefining \microtypesetup on input line 163.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: No adjustment of tracking.
@@ -1090,71 +1103,108 @@ Package fontspec Info:
 
 \symlegacymaths=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 156.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 156.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 156.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 156.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 156.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 156.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 156.
-LaTeX Font Info:    Redeclaring math accent \check on input line 156.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 156.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 156.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 156.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 156.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 163.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 163.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 163.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 163.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 163.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 163.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 163.
+LaTeX Font Info:    Redeclaring math accent \check on input line 163.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 163.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 163.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 163.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 163.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 156.
+(Font)              `operators' in the math version `normal' on input line 163.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/TimesNewRoman(0)/m/n on input line 156.
+(Font)                  OT1/cmr/m/n --> TU/TimesNewRoman(0)/m/n on input line 163.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 156.
+(Font)              `operators' in the math version `bold' on input line 163.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/m/n on input line 156.
+(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/m/n on input line 163.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/m/n on input line 156.
+(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/m/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/TimesNewRoman(0)/m/it on input line 156.
+(Font)                  OT1/cmr/m/it --> TU/TimesNewRoman(0)/m/it on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/b/n on input line 156.
+(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/b/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/Arial(0)/m/n on input line 156.
+(Font)                  OT1/cmss/m/n --> TU/Arial(0)/m/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/m/n on input line 156.
+(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/m/n on input line 163.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/b/n on input line 156.
+(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/b/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/TimesNewRoman(0)/b/it on input line 156.
+(Font)                  OT1/cmr/bx/it --> TU/TimesNewRoman(0)/b/it on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/Arial(0)/b/n on input line 156.
+(Font)                  OT1/cmss/bx/n --> TU/Arial(0)/b/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/b/n on input line 156.
+(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/b/n on input line 163.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count503
-Package hyperref Info: Link coloring OFF on input line 156.
+\c@lstlisting=\count513
+Package hyperref Info: Link coloring OFF on input line 163.
 (build/main.out) (build/main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
-Package biblatex Info: Trying to load language 'polish'...
-Package biblatex Info: ... file 'polish.lbx' found.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/lbx/polish.lbx
-File: polish.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
-)
+Package biblatex Info: Trying to load language 'polish' -> 'american-apa'...
+Package biblatex Info: ... file 'american-apa.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
+File: american-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'american' -> 'american-apa'...
+Package biblatex Info: ... file 'american-apa.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
+File: american-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'american'...
+Package biblatex Info: ... file 'american.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/lbx/american.lbx
+File: american.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
+Package biblatex Info: Trying to load language 'english' -> 'english-apa'...
+Package biblatex Info: ... file 'english-apa.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/english-apa.lbx
+File: english-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
+))))
+Package biblatex Info: Trying to load language 'american' -> 'american-apa'...
+Package biblatex Info: ... file 'american-apa.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
+File: american-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'american'...
+Package biblatex Info: ... file 'american.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/lbx/american.lbx
+File: american.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
+Package biblatex Info: Trying to load language 'english' -> 'english-apa'...
+Package biblatex Info: ... file 'english-apa.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/english-apa.lbx
+File: english-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'american'...
+Package biblatex Info: ... file 'american.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/lbx/american.lbx
+File: american.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
+))))))
 Package biblatex Info: XeTeX detected.
 (biblatex)             Assuming input encoding 'utf8'.
 Package biblatex Info: Automatic encoding selection.
@@ -1164,8 +1214,8 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (build/main.bbl)
-Package biblatex Info: Reference section=0 on input line 156.
-Package biblatex Info: Reference segment=0 on input line 156.
+Package biblatex Info: Reference section=0 on input line 163.
+Package biblatex Info: Reference segment=0 on input line 163.
 File: pjatk-logo.png Graphic file (type bmp)
 <pjatk-logo.png>
  [1
@@ -1197,7 +1247,10 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (
 \openout2 = `rozdzialy/1_wstep.aux'.
 
  (./rozdzialy/1_wstep.tex
-Rozdział 1.
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 29.
+
 [7
 
 
@@ -1208,12 +1261,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 7116) in paragraph at lines 56--59
+Underfull \hbox (badness 7116) in paragraph at lines 58--61
 [][][][][][][]\TU/TimesNewRoman(0)/m/n/12 ), serwisu produktów ([][][][][][][][]) oraz serwisu płatności
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 56--59
+Underfull \hbox (badness 10000) in paragraph at lines 58--61
 \TU/TimesNewRoman(0)/m/n/12 ([][][][][][][][]), komunikujących się synchronicznie poprzez interfejsy
  []
 
@@ -1221,57 +1274,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--59
 \openout2 = `rozdzialy/2_podstawy_mikroserwisow.aux'.
 
  (./rozdzialy/2_podstawy_mikroserwisow.tex
-Rozdział 2.
+Rozdział 1.
 [12
 
 
 
 
-] [13] [14] [15] [16] [17]) [18]
+] [13] [14] [15] [16]) [17]
 \openout2 = `rozdzialy/3_kubernetes.aux'.
 
  (./rozdzialy/3_kubernetes.tex
-Rozdział 3.
-[19
+Rozdział 2.
+[18
 
 
 
 
-] [20] [21] [22] [23]) [24]
+] [19] [20] [21]) [22]
 \openout2 = `rozdzialy/4_aws.aux'.
 
  (./rozdzialy/4_aws.tex
-Rozdział 4.
-[25
+Rozdział 3.
+[23
 
 
 
 
-] [26] [27] [28]) [29]
+] [24] [25]) [26]
 \openout2 = `rozdzialy/5_projekt_systemu.aux'.
 
  (./rozdzialy/5_projekt_systemu.tex
-Rozdział 5.
-[30
+Rozdział 4.
+[27
 
 
 
 
-] [31] [32] [33]
+] [28] [29] [30]
 Underfull \hbox (badness 10000) in paragraph at lines 253--253
 []|[][][][][][][][][][][][][][][][][]
  []
 
-[34]
+[31]
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 277.
- [35] [36] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
+ [32] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-) [37] [38] [39]) [40]
+) [33] [34] [35]) [36]
 \openout2 = `rozdzialy/6_implementacja_mikroserwisow.aux'.
 
  (./rozdzialy/6_implementacja_mikroserwisow.tex
-Rozdział 6.
-[41
+Rozdział 5.
+[37
 
 
 
@@ -1282,28 +1335,28 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 File: lstlang2.sty 2025/11/14 1.11b listings language file
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2025/11/14 1.11b listings language file
-) [42] [43] [44] [45] [46] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
+) [38] [39] [40] [41] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-) [47]) [48]
+)) [42]
 \openout2 = `rozdzialy/7_implementacja_portalu.aux'.
 
  (./rozdzialy/7_implementacja_portalu.tex
-Rozdział 7.
-[49
+Rozdział 6.
+File: rysunki/ProductView.png Graphic file (type bmp)
+<rysunki/ProductView.png>
+[43
 
 
 
 
 ]
-File: rysunki/ProductView.png Graphic file (type bmp)
-<rysunki/ProductView.png>
 File: rysunki/CartView.png Graphic file (type bmp)
 <rysunki/CartView.png>
 File: rysunki/CheckoutView.png Graphic file (type bmp)
 <rysunki/CheckoutView.png>
- [50]
+ [44]
 Overfull \hbox (28.85292pt too wide) in paragraph at lines 61--63
 []\TU/TimesNewRoman(0)/m/n/12 Po jego utworzeniu użytkownik przechodzi do \TU/TimesNewRoman(0)/b/n/12 szczegółów zamówienia \TU/TimesNewRoman(0)/m/n/12 ([]
  []
@@ -1312,15 +1365,15 @@ File: rysunki/OrderDetailsView.png Graphic file (type bmp)
 <rysunki/OrderDetailsView.png>
 File: rysunki/PaymentView.png Graphic file (type bmp)
 <rysunki/PaymentView.png>
-[51]
+[45]
 File: rysunki/OrderHistory.png Graphic file (type bmp)
 <rysunki/OrderHistory.png>
 File: rysunki/DashboardView.png Graphic file (type bmp)
 <rysunki/DashboardView.png>
- [52]
+ [46]
 File: rysunki/NavigationPanel.png Graphic file (type bmp)
 <rysunki/NavigationPanel.png>
- [53]
+ [47]
 File: rysunki/HomeView.png Graphic file (type bmp)
 <rysunki/HomeView.png>
 
@@ -1328,42 +1381,42 @@ Overfull \hbox (31.37766pt too wide) in paragraph at lines 151--152
  [][] 
  []
 
-[54]
+[48]
 File: rysunki/CognitoLogin.png Graphic file (type bmp)
 <rysunki/CognitoLogin.png>
- [55]) [56]
+ [49]) [50]
 \openout2 = `rozdzialy/8_infrastruktura.aux'.
 
  (./rozdzialy/8_infrastruktura.tex
-Rozdział 8.
-[57
+Rozdział 7.
+[51
 
 
 
 
-] [58]
+]
 File: rysunki/ClusterEKS.png Graphic file (type bmp)
 <rysunki/ClusterEKS.png>
+ [52]
 File: rysunki/NodesEKS.png Graphic file (type bmp)
 <rysunki/NodesEKS.png>
- [59]
+ [53]
 File: rysunki/AddonsEKS.png Graphic file (type bmp)
 <rysunki/AddonsEKS.png>
- [60]
+ [54]
 File: rysunki/PosgreSQL.png Graphic file (type bmp)
 <rysunki/PosgreSQL.png>
- [61]
 File: rysunki/ServicesEKS.png Graphic file (type bmp)
 <rysunki/ServicesEKS.png>
+ [55]
 File: rysunki/Kafka.png Graphic file (type bmp)
 <rysunki/Kafka.png>
- [62]
 File: rysunki/Cloudfront.png Graphic file (type bmp)
 <rysunki/Cloudfront.png>
- [63]
+ [56]
 File: rysunki/CloudfrontPaths.png Graphic file (type bmp)
 <rysunki/CloudfrontPaths.png>
- [64]
+ [57]
 File: rysunki/Nginx.png Graphic file (type bmp)
 <rysunki/Nginx.png>
 
@@ -1371,18 +1424,17 @@ Overfull \hbox (9.6903pt too wide) in paragraph at lines 401--402
  [][] 
  []
 
-[65]
+[58]
 File: rysunki/PrometheusEKS.png Graphic file (type bmp)
 <rysunki/PrometheusEKS.png>
- [66]
 File: rysunki/Grafana.png Graphic file (type bmp)
 <rysunki/Grafana.png>
-) [67] [68]
+ [59]) [60]
 \openout2 = `rozdzialy/9_testy.aux'.
 
  (./rozdzialy/9_testy.tex
-Rozdział 9.
-[69
+Rozdział 8.
+[61
 
 
 
@@ -1407,81 +1459,91 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--65
 []|\TU/TimesNewRoman(0)/m/n/12 odmowa (autoryzacja
  []
 
-[70] [71]
+[62] [63]
 File: wykresy/max-grafana-order.png Graphic file (type bmp)
 <wykresy/max-grafana-order.png>
- [72]
 File: wykresy/max-grafana-product.png Graphic file (type bmp)
 <wykresy/max-grafana-product.png>
+ [64]
 File: rysunki/JuneBilling.png Graphic file (type bmp)
 <rysunki/JuneBilling.png>
- [73]
 File: rysunki/ForecastCost.png Graphic file (type bmp)
 <rysunki/ForecastCost.png>
+ [65]
 File: rysunki/order-service-flamegraph.png Graphic file (type bmp)
 <rysunki/order-service-flamegraph.png>
- [74]
 File: rysunki/product-service-flamegraph.png Graphic file (type bmp)
 <rysunki/product-service-flamegraph.png>
- [75]) [76] [77]
+ [66] [67]) [68]
 \openout2 = `rozdzialy/10_wnioski.aux'.
 
  (./rozdzialy/10_wnioski.tex
-Rozdział 10.
-[78
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 9.
+
+
+Package hyperref Warning: Suppressing empty link on input line 38.
+
+[69
 
 
 
 
-] [79]) [80] (build/main.lof
-Underfull \hbox (badness 6332) in paragraph at lines 8--8
+] [70]) [71] (build/main.lof
+Underfull \hbox (badness 6332) in paragraph at lines 7--7
  \TU/TimesNewRoman(0)/m/n/12 (HTTPS/REST), linia przerywana — asynchroniczna wymiana zdarzeń 
  []
 
-[81
+[72
 
 
 
 
-] [82])
+] [73])
 \tf@lof=\write7
 \openout7 = `main.lof'.
 
- [83] [84] (build/main.lot)
+ [74] (build/main.lot)
 \tf@lot=\write8
 \openout8 = `main.lot'.
 
- [85
+ [75
 
 
 ] (build/main.lol)
 \tf@lol=\write9
 \openout9 = `main.lol'.
 
- [86
+ [76
 
 
-] [87
+] [77
 
 
-] [88] (build/main.aux (build/rozdzialy/1_wstep.aux) (build/rozdzialy/2_podstawy_mikroserwisow.aux) (build/rozdzialy/3_kubernetes.aux) (build/rozdzialy/4_aws.aux) (build/rozdzialy/5_projekt_systemu.aux) (build/rozdzialy/6_implementacja_mikroserwisow.aux) (build/rozdzialy/7_implementacja_portalu.aux) (build/rozdzialy/8_infrastruktura.aux) (build/rozdzialy/9_testy.aux) (build/rozdzialy/10_wnioski.aux))
+] (./rozdzialy/wykaz_skrotow.tex
+ignored: Infinite glue shrinkage found in box being split [78
+
+
+]
+ignored: Infinite glue shrinkage found in box being split [79]) [80] (build/main.aux (build/rozdzialy/1_wstep.aux) (build/rozdzialy/2_podstawy_mikroserwisow.aux) (build/rozdzialy/3_kubernetes.aux) (build/rozdzialy/4_aws.aux) (build/rozdzialy/5_projekt_systemu.aux) (build/rozdzialy/6_implementacja_mikroserwisow.aux) (build/rozdzialy/7_implementacja_portalu.aux) (build/rozdzialy/8_infrastruktura.aux) (build/rozdzialy/9_testy.aux) (build/rozdzialy/10_wnioski.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D8EE5F84E8C04E86956C38C5C88ED807;20754.
+(rerunfilecheck)             Checksum: E33EB8A647415FA44136347CC5AC40EB;20891.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 40911 strings out of 468168
- 831889 string characters out of 5432816
- 2085060 words of memory out of 5000000
- 68919 multiletter control sequences out of 15000+600000
- 635327 words of font info for 119 fonts, out of 8000000 for 9000
+ 41686 strings out of 468168
+ 848935 string characters out of 5432816
+ 2272125 words of memory out of 5000000
+ 69673 multiletter control sequences out of 15000+600000
+ 635343 words of font info for 121 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 102i,16n,107p,1234b,6439s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,16n,107p,1234b,7218s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on build/main.xdv (88 pages, 1775552 bytes).
+Output written on build/main.xdv (80 pages, 1817324 bytes).

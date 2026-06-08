@@ -18,9 +18,9 @@
 \usepackage{geometry}
 \geometry{margin=2.5cm}
 
-% Interlinia 1,5
+% Interlinia 1,15
 \usepackage{setspace}
-\onehalfspacing
+\setstretch{1.15}
 
 % Język polski
 \usepackage{polyglossia}
@@ -33,7 +33,12 @@
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
-\setmonofont{Courier New}
+% Kody źródłowe - Consolas (zgodnie z wymaganiami); gdy font nie jest
+% zainstalowany w systemie, używamy wizualnie zbliżonego zamiennika,
+% aby praca kompilowała się także bez fontów Microsoft.
+\IfFontExistsTF{Consolas}
+  {\setmonofont{Consolas}}
+  {\setmonofont{Courier New}}
 
 % Małe wcięcia dla lepszego wyglądu
 \setlength{\parindent}{24pt}
@@ -72,7 +77,7 @@
 % Ustawienia globalne dla dużych bloków (lstinputlisting / begin{lstlisting})
 % Te ustawienia dają: ramkę, numery linii, stałą szerokość znaków
 \lstset{
-  basicstyle=\ttfamily\small,
+  basicstyle=\ttfamily\setstretch{1}\fontsize{9}{10}\selectfont, % Consolas 9pt, interlinia 1
   numbers=left,            % Numery linii po lewej
   numberstyle=\tiny,       % Małe cyferki
   stepnumber=1,            % Numeruj każdą linię
@@ -132,8 +137,10 @@
 \usepackage{xurl}
 \renewcommand{\figureautorefname}{Ilustracja}
 
-% Bibliografia - IEEE
-\usepackage[style=ieee,sorting=none]{biblatex}
+% Bibliografia - APA (7. edycja)
+\usepackage[style=apa,backend=biber]{biblatex}
+% biblatex-apa nie ma natywnego pliku polskiego - mapujemy na american-apa
+\DeclareLanguageMapping{polish}{american-apa}
 \addbibresource{bibliografia.bib}
 
 % Ułatw LaTeX'owi łamanie linków w bibliografii
@@ -203,7 +210,7 @@
 
     % Miejsce, miesiąc rok obrony - wyśrodkowane na dole
     \begin{center}
-        Warszawa, x 2026
+        Warszawa, czerwiec 2026
     \end{center}
 
 \end{titlepage}
@@ -277,5 +284,11 @@ zdarzeniami, infrastruktura jako kod, Go
 % ======================
 \clearpage
 \printbibliography[heading=bibintoc,title={Bibliografia}]
+
+% ======================
+% WYKAZ SKRÓTÓW - na końcu pracy
+% ======================
+\clearpage
+\input{rozdzialy/wykaz_skrotow}
 
 \end{document}
