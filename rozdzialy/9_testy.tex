@@ -164,14 +164,14 @@ prezentuje analogiczne metryki serwisu produktów wraz z~tempem konsumpcji zdarz
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{max-grafana-order.png}
-    \caption{Metryki serwisu zamówień w~profilu \emph{max} (Grafana): zużycie procesora i~pamięci per replika, przepustowość HTTP, opóźnienia oraz tempo tworzenia zamówień. Rozdwojenie krzywych obrazuje moment automatycznego skalowania do~dwóch replik.}
+    \caption{Metryki serwisu zamówień w~profilu \emph{max} (Grafana): zużycie procesora i~pamięci per replika, przepustowość HTTP, opóźnienia oraz tempo tworzenia zamówień. Rozdwojenie krzywych obrazuje moment automatycznego skalowania do~dwóch replik. (źródło: opracowanie własne)}
     \label{fig:grafana-order}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{max-grafana-product.png}
-    \caption{Metryki serwisu produktów w~profilu \emph{max} (Grafana): zużycie zasobów per replika, przepustowość oraz tempo konsumpcji zdarzeń z~Kafki.}
+    \caption{Metryki serwisu produktów w~profilu \emph{max} (Grafana): zużycie zasobów per replika, przepustowość oraz tempo konsumpcji zdarzeń z~Kafki. (źródło: opracowanie własne)}
     \label{fig:grafana-product}
 \end{figure}
 
@@ -184,14 +184,14 @@ rysunki~\ref{fig:june-billing} i~\ref{fig:forecast-cost}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{JuneBilling.png}
-    \caption{Rzeczywisty koszt środowiska w~czerwcu 2026 w~podziale na~usługi (AWS Cost Explorer). Dominuje płaszczyzna sterowania EKS (67,90~USD) --- składnik nieobjęty bezpłatnym limitem; pozostałe usługi (EC2, ELB, RDS) generują koszty rzędu pojedynczych dolarów dzięki Free Tier.}
+    \caption{Rzeczywisty koszt środowiska w~czerwcu 2026 w~podziale na~usługi (AWS Cost Explorer). Dominuje płaszczyzna sterowania EKS (67,90~USD) --- składnik nieobjęty bezpłatnym limitem; pozostałe usługi (EC2, ELB, RDS) generują koszty rzędu pojedynczych dolarów dzięki Free Tier. (źródło: opracowanie własne)}
     \label{fig:june-billing}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{ForecastCost.png}
-    \caption{Podsumowanie kosztów bieżącego miesiąca (AWS Cost Explorer): koszt narosły do~dnia odczytu (93,71~USD) oraz~prognoza na~cały miesiąc (126,20~USD).}
+    \caption{Podsumowanie kosztów bieżącego miesiąca (AWS Cost Explorer): koszt narosły do~dnia odczytu (93,71~USD) oraz~prognoza na~cały miesiąc (126,20~USD). (źródło: opracowanie własne)}
     \label{fig:forecast-cost}
 \end{figure}
 
@@ -202,19 +202,21 @@ Profile procesora serwisów, pobrane przez~\code{pprof} w~szczycie obciążenia 
 usługi są~\emph{ograniczone operacjami wejścia--wyjścia}, nie~zaś mocą obliczeniową. Dominującą pozycją w~obu
 profilach są~wywołania systemowe (ok.~18\% próbek dla~serwisu zamówień, ok.~22\% dla~produktów) związane
 z~komunikacją sieciową oraz~zapytaniami do~bazy danych. Całkowite zużycie procesora w~oknie pomiaru pozostawało
-niskie. Oznacza to, że~kod aplikacyjny w~języku~Go nie~jest czynnikiem ograniczającym wydajność.
+niskie. Oznacza to, że~kod aplikacyjny w~języku~Go nie~jest czynnikiem ograniczającym wydajność. Profile obu
+serwisów w~postaci wykresów płomieniowych (\emph{flamegraph}) przedstawiono na~rysunkach~\ref{fig:order-service-flamegraph}
+i~\ref{fig:product-service-flamegraph}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{order-service-flamegraph.png}
-    \caption{Flamegraph profilu procesora serwisu zamówień (\code{pprof}), zarejestrowany w~szczycie obciążenia profilu \emph{max}. Szerokość słupka odpowiada udziałowi funkcji w~czasie procesora. Widoczne są: obsługa żądań HTTP, weryfikacja tokenu JWT (\code{CognitoVerifier.Verify}), zapytania do~PostgreSQL przez~\code{pgx} oraz~(de)serializacja JSON. Znaczną część stanowią wywołania systemowe związane z~siecią i~bazą danych, co~potwierdza ograniczenie operacjami wejścia--wyjścia, nie~mocą obliczeniową.}
+    \caption{Flamegraph profilu procesora serwisu zamówień (\code{pprof}), zarejestrowany w~szczycie obciążenia profilu \emph{max}. Szerokość słupka odpowiada udziałowi funkcji w~czasie procesora. Widoczne są: obsługa żądań HTTP, weryfikacja tokenu JWT (\code{CognitoVerifier.Verify}), zapytania do~PostgreSQL przez~\code{pgx} oraz~(de)serializacja JSON. Znaczną część stanowią wywołania systemowe związane z~siecią i~bazą danych, co~potwierdza ograniczenie operacjami wejścia--wyjścia, nie~mocą obliczeniową. (źródło: opracowanie własne)}
     \label{fig:order-service-flamegraph}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{product-service-flamegraph.png}
-    \caption{Flamegraph profilu procesora serwisu produktów (\code{pprof}) w~szczycie obciążenia profilu \emph{max}. Podobnie jak w~serwisie zamówień dominują wywołania systemowe (operacje sieciowe i~bazodanowe), a~spośród operacji obliczeniowych wyróżniają się weryfikacja JWT oraz~kodowanie JSON --- profil potwierdza, że~usługa jest~ograniczona wejściem--wyjściem.}
+    \caption{Flamegraph profilu procesora serwisu produktów (\code{pprof}) w~szczycie obciążenia profilu \emph{max}. Podobnie jak w~serwisie zamówień dominują wywołania systemowe (operacje sieciowe i~bazodanowe), a~spośród operacji obliczeniowych wyróżniają się weryfikacja JWT oraz~kodowanie JSON --- profil potwierdza, że~usługa jest~ograniczona wejściem--wyjściem. (źródło: opracowanie własne)}
     \label{fig:product-service-flamegraph}
 \end{figure}
 

@@ -62,15 +62,18 @@
 \usepackage{booktabs}
 
 % Podpisy rysunków i tabel - mała czcionka, wyrównanie do lewej
-\usepackage[singlelinecheck=false,justification=raggedright,font=small]{caption}
+% labelsep=period -> "Rys. 2.1. Tytuł" / "Tab. 2.1. Tytuł" (kropka i spacja po numerze)
+\usepackage[singlelinecheck=false,justification=raggedright,font=small,labelsep=period]{caption}
 \addto\captionspolish{
-  \renewcommand{\figurename}{Ilustracja}
-  \renewcommand{\listfigurename}{Spis ilustracji}
-  \renewcommand{\tableautorefname}{Tabela}
-  \renewcommand{\figureautorefname}{Ilustracja}
+  \renewcommand{\figurename}{Rys.}
+  \renewcommand{\tablename}{Tab.}
+  \renewcommand{\listfigurename}{Spis rysunków}
+  \renewcommand{\tableautorefname}{Tab.}
+  \renewcommand{\figureautorefname}{Rys.}
 }
-\renewcommand{\tablename}{Tabela}
-\renewcommand{\listfigurename}{Spis ilustracji}
+\renewcommand{\tablename}{Tab.}
+\renewcommand{\figurename}{Rys.}
+\renewcommand{\listfigurename}{Spis rysunków}
 
 \usepackage{listings}
 
@@ -110,8 +113,8 @@
 % Wielopoziomowe nagłówki: 1., 1.1., 1.1.1.
 \usepackage[indentafter]{titlesec}  % Dodać wcięcie również w pierwszym akapicie
 \titleformat{\chapter}[hang]{\bfseries\Large}{\thechapter.}{1em}{}
-\titleformat{\section}[hang]{\bfseries\large}{\thesection}{1em}{}
-\titleformat{\subsection}[hang]{\bfseries\normalsize}{\thesubsection}{1em}{}
+\titleformat{\section}[hang]{\bfseries\large}{\thesection.}{1em}{}
+\titleformat{\subsection}[hang]{\bfseries\normalsize}{\thesubsection.}{1em}{}
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -203,7 +206,7 @@
     \begin{flushright}
         Praca Inżynierska\\[1cm]
         Promotor:\\
-        dr Krzysztof Barteczko
+        dr Krzysztof Barteczko, prof. PJATK
     \end{flushright}
 
     \vfill
@@ -269,7 +272,7 @@ zdarzeniami, infrastruktura jako kod, Go
 % ======================
 \clearpage
 \listoffigures
-\addcontentsline{toc}{chapter}{Spis ilustracji}
+\addcontentsline{toc}{chapter}{Spis rysunków}
 
 \clearpage
 \listoftables

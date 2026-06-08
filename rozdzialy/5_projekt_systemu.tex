@@ -60,7 +60,7 @@ Są to zarejestrowani użytkownicy przeglądający ofertę i składający zamów
                   label={[font=\small\itshape]above:System obsługi zamówień}] {};
         \end{scope}
     \end{tikzpicture}
-    \caption{Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy, administrator zarządza katalogiem produktów; logowanie jest~wspólne dla~obu ról.}
+    \caption{Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy, administrator zarządza katalogiem produktów; logowanie jest~wspólne dla~obu ról. (źródło: opracowanie własne)}
     \label{fig:przypadki-uzycia}
 \end{figure}
 
@@ -82,7 +82,7 @@ Kwoty pieniężne modelowane są typem dziesiętnym o~stałej precyzji. Eliminuj
 zmiennoprzecinkowych.
 
 Cykl życia zamówienia zamodelowano jako maszynę stanów (wzorzec omówiony w~sekcji~\ref{sec:wzorce-projektowe}).
-Osiem możliwych stanów zestawiono w tabeli {tab:stany-zamowienia} i~zilustrowano na~rysunku~\ref{fig:maszyna-stanow}.
+Osiem możliwych stanów zestawiono w~tabeli~\ref{tab:stany-zamowienia} i~zilustrowano na~rysunku~\ref{fig:maszyna-stanow}.
 Dozwolone przejścia tworzą ścieżkę główną: \code{NEW} $\rightarrow$ \code{VALIDATED} $\rightarrow$ \code{PAYMENT\_PENDING} $\rightarrow$ \code{PAID}
 $\rightarrow$ \code{PROCESSING} $\rightarrow$ \code{SHIPPED}. Przy czym z każdego stanu niekońcowego możliwe
 jest przejście do stanów \code{CANCELLED} lub \code{FAILED}. Stany \code{SHIPPED}, \code{CANCELLED} i~\code{FAILED} są
@@ -142,7 +142,7 @@ terminalne. Każda próba przejścia spoza tego zbioru jest odrzucana na poziomi
         \draw[arr, densely dashed, black!55] (paid) to[bend left=14] (fail);
         \draw[arr, densely dashed, black!55] (proc) -- (fail);
     \end{tikzpicture}
-    \caption{Maszyna stanów cyklu życia zamówienia. Linią ciągłą oznaczono ścieżkę główną, przerywaną --- przejścia do~stanów terminalnych \code{CANCELLED} i~\code{FAILED}, osiągalne z~każdego stanu nieterminalnego (dla~czytelności pokazano reprezentatywne krawędzie). Stany terminalne wyróżniono szarym tłem.}
+    \caption{Maszyna stanów cyklu życia zamówienia. Linią ciągłą oznaczono ścieżkę główną, przerywaną --- przejścia do~stanów terminalnych \code{CANCELLED} i~\code{FAILED}, osiągalne z~każdego stanu nieterminalnego (dla~czytelności pokazano reprezentatywne krawędzie). Stany terminalne wyróżniono szarym tłem. (źródło: opracowanie własne)}
     \label{fig:maszyna-stanow}
 \end{figure}
 
@@ -203,7 +203,7 @@ rysunek~\ref{fig:architektura}.
         \draw[async] (order.west) to[bend right=18] node[left, font=\scriptsize]{order.events} (kafka.north);
         \draw[async] (kafka.south) to[bend right=18] node[left, font=\scriptsize]{} (product.west);
     \end{tikzpicture}
-    \caption{Architektura systemu. Linia ciągła --- komunikacja synchroniczna (HTTPS/REST), linia przerywana --- asynchroniczna wymiana zdarzeń przez~Apache Kafka. Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności.}
+    \caption{Architektura systemu. Linia ciągła --- komunikacja synchroniczna (HTTPS/REST), linia przerywana --- asynchroniczna wymiana zdarzeń przez~Apache Kafka. Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności. (źródło: opracowanie własne)}
     \label{fig:architektura}
 \end{figure}
 
@@ -353,7 +353,7 @@ Pełny przebieg procesu zakupowego przedstawia rysunek~\ref{fig:sekwencja-zamowi
         \draw[ret] (\payx,-7.7) -- node[above]{200 (SUCCEEDED)} (\portx,-7.7);
 
     \end{tikzpicture}
-    \caption{Diagram sekwencji przepływu zakupowego. Po~synchronicznym utworzeniu zamówienia jego walidacja przebiega asynchronicznie, według choreografii zdarzeń Kafki (order-service $\rightarrow$ product-service); płatność i~jej finalizacja są~ponownie operacjami synchronicznymi.}
+    \caption{Diagram sekwencji przepływu zakupowego. Po~synchronicznym utworzeniu zamówienia jego walidacja przebiega asynchronicznie, według choreografii zdarzeń Kafki (order-service $\rightarrow$ product-service); płatność i~jej finalizacja są~ponownie operacjami synchronicznymi. (źródło: opracowanie własne)}
     \label{fig:sekwencja-zamowienia}
 \end{figure}
 
@@ -384,6 +384,10 @@ rozwijanych baz danych. Bardzo dobra transakcyjność ACID byłą niezbędna prz
 stanów magazynowych i~finalizacji płatności. Dostępność PostgreSQL jako w~pełni zarządzanej usługi Amazon RDS
 była kolejnym powodem dlaczego został wybrany ten silnik (sekcja~\ref{subsec:rds}).
 
+Schemat głównej tabeli zamówień przedstawiono na~listingu~\ref{lst:schemat-orders}. Identyfikatory zapisano jako
+\code{TEXT}, pozycje zamówienia i~adres dostawy --- w~kolumnach \code{JSONB}, a~pełną historię przejść między stanami
+utrwala kolumna \code{history}.
+
 \begin{lstlisting}[caption={Schemat tabeli orders},label={lst:schemat-orders},language=SQL]
 CREATE TABLE orders (
     id               TEXT PRIMARY KEY,
@@ -399,8 +403,9 @@ CREATE TABLE orders (
 );
 \end{lstlisting}
 
-Tabelę uzupełniają indeksy na kolumnach \code{customer\_id} i~\code{created\_at}, wspierające najczęstsze zapytanie
-systemu. Tabela \code{idempotency\_keys}, wiążąca klucze idempotencji z~identyfikatorami utworzonych zamówień.
+Tabelę uzupełniają indeksy na kolumnach \code{customer\_id} i~\code{created\_at}, wspierające najczęstsze zapytania
+systemu. Tabela \code{idempotency\_keys} (listing~\ref{lst:schemat-idempotency_keys}) wiąże klucze idempotencji
+z~identyfikatorami utworzonych zamówień, dzięki czemu powtórzone żądanie z~tym samym kluczem nie~tworzy duplikatu.
 
 \begin{lstlisting}[caption={Schemat tabeli idempotency keys},label={lst:schemat-idempotency_keys},language=SQL]
 CREATE TABLE idempotency_keys (
@@ -410,7 +415,7 @@ CREATE TABLE idempotency_keys (
 );
 \end{lstlisting}
 
-Serwis produktów przechowuje katalog w~tabeli \code{products}. Stan magazynowy zamodelowano czterema
+Serwis produktów przechowuje katalog w~tabeli \code{products} (listing~\ref{lst:schemat-products}). Stan magazynowy zamodelowano czterema
 kolumnami ilościowymi (\code{qty}, \code{reserved\_qty}, \code{paid\_qty}, \code{shipped\_qty}) z~ograniczeniami
 \code{CHECK} wykluczającymi wartości ujemne. Dzięki czemu niezmiennik nieujemności stanów magazynowych
 egzekwowany jest również na poziomie bazy.
@@ -432,8 +437,8 @@ CREATE TABLE products (
 );
 \end{lstlisting}
 
-Zdjęcia produktów przechowywane są w~tabeli \code{product\_images} w~kolumnie binarnej \code{BYTEA}, 
-wraz z~typem MIME i~rozmiarem.
+Zdjęcia produktów przechowywane są w~tabeli \code{product\_images} w~kolumnie binarnej \code{BYTEA},
+wraz z~typem MIME i~rozmiarem; jej schemat przedstawia listing~\ref{lst:schemat-images}.
 
 \begin{lstlisting}[caption={Schemat tabeli images},label={lst:schemat-images},language=SQL]
 CREATE TABLE IF NOT EXISTS product_images (
@@ -447,8 +452,9 @@ CREATE TABLE IF NOT EXISTS product_images (
 );
 \end{lstlisting}
 
-Serwis płatności utrzymuje tabelę \code{payments}, wiążącą płatność 
-z~zamówieniem i~klientem oraz rejestrującą znacznik czasu finalizacji.
+Serwis płatności utrzymuje tabelę \code{payments}, wiążącą płatność
+z~zamówieniem i~klientem oraz rejestrującą znacznik czasu finalizacji; jej schemat przedstawia
+listing~\ref{lst:schemat-payments}.
 
 \begin{lstlisting}[caption={Schemat tabeli payments},label={lst:schemat-payments},language=SQL]
 CREATE TABLE IF NOT EXISTS payments (
@@ -526,7 +532,7 @@ aplikację. Uzyskany token dołączany jest do każdego żądania API w~nagłów
         \node[align=center, font=\scriptsize] at (\svcx,-7.6)
             {\textit{weryfikacja}\\\textit{podpisu (JWKS)}};
     \end{tikzpicture}
-    \caption{Przepływ uwierzytelniania OAuth~2.0 \emph{authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny --- wraz z~weryfikatorem --- na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS).}
+    \caption{Przepływ uwierzytelniania OAuth~2.0 \emph{authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny --- wraz z~weryfikatorem --- na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS). (źródło: opracowanie własne)}
     \label{fig:pkce}
 \end{figure}
 

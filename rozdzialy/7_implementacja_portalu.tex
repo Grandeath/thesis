@@ -31,77 +31,85 @@ Przepływ zakupowy przebiega przez kolejne widoki aplikacji.
 
 \textbf{Katalog} (\code{CatalogView}) prezentuje
 stronicowaną listę produktów z~filtrowaniem po kategorii, przedziale cenowym i~dostępności. Przy czym produkty 
-o~wyczerpanym stanie magazynowym mają zablokowaną możliwość dodania do koszyka. 
+o~wyczerpanym stanie magazynowym mają zablokowaną możliwość dodania do koszyka. Widok katalogu
+przedstawiono na~rysunku~\ref{fig:product-view}; karty produktów prezentują nazwę, cenę i~dostępność,
+a~filtry działają po~stronie klienta na~danych pobranych z~serwisu produktów.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{ProductView.png}
-    \caption{Widok katalogu produktów zrealizowanego serwisu.}
+    \caption{Widok katalogu produktów zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:product-view}
 \end{figure}
 
-\textbf{Koszyk} (\code{CartView}) umożliwia edycję ilości i~usuwanie pozycji,
+\textbf{Koszyk} (\code{CartView}, rysunek~\ref{fig:cart-view}) umożliwia edycję ilości i~usuwanie pozycji
+oraz na~bieżąco przelicza wartość zamówienia na~podstawie aktualnych cen z~katalogu.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{CartView.png}
-    \caption{Widok koszyka zrealizowanego serwisu.}
+    \caption{Widok koszyka zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:cart-view}
 \end{figure}
 
-\textbf{Finalizacja} (\code{CheckoutView}) zbiera adres dostawy i~składa zamówienie. 
+\textbf{Finalizacja} (\code{CheckoutView}) zbiera adres dostawy i~składa zamówienie; jej widok
+przedstawiono na~rysunku~\ref{fig:checkout-view}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{CheckoutView.png}
-    \caption{Widok finalizacji zamówienia zrealizowanego serwisu.}
+    \caption{Widok finalizacji zamówienia zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:checkout-view}
 \end{figure}
 
 Po jego utworzeniu użytkownik przechodzi do \textbf{szczegółów zamówienia} (\code{OrderDetailsView}).
-Prezentujących pozycje, adres, bieżący status wraz z~wizualizacją postępu w~cyklu życia. 
+Prezentujących pozycje, adres, bieżący status wraz z~wizualizacją postępu w~cyklu życia. Widok ten
+przedstawiono na~rysunku~\ref{fig:order-details-view} --- pasek postępu odzwierciedla kolejne stany maszyny
+stanów zamówienia opisanej w~sekcji~\ref{sec:order-service}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{OrderDetailsView.png}
-    \caption{Widok szczegółów zamówienia zrealizowanego serwisu.}
+    \caption{Widok szczegółów zamówienia zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:order-details-view}
 \end{figure}
 
-Przycisk rozpoczęcia płatności prowadzi do \textbf{widoku płatności} (\code{PaymentView}) z~symulowanym formularzem zapłaty.
+Przycisk rozpoczęcia płatności prowadzi do \textbf{widoku płatności} (\code{PaymentView}) z~symulowanym formularzem zapłaty,
+który przedstawiono na~rysunku~\ref{fig:payment-view}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{PaymentView.png}
-    \caption{Widok płatności zrealizowanego serwisu.}
+    \caption{Widok płatności zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:payment-view}
 \end{figure}
 
-Historię zamówień prezentuje \code{OrdersView},
+Historię zamówień prezentuje \code{OrdersView} (rysunek~\ref{fig:order-history-view}), grupując zamówienia
+według statusu i~umożliwiając przejście do~ich szczegółów.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{OrderHistory.png}
-    \caption{Widok historii zamówień zrealizowanego serwisu.}
+    \caption{Widok historii zamówień zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:order-history-view}
 \end{figure}
 
-\textbf{Pulpit} (\code{DashboardView}) pokzuje podsumowanie. Czyli liczbę aktywnych zamówień
-i~ostatnią płatność. 
+\textbf{Pulpit} (\code{DashboardView}) pokazuje podsumowanie, czyli liczbę aktywnych zamówień
+i~ostatnią płatność; jego widok przedstawiono na~rysunku~\ref{fig:dashboard-view}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{DashboardView.png}
-    \caption{Widok pulpitu zrealizowanego serwisu.}
+    \caption{Widok pulpitu zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:dashboard-view}
 \end{figure}
 
-Całość spina powłoka aplikacji ze~stałym panelem nawigacyjnym.
+Całość spina powłoka aplikacji ze~stałym panelem nawigacyjnym, który przedstawiono na~rysunku~\ref{fig:navigation-panel}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{NavigationPanel.png}
-    \caption{Widok paneluj nawigacyjnego zrealizowanego serwisu.}
+    \caption{Widok paneluj nawigacyjnego zrealizowanego serwisu. (źródło: opracowanie własne)}
     \label{fig:navigation-panel}
 \end{figure}
 
@@ -145,11 +153,14 @@ Rozpoczynając logowanie, aplikacja generuje kryptograficznie losowy weryfikator
 bibliotek kryptograficznych. Weryfikator, wraz z~losowym parametrem \code{state} (chroniącym przed atakami CSRF)
 i~docelową trasą po zalogowaniu, zapisywany jest w~\code{sessionStorage}. Po czym przeglądarka przekierowywana
 jest na punkt końcowy autoryzacji Cognito z~parametrami \code{code\_challenge} i~\code{code\_challenge\_method=S256}.
+Punktem wejścia dla~niezalogowanego użytkownika jest strona startowa z~przyciskiem logowania
+(rysunek~\ref{fig:home-view}), kierująca do~hostowanego formularza logowania Cognito
+(rysunek~\ref{fig:cognito-login-view}), na~którym następuje właściwe uwierzytelnienie.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{HomeView.png}
-    \caption{Widok strony przekierowującej do logowania.}
+    \caption{Widok strony przekierowującej do logowania. (źródło: opracowanie własne)}
     \label{fig:home-view}
 \end{figure}
 
@@ -157,7 +168,7 @@ jest na punkt końcowy autoryzacji Cognito z~parametrami \code{code\_challenge} 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{CognitoLogin.png}
-    \caption{Widok logowania Cognito.}
+    \caption{Widok logowania Cognito. (źródło: opracowanie własne)}
     \label{fig:cognito-login-view}
 \end{figure}
 

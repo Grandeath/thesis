@@ -1,7 +1,7 @@
 \contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Struktura zdarzenia order.created}}{32}{lstlisting.4.1}%
 \contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Schemat tabeli orders}}{33}{lstlisting.4.2}%
 \contentsline {lstlisting}{\numberline {4.3}{\ignorespaces Schemat tabeli idempotency keys}}{33}{lstlisting.4.3}%
-\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces Schemat tabeli products}}{33}{lstlisting.4.4}%
+\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces Schemat tabeli products}}{34}{lstlisting.4.4}%
 \contentsline {lstlisting}{\numberline {4.5}{\ignorespaces Schemat tabeli images}}{34}{lstlisting.4.5}%
 \contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Schemat tabeli payments}}{34}{lstlisting.4.6}%
 \contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Struktura katalogów serwisu zamówień}}{37}{lstlisting.5.1}%
@@ -18,4 +18,4 @@
 \contentsline {lstlisting}{\numberline {7.4}{\ignorespaces Reguła ALB wymagająca nagłówka weryfikacyjnego (alb.tf)}}{57}{lstlisting.7.4}%
 \contentsline {lstlisting}{\numberline {7.5}{\ignorespaces Reguły routingu wewnętrznego proxy nginx (fragment)}}{58}{lstlisting.7.5}%
 \contentsline {lstlisting}{\numberline {7.6}{\ignorespaces Odkrywanie celów pomiarowych na podstawie adnotacji (prometheus.yml)}}{59}{lstlisting.7.6}%
-\contentsline {lstlisting}{\numberline {8.1}{\ignorespaces Reakcja HorizontalPodAutoscaler na obciążenie (profil max)}}{64}{lstlisting.8.1}%
+\contentsline {lstlisting}{\numberline {8.1}{\ignorespaces Reakcja HorizontalPodAutoscaler na obciążenie (profil max)}}{65}{lstlisting.8.1}%

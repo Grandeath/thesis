@@ -99,7 +99,7 @@ resource "aws_subnet" "private" {
                   inner sep=5mm, label={[font=\scriptsize\bfseries]above:VPC 10.0.0.0/16}] {};
         \end{scope}
     \end{tikzpicture}
-    \caption{Topologia sieci VPC. Komponenty brzegowe (ALB, bramy NAT) działają w~podsieciach publicznych, a~węzły klastra i~baza danych --- w~prywatnych, pozbawionych bezpośredniej łączności z~Internetem. Zasoby rozmieszczono w~dwóch strefach dostępności. Baza danych w~środowisku pracuje jednostrefowo; wariant standby zaznaczono jako~opcję trybu Multi-AZ.}
+    \caption{Topologia sieci VPC. Komponenty brzegowe (ALB, bramy NAT) działają w~podsieciach publicznych, a~węzły klastra i~baza danych --- w~prywatnych, pozbawionych bezpośredniej łączności z~Internetem. Zasoby rozmieszczono w~dwóch strefach dostępności. Baza danych w~środowisku pracuje jednostrefowo; wariant standby zaznaczono jako~opcję trybu Multi-AZ. (źródło: opracowanie własne)}
     \label{fig:topologia-sieci}
 \end{figure}
 
@@ -109,11 +109,12 @@ resource "aws_subnet" "private" {
 Klaster EKS utworzono z~płaszczyzną sterowania rozpiętą na podsieci prywatne obu stref
 dostępności. Uprawnienia administracyjne do klastra nadawane są wpisami
 dostępu powiązanymi z~tożsamościami IAM, bez ręcznej edycji map konfiguracyjnych wewnątrz klastra.
+Utworzony klaster w~konsoli Amazon EKS przedstawiono na~rysunku~\ref{fig:cluster-eks}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{ClusterEKS.png}
-    \caption{Konsola Amazon EKS: klaster \code{order-portal-prod-eks} w~wersji Kubernetes~1.32, w~stanie aktywnym.}
+    \caption{Konsola Amazon EKS: klaster \code{order-portal-prod-eks} w~wersji Kubernetes~1.32, w~stanie aktywnym. (źródło: opracowanie własne)}
     \label{fig:cluster-eks}
 \end{figure}
 
@@ -141,10 +142,13 @@ resource "aws_eks_addon" "vpc_cni" {
 }
 \end{lstlisting}
 
+Uruchomione cztery węzły grupy w~stanie \emph{Ready} przedstawiono na~rysunku~\ref{fig:nodes-eks};
+zwraca uwagę wyraźnie wyższe wykorzystanie pamięci niż~procesora.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{NodesEKS.png}
-    \caption{Cztery węzły grupy \code{order-portal-prod-ng} (instancje \code{t3.small}) w~stanie \emph{Ready}. Wykorzystanie pamięci (56--68\%) wyraźnie przewyższa wykorzystanie procesora (21--34\%) --- co~potwierdza ustalenie z~rozdziału~\ref{chap:testy-i-analiza}, że~to~pamięć, a~nie~procesor, jest~czynnikiem ograniczającym gęstość podów.}
+    \caption{Cztery węzły grupy \code{order-portal-prod-ng} (instancje \code{t3.small}) w~stanie \emph{Ready}. Wykorzystanie pamięci (56--68\%) wyraźnie przewyższa wykorzystanie procesora (21--34\%) --- co~potwierdza ustalenie z~rozdziału~\ref{chap:testy-i-analiza}, że~to~pamięć, a~nie~procesor, jest~czynnikiem ograniczającym gęstość podów. (źródło: opracowanie własne)}
     \label{fig:nodes-eks}
 \end{figure}
 
@@ -156,11 +160,12 @@ IP podów. \code{kube-proxy} programuje na~każdym węźle reguły sieciowe real
 kierujące ruch z~nazwy usługi do~jej aktualnych replik. Agent \textbf{EKS Pod Identity} umożliwia nadawanie podom
 uprawnień do~usług AWS. Sterownik \textbf{EBS CSI} odpowiada za~trwałe składowanie danych: na~żądanie aplikacji
 (obiekt PersistentVolumeClaim) automatycznie tworzy w~AWS wolumin EBS i~podłącza go do~poda.
+Komplet aktywnych dodatków klastra przedstawiono na~rysunku~\ref{fig:addons-eks}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{AddonsEKS.png}
-    \caption{Zarządzane dodatki klastra EKS --- agent Pod Identity, VPC CNI, sterownik EBS CSI, CoreDNS oraz metrics-server --- wszystkie w~stanie aktywnym.}
+    \caption{Zarządzane dodatki klastra EKS --- agent Pod Identity, VPC CNI, sterownik EBS CSI, CoreDNS oraz metrics-server --- wszystkie w~stanie aktywnym. (źródło: opracowanie własne)}
     \label{fig:addons-eks}
 \end{figure}
 
@@ -185,12 +190,12 @@ Bazę danych utworzono jako instancję RDS PostgreSQL~18 klasy \code{db.t4g.micr
 Wytworzono go w~podsieciach prywatnych. Dostęp sieciowy ogranicza dedykowana grupa
 bezpieczeństwa, przepuszczająca port 5432 wyłącznie z~grupy bezpieczeństwa węzłów klastra. Baza nie jest
 osiągalna ani z~Internetu, ani z~podsieci publicznych. W~środowisku przyjęto jednodniową retencję kopii zapasowych
-i~tryb jednostrefowy.
+i~tryb jednostrefowy. Utworzoną instancję bazy w~konsoli Amazon RDS przedstawiono na~rysunku~\ref{fig:postgreSQL-RDS}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{PosgreSQL.png}
-    \caption{Konsola Amazon RDS: instancja PostgreSQL \code{order-portal-prod-pg} klasy \code{db.t4g.micro} w~strefie \code{eu-central-1b}, w~stanie dostępnym.}
+    \caption{Konsola Amazon RDS: instancja PostgreSQL \code{order-portal-prod-pg} klasy \code{db.t4g.micro} w~strefie \code{eu-central-1b}, w~stanie dostępnym. (źródło: opracowanie własne)}
     \label{fig:postgreSQL-RDS}
 \end{figure}
 
@@ -207,24 +212,26 @@ Konfiguracja każdej usługi składana jest w~Terraformie do pliku \code{.env}, 
 do kontenera jako wolumin tylko do odczytu. Szablony wdrożeniowe niosą również adnotacje
 \code{prometheus.io/scrape}, \code{prometheus.io/port} i~\code{prometheus.io/path}, włączające pody do monitoringu
 (sekcja~\ref{sec:wdrozenie-monitoringu}). Każdej usłudze towarzyszy obiekt Service typu ClusterIP, udostępniający
-ją pod stabilną nazwą DNS.
+ją pod stabilną nazwą DNS. Trzy wdrożone mikroserwisy w~przestrzeni nazw \code{order-portal} przedstawiono
+na~rysunku~\ref{fig:serices-eks}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{ServicesEKS.png}
-    \caption{Trzy mikroserwisy wdrożone w~przestrzeni nazw \code{order-portal} jako obiekty Deployment --- każdy w~stanie gotowości (1~Ready / 1~Desired).}
+    \caption{Trzy mikroserwisy wdrożone w~przestrzeni nazw \code{order-portal} jako obiekty Deployment --- każdy w~stanie gotowości (1~Ready / 1~Desired). (źródło: opracowanie własne)}
     \label{fig:serices-eks}
 \end{figure}
 
 Broker Kafka uruchomiono jako Deployment z~obrazem \code{apache/kafka:4.3.0}, Dziennik zdarzeń składowany jest na 
 trwałym woluminie 5~GiB klasy \code{ebs-gp3}. Z tego powodu dane przetrwają
 restart i~przeniesienie poda. Tematy \code{order.events} i~\code{product.events} tworzy jednorazowy Job inicjalizacyjny,
-wykonujący narzędzie \code{kafka-topics} po starcie brokera.
+wykonujący narzędzie \code{kafka-topics} po starcie brokera. Uruchomiony broker w~klastrze przedstawiono
+na~rysunku~\ref{fig:kafka-eks}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Kafka.png}
-    \caption{Broker Apache Kafka (\code{apache/kafka:4.3.0}) uruchomiony w~klastrze jako pojedynczy pod, ze~strategią \emph{Recreate} --- zgodnie z~projektem jednowęzłowego brokera w~trybie KRaft.}
+    \caption{Broker Apache Kafka (\code{apache/kafka:4.3.0}) uruchomiony w~klastrze jako pojedynczy pod, ze~strategią \emph{Recreate} --- zgodnie z~projektem jednowęzłowego brokera w~trybie KRaft. (źródło: opracowanie własne)}
     \label{fig:kafka-eks}
 \end{figure}
 
@@ -234,8 +241,9 @@ wykonujący narzędzie \code{kafka-topics} po starcie brokera.
 Jedynym publicznym punktem wejścia do systemu jest dystrybucja CloudFront z~dwoma originami. Domyślne zachowanie
 kieruje żądania do prywatnego bucketa S3 z~aplikacją webową, z~polityką agresywnego buforowania i~kompresją. Ponieważ trasy SPA (np.
 \code{/orders/123}) nie odpowiadają obiektom w~S3, do zachowania dołączono funkcję CloudFront wykonywaną przy
-każdym żądaniu (listing~\ref{lst:spa-router}). Żądania bez rozszerzenia pliku przepisywane są na \code{/index.html}, 
-dzięki czemu głębokie odnośniki i~odświeżenie strony działają poprawnie.
+każdym żądaniu (listing~\ref{lst:spa-router}). Żądania bez rozszerzenia pliku przepisywane są na \code{/index.html},
+dzięki czemu głębokie odnośniki i~odświeżenie strony działają poprawnie. Skonfigurowaną dystrybucję
+CloudFront wraz z~jej dwoma originami przedstawiono na~rysunku~\ref{fig:cloudfront}.
 
 \begin{lstlisting}[caption={Funkcja CloudFront przepisująca trasy SPA (cloudfront.tf)},label={lst:spa-router}]
 function handler(event) {
@@ -252,7 +260,7 @@ function handler(event) {
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Cloudfront.png}
-    \caption{Dystrybucja CloudFront \code{order-portal-prod-cdn} z~dwoma originami: bucketem S3 (aplikacja SPA, dostęp przez~Origin Access Control) oraz~load balancerem ALB (ruch API).}
+    \caption{Dystrybucja CloudFront \code{order-portal-prod-cdn} z~dwoma originami: bucketem S3 (aplikacja SPA, dostęp przez~Origin Access Control) oraz~load balancerem ALB (ruch API). (źródło: opracowanie własne)}
     \label{fig:cloudfront}
 \end{figure}
 
@@ -263,12 +271,13 @@ nie nawiążą nawet połączenia TCP. Po drugie, CloudFront dokleja do żądań
 \code{X-Origin-Verify} (o~wartości generowanej zasobem \code{random\_password}), a~jedyna przepuszczająca reguła
 nasłuchu wymaga jego obecności (listing~\ref{lst:origin-verify}). Żądania bez poprawnego nagłówka np.
 z~cudzej dystrybucji CloudFront otrzymują odpowiedź odmowną. Wymusza to przepływ całego ruchu przez warstwę
-brzegową, wraz z~jej terminacją TLS i~ochroną przed atakami wolumetrycznymi.
+brzegową, wraz z~jej terminacją TLS i~ochroną przed atakami wolumetrycznymi. Reguły kierowania ruchu
+(\emph{behaviors}) dystrybucji przedstawiono na~rysunku~\ref{fig:cloudfront-paths}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{CloudfrontPaths.png}
-    \caption{Reguły zachowań (\emph{behaviors}) CloudFront: ścieżki \code{/api/*} oraz~\code{/grafana*} kierowane są~do~ALB z~wyłączonym buforowaniem, a~pozostałe --- domyślnie do~bucketa S3 z~buforowaniem zoptymalizowanym.}
+    \caption{Reguły zachowań (\emph{behaviors}) CloudFront: ścieżki \code{/api/*} oraz~\code{/grafana*} kierowane są~do~ALB z~wyłączonym buforowaniem, a~pozostałe --- domyślnie do~bucketa S3 z~buforowaniem zoptymalizowanym. (źródło: opracowanie własne)}
     \label{fig:cloudfront-paths}
 \end{figure}
 
@@ -315,10 +324,12 @@ location / {
 }
 \end{lstlisting}
 
+Działający pojedynczy pod proxy (Deployment \code{router}) w~klastrze przedstawiono na~rysunku~\ref{fig:nginx}.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Nginx.png}
-    \caption{Pod wewnętrznego proxy nginx (Deployment \code{router}) w~przestrzeni \code{order-portal} --- pojedyncza replika trasująca ruch API do~mikroserwisów na~podstawie prefiksu ścieżki.}
+    \caption{Pod wewnętrznego proxy nginx (Deployment \code{router}) w~przestrzeni \code{order-portal} --- pojedyncza replika trasująca ruch API do~mikroserwisów na~podstawie prefiksu ścieżki. (źródło: opracowanie własne)}
     \label{fig:nginx}
 \end{figure}
 
@@ -400,7 +411,7 @@ location / {
 
     \end{tikzpicture}
 
-    \caption{Przepływ żądania API przez warstwy systemu. CloudFront kieruje ruch \code{/api/*} do load balancera, natomiast pozostałe trasy obsługuje bucket S3 z aplikacją SPA. Dostęp do ALB ograniczają tajny nagłówek \code{X-Origin-Verify} oraz prefix list CloudFront. Wewnętrzne proxy nginx trasuje żądanie do właściwego mikroserwisu na podstawie prefiksu ścieżki.}
+    \caption{Przepływ żądania API przez warstwy systemu. CloudFront kieruje ruch \code{/api/*} do load balancera, natomiast pozostałe trasy obsługuje bucket S3 z aplikacją SPA. Dostęp do ALB ograniczają tajny nagłówek \code{X-Origin-Verify} oraz prefix list CloudFront. Wewnętrzne proxy nginx trasuje żądanie do właściwego mikroserwisu na podstawie prefiksu ścieżki. (źródło: opracowanie własne)}
     \label{fig:przeplyw-zadania}
 \end{figure}
 
@@ -438,19 +449,21 @@ scrape_configs:
 
 Grafanę provisionowano w~pełni deklaratywnie: źródło danych (wewnątrzklastrowy adres Prometheusa).
  Interfejs Grafany udostępniono pod ścieżką \code{/grafana} publicznej dystrybucji CloudFront (poprzez regułę proxy z~sekcji~\ref{sec:routing-ruchu}), dzięki
-czemu wgląd w~stan systemu nie wymaga dostępu administracyjnego do klastra.
+czemu wgląd w~stan systemu nie wymaga dostępu administracyjnego do klastra. Wdrożony podsystem monitoringu
+w~przestrzeni nazw \code{monitoring} przedstawiono na~rysunku~\ref{fig:prometheus-eks}, a~udostępniony interfejs
+Grafany z~kokpitami mikroserwisów --- na~rysunku~\ref{fig:grafana}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{PrometheusEKS.png}
-    \caption{Podsystem monitoringu w~przestrzeni nazw \code{monitoring}: wdrożenia Prometheus i~Grafana, oba w~stanie gotowości.}
+    \caption{Podsystem monitoringu w~przestrzeni nazw \code{monitoring}: wdrożenia Prometheus i~Grafana, oba w~stanie gotowości. (źródło: opracowanie własne)}
     \label{fig:prometheus-eks}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Grafana.png}
-    \caption{Interfejs Grafany udostępniony pod~ścieżką \code{/grafana} dystrybucji CloudFront, z~osobnym kokpitem dla~każdego z~trzech mikroserwisów.}
+    \caption{Interfejs Grafany udostępniony pod~ścieżką \code{/grafana} dystrybucji CloudFront, z~osobnym kokpitem dla~każdego z~trzech mikroserwisów. (źródło: opracowanie własne)}
     \label{fig:grafana}
 \end{figure}
 

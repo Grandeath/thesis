@@ -64,23 +64,23 @@
 \contentsline {section}{\numberline {7.6}Routing ruchu --- CloudFront, ALB i reverse proxy}{56}{section.7.6}%
 \contentsline {section}{\numberline {7.7}Wdrożenie monitoringu --- Prometheus i Grafana}{59}{section.7.7}%
 \contentsline {section}{\numberline {7.8}Skalowanie aplikacji i zarządzanie cyklem życia}{60}{section.7.8}%
-\contentsline {chapter}{\numberline {8}Testy i analiza działania systemu}{61}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Metodyka testowania}{61}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Testy funkcjonalne systemu}{62}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Testy wydajnościowe i skalowalność}{62}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Czasy odpowiedzi i efekt rozgrzania}{63}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}Opóźnienie asynchronicznej walidacji}{63}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}Automatyczne skalowanie pod obciążeniem}{63}{subsection.8.3.3}%
-\contentsline {section}{\numberline {8.4}Analiza kosztowa wykorzystania usług AWS}{65}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Profilowanie procesora}{66}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}Zidentyfikowane wąskie gardła}{67}{subsection.8.4.2}%
-\contentsline {chapter}{Wnioski i podsumowanie}{69}{chapter*.45}%
-\contentsline {section}{Stopień realizacji celów pracy}{69}{section*.46}%
-\contentsline {section}{Napotkane trudności i sposoby ich rozwiązania}{70}{table.caption.47}%
-\contentsline {section}{Rekomendacje dotyczące dalszego rozwoju systemu}{70}{table.caption.47}%
-\contentsline {section}{Podsumowanie końcowe}{71}{table.caption.47}%
-\contentsline {chapter}{Spis ilustracji}{74}{chapter*.48}%
-\contentsline {chapter}{Spis tabel}{75}{chapter*.49}%
-\contentsline {chapter}{Spis listingów}{76}{chapter*.50}%
-\contentsline {chapter}{Bibliografia}{77}{chapter*.51}%
-\contentsline {chapter}{Wykaz skrótów}{78}{chapter*.52}%
+\contentsline {chapter}{\numberline {8}Testy i analiza działania systemu}{62}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Metodyka testowania}{62}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Testy funkcjonalne systemu}{63}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Testy wydajnościowe i skalowalność}{63}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Czasy odpowiedzi i efekt rozgrzania}{64}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Opóźnienie asynchronicznej walidacji}{64}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Automatyczne skalowanie pod obciążeniem}{64}{subsection.8.3.3}%
+\contentsline {section}{\numberline {8.4}Analiza kosztowa wykorzystania usług AWS}{66}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Profilowanie procesora}{67}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}Zidentyfikowane wąskie gardła}{68}{subsection.8.4.2}%
+\contentsline {chapter}{Wnioski i podsumowanie}{70}{chapter*.45}%
+\contentsline {section}{Stopień realizacji celów pracy}{70}{section*.46}%
+\contentsline {section}{Napotkane trudności i sposoby ich rozwiązania}{71}{table.caption.47}%
+\contentsline {section}{Rekomendacje dotyczące dalszego rozwoju systemu}{71}{table.caption.47}%
+\contentsline {section}{Podsumowanie końcowe}{72}{table.caption.47}%
+\contentsline {chapter}{Spis rysunków}{76}{chapter*.48}%
+\contentsline {chapter}{Spis tabel}{77}{chapter*.49}%
+\contentsline {chapter}{Spis listingów}{78}{chapter*.50}%
+\contentsline {chapter}{Bibliografia}{79}{chapter*.51}%
+\contentsline {chapter}{Wykaz skrótów}{80}{chapter*.52}%
