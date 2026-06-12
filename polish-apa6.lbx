@@ -1,0 +1,64 @@
+\ProvidesFile{polish-apa6.lbx}[2026/06/12 polska lokalizacja stylu biblatex-apa6]
+
+% Makra specyficzne dla stylu APA (formaty dat itd.) dziedziczymy z wersji
+% amerykanskiej, a lancuchy tekstowe z polskiej lokalizacji pakietu biblatex.
+\InheritBibliographyExtras{american-apa6}
+
+\DeclareBibliographyStrings{%
+  inherit          = {polish},
+  revisededition   = {{wydanie poprawione}{wyd\adddotspace popr\adddot}},
+  on               = {{na}{na}},
+  retrieved        = {{pobrano}{pobrano}},
+  available        = {{dostępne}{dostępne}},
+  from             = {{z}{z}},
+  archivedat       = {{zarchiwizowano pod adresem}{zarchiwizowano pod adresem}},
+  origyear         = {{praca oryginalnie opublikowana}{praca oryginalnie opublikowana}},
+  reviewof         = {{recenzja}{recenzja}},
+  with             = {{z}{z}},
+  producer         = {{producent}{producent}},
+  execproducer     = {{producent wykonawczy}{producent wykonawczy}},
+  director         = {{reżyser}{reżyser}},
+  writer           = {{scenariusz}{scenariusz}},
+  typechair        = {{przewodniczący}{przewodniczący}},
+  typechairs       = {{przewodniczący}{przewodniczący}},
+  typevolume       = {{redaktor tomu}{red\adddotspace tomu}},
+  typevolumes      = {{redaktorzy tomu}{red\adddotspace tomu}},
+  typeseries       = {{redaktor serii}{red\adddotspace serii}},
+  typeseriess      = {{redaktorzy serii}{red\adddotspace serii}},
+  typevolseries    = {{redaktor serii i tomu}{red\adddotspace serii i~tomu}},
+  typevolseriess   = {{redaktorzy serii i tomu}{red\adddotspace serii i~tomu}},
+}
+
+% Polski szyk dat:
+%  - data publikacji: (2020, 4 czerwca)
+%  - data dostepu (urldate): pobrano 4 czerwca 2026
+\DeclareBibliographyExtras{%
+  \protected\def\mkbibdateapalong#1#2#3{%
+    \iffieldundef{#1}
+      {}
+      {\iffieldbibstring{#1}
+         {\biblcstring{\thefield{#1}}}
+         {\thefield{#1}}}%
+    \iffieldundef{#2}
+      {}
+      {\iffieldundef{#1}{}{\addcomma\space}%
+       \iffieldundef{#3}
+         {}
+         {\stripzeros{\thefield{#3}}\addspace}%
+       \lbx@pl@mkbibmonth{\thefield{#2}}}}%
+  \protected\def\mkbibdateapalongmdy#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\stripzeros{\thefield{#3}}\addspace}%
+    \iffieldundef{#2}
+      {}
+      {\lbx@pl@mkbibmonth{\thefield{#2}}}%
+    \iffieldundef{#1}
+      {}
+      {\iffieldundef{#2}{}{\addspace}%
+       \iffieldbibstring{#1}
+         {\biblcstring{\thefield{#1}}}
+         {\thefield{#1}}}}%
+}
+
+\endinput

@@ -261,7 +261,7 @@ Pełny przebieg procesu zakupowego przedstawia rysunek~\ref{fig:sekwencja-zamowi
 \section{Wybór technologii implementacyjnych - Go i Vue 3}
 \label{sec:wybor-technologii}
 
-Na język implementacji mikroserwisów wybrano \textbf{Go}. Język ten często określany jako język chmury \cite{medium}.
+Na język implementacji mikroserwisów wybrano \textbf{Go}. Język ten często określany jako język chmury \parencite{medium}.
 Ma wiele zalet które idealnie sprawdzają się przy budowaniu mikroserwisów. Go kompiluje się do pojedynczego,
 statycznie linkowanego pliku wykonywalnego. Pozwala to budować minimalne obrazy kontenerów pozbawione systemu
 operacyjnego (rozdział~\ref{chap:implementacja-mikroserwisow}). Ma bardzo niskie zużycie pamięci i szybki start procesu.
@@ -374,7 +374,7 @@ CREATE TABLE IF NOT EXISTS payments (
 
 Rolę brokera komunikatów pełni \textbf{Apache Kafka} . Jest to rozproszony dziennik zdarzeń (\emph{distributed log}),
 w~którym komunikaty zapisywane są trwale, w~kolejności, do nazwanych tematów (\emph{topics}) dzielonych na
-partycje \cite{kleppmann2017}. Model konsumpcji oparty jest na grupach konsumentów. Każda grupa utrzymuje własne
+partycje \parencite{kleppmann2017}. Model konsumpcji oparty jest na grupach konsumentów. Każda grupa utrzymuje własne
 przesunięcie (\emph{offset}) w~temacie, dzięki czemu wielu niezależnych odbiorców może przetwarzać ten sam strumień
 zdarzeń, a~konsument po awarii wznawia przetwarzanie od ostatniej zatwierdzonej pozycji. Ta właściwość odróżnia Kafkę 
 od klasycznych kolejek komunikatów i~czyni ją naturalnym nośnikiem zdarzeń domenowych.
@@ -391,10 +391,10 @@ omówiono w~rozdziale~\ref{chap:testy-i-analiza}.
 \section{Projekt uwierzytelniania i autoryzacji}
 \label{sec:projekt-uwierzytelniania}
 
-Uwierzytelnianie użytkowników oparto na protokole \textbf{OAuth~2.0} \cite{rfc6749} z~warstwą tożsamości OpenID
+Uwierzytelnianie użytkowników oparto na protokole \textbf{OAuth~2.0} \parencite{rfc6749} z~warstwą tożsamości OpenID
 Connect, z~Amazon Cognito w~roli serwera autoryzacji (sekcja~\ref{subsec:cognito}). Ponieważ klientem jest
 aplikacja jednostronicowa, zastosowano przepływ \emph{authorization code} z~rozszerzeniem \textbf{PKCE} (\emph{Proof Key for Code Exchange})
-\cite{rfc7636}. Portal generuje przy każdym logowaniu jednorazowy weryfikator, którego skrót dołącza do żądania
+\parencite{rfc7636}. Portal generuje przy każdym logowaniu jednorazowy weryfikator, którego skrót dołącza do żądania
 autoryzacji, a~oryginał przedstawia przy wymianie kodu na tokeny. Uniemożliwia to wykorzystanie przechwyconego
 kodu autoryzacyjnego przez stronę trzecią.
 

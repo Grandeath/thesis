@@ -12,11 +12,11 @@ Zarówno pod względem skalowalności jak i~tempa rozwoju oprogramowania.
 Odpowiedzią przemysłu informatycznego na te ograniczenia stała się architektura mikroserwisowa, 
 polegająca na dekompozycji systemu na zbiór niewielkich, niezależnie wdrażanych usług, 
 z~których każda odpowiada za wyodrębniony fragment domeny biznesowej i~komunikuje się z~pozostałymi 
-poprzez dobrze zdefiniowane interfejsy \cite{newman2021}. Podejście to, choć rozwiązuje wiele problemów monolitu, 
+poprzez dobrze zdefiniowane interfejsy \parencite{newman2021}. Podejście to, choć rozwiązuje wiele problemów monolitu, 
 wprowadza jednocześnie nowe wyzwania: konieczność zarządzania komunikacją między usługową, zapewnienia spójności 
-danych rozproszonych pomiędzy usługami, a~także orkiestracji, monitorowania i~skalowania wielu niezależnych komponentów \cite{richardson2018}. 
+danych rozproszonych pomiędzy usługami, a~także orkiestracji, monitorowania i~skalowania wielu niezależnych komponentów \parencite{richardson2018}. 
 W~praktyce przemysłowej wyzwania te adresowane są przy użyciu konteneryzacji, platform orkiestracji, z~spośród 
-których standardem de facto stał się Kubernetes \cite{burns2022} oraz usług chmury publicznej, przejmujących 
+których standardem de facto stał się Kubernetes \parencite{burns2022} oraz usług chmury publicznej, przejmujących 
 od zespołów deweloperskich znaczną część odpowiedzialności za utrzymanie infrastruktury.
 
 Niniejsza praca podejmuje się tego zagadnienia w~ujęciu praktycznym. Jej przedmiotem jest budowa kompletnego systemu 
@@ -75,7 +75,7 @@ Wybór tematu pracy wynika ze~znaczenia omawianych technologii we współczesnym
 Architektura mikroserwisowa wraz z~konteneryzacją i~orkiestracją przestały być rozwiązaniami niszowymi, 
 zarezerwowanymi dla największych firm technologicznych. Badania społeczności Cloud Native Computing Foundation wskazują, 
 że zdecydowana większość organizacji wykorzystujących technologie chmurowe stosuje Kubernetes w~środowiskach produkcyjnych, 
-a~odsetek ten systematycznie rośnie \cite{cncf2023}. 
+a~odsetek ten systematycznie rośnie \parencite{cncf2023}. 
 
 System zamówień jest bardzo dobrą dziedziną do wykorzystania architektury mikroserwisowej. Dzieli się ona łatwo na odrębne
 tematy biznesowe takie jak: katalog produktów, zamówienia oraz płatności. Pomiędzy nimi występują interakcje synchroniczne
@@ -91,7 +91,7 @@ i koszty niesie za sobą uruchomienie takiego systemu w~chmurze publicznej. Udok
 \label{sec:przeglad-technologii-chmurowych}
 
 Chmura obliczeniowa definiowana jest jako model umożliwiający wygodny, sieciowy dostęp na żądanie do współdzielonej puli konfigurowalnych 
-zasobów obliczeniowych, które mogą być szybko przydzielane i~zwalniane przy minimalnym zaangażowaniu dostawcy \cite{nist2011}.
+zasobów obliczeniowych, które mogą być szybko przydzielane i~zwalniane przy minimalnym zaangażowaniu dostawcy \parencite{nist2011}.
 Można w niej wyróżnić trzy modele usługowe. SaaS (\emph{Software as a~Service}), w~którym produktem jest kompletne oprogramowanie dostępne przez sieć.
 IaaS (\emph{Infrastructure as a~Service}), w~którym dostawca udostępnia surowe zasoby obliczeniowe, sieciowe i~dyskowe.
 PaaS (\emph{Platform as a~Service}), w~którym udostępniana jest gotowa platforma uruchomieniowa dla aplikacji. Usługi wykorzystane w tej pracy
@@ -99,7 +99,7 @@ sytuują się pomiedzy modelami IaaS i~PaaS. Dostawca przyjmuje odpowiedzialnoś
 użytkownikowi kontrolę nad jej konfiguracją. Z~perspektywy architektury mikroserwisowej kluczowe znaczenie mają cztery grupy technologii.
 
 Konteneryzacja pozwalająca opakować usługę wraz z~jej zależnościami w~przenośny niezmienny obraz, której standardem de facto stał się Kubernetes: 
-platforma automatyzująca rozmieszczanie, skalowanie, samonaprawianie i~aktualizacje kontenerów na klastrze maszyn \cite{burns2022}. 
+platforma automatyzująca rozmieszczanie, skalowanie, samonaprawianie i~aktualizacje kontenerów na klastrze maszyn \parencite{burns2022}. 
 Wszyscy najwięksi dostawcy chmury publicznej oferują zarządzane warianty Kubernetes.
 
 \emph{infrastructure as code} (IaC), takie jak Terraform, pozwalające opisać całość infrastruktury chmurowej w~postaci deklaratywnego, wersjonowanego kodu.

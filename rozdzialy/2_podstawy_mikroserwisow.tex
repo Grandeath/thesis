@@ -13,25 +13,25 @@ Architektura monolityczna to model budowy aplikacji, w której całość logiki 
 pojedynczą jednostkę uruchomieniową. Model ten ma istotne zalety. Jest on prosty koncepcyjnie. Transakcje mogą być
 lokalne i obejmować cały stan aplikacji. Uproszczone jest testowanie i debugowanie, a~wdrożenie sprowadza się do uruchomienia 
 jednego artefaktu. Z~tych powodów monolit pozostaje racjonalnym wyborem dla małych zespołów i~systemów 
-o~ograniczonej złożoności \cite{newman2021}.
+o~ograniczonej złożoności \parencite{newman2021}.
 
 Problemy architektury monolitycznej ujawniają się wraz z rozbudową systemu i~organizacji. Skalowanie możliwe
 jest poprzez dodanie zasobów lub powielenie całej aplikacji. Nawet jeśli wąskim gardłem jest pojedynczy moduł.
 Każda zmiana wymaga zbudowania i wdrożenia całej aplikacji. Co wydłuża cykl wydawniczy i~zwiększa ryzyko regresji.
 Brak wymuszenia granic pomiędzy modułami może powodować z czasem erozje, prowadząc do silnego sprzężenia kodu.
 Finalnie cały system związany jest jedną technologią i~jedną wersją zależności, a~awaria dowolnego fragmentu 
-może unieruchomić aplikację w~całości \cite{richardson2018}.
+może unieruchomić aplikację w~całości \parencite{richardson2018}.
 
 Architektura mikroserwisowa stanowi odpowiedź na te ograniczenia. Lewis i~Fowler definiują ją jako podejście,
 w~którym pojedyncza aplikacja budowana jest jako zbiór niewielkich usług. Każda działa we własnym procesie
 i~komunikuje się z~pozostałymi za pomocą lekkich mechanizmów. Usługi zbudowane są wokół zdolności biznesowych
-i~wdrażane niezależnie w~sposób w~pełni zautomatyzowany \cite{fowler2014}. Zestawienie najważniejszych różnic
+i~wdrażane niezależnie w~sposób w~pełni zautomatyzowany \parencite{fowler2014}. Zestawienie najważniejszych różnic
 pomiędzy oboma podejściami przedstawia tabela~\ref{tab:monolit-vs-mikroserwisy}.
 
 \begin{table}[H]
     \centering
     \caption{Porównanie architektury monolitycznej i mikroserwisowej 
-    (opracowanie własne na podstawie \cite{newman2021,richardson2018})}
+    (opracowanie własne na podstawie: \cite{newman2021,richardson2018})}
     \label{tab:monolit-vs-mikroserwisy}
     \renewcommand{\arraystretch}{1.25}
     \setlength{\tabcolsep}{8pt}
@@ -94,11 +94,11 @@ chmurowymi i~ich automatyzacją.
 \section{Charakterystyka mikroserwisów}
 \label{sec:charakterystyka-mikroserwisow}
 
-Literatura przedmiotu \cite{newman2021,richardson2018} wskazuje zestaw cech konstytuujących architekturę
+Literatura przedmiotu \parencite{newman2021,richardson2018} wskazuje zestaw cech konstytuujących architekturę
 mikroserwisową, które można sprowadzić do następujących zasad.
 
 \textbf{Modelowanie wokół domeny biznesowej.} Granice usług powinny odpowiadać granicom kontekstów biznesowych
-(\emph{bounded contexts}) w~rozumieniu projektowania sterowanego domeną (\emph{Domain-Driven Design}) \cite{evans2003}.
+(\emph{bounded contexts}) w~rozumieniu projektowania sterowanego domeną (\emph{Domain-Driven Design}) \parencite{evans2003}.
 Usługa bierze odpowiedzialność za wyodrębniony fragment domeny. W realizowanym systemie te fragmenty to:
 zamówienia, katalog produktów oraz płatności. Minimalizuje to liczbę zmian wymaganych do koordynacji między
 usługami.
@@ -110,7 +110,7 @@ oraz unikanie współdzielenia struktur danych. Bardzo dobrą praktyką jest roz
 \textbf{Ukrywanie informacji i~własność danych.} Usługa udostępnia na zewnątrz wyłącznie swój interfejs, ukrywając
 szczegóły implementacji. Konsekwencją jest zasada \emph{database-per-service}. Każda usługa jest wyłącznym właścicielem swoich danych.
 Inne usługi mogą uzyskać do nich dostęp jedynie poprzez jej interfejs. Złamanie tej zasady prowadzi do sprzężenia na poziomie schematu, 
-które w~praktyce odbiera usługom niezależność wdrożeniową \cite{newman2021}.
+które w~praktyce odbiera usługom niezależność wdrożeniową \parencite{newman2021}.
 
 \textbf{Decentralizacja i~autonomia technologiczna.} Usługi mogą być rozwijane przez niezależne zespoły 
 i~realizowane w~różnych technologiach, dobranych do charakteru problemu.
@@ -140,7 +140,7 @@ Podobnym dla interakcji użytkownika z serwisem.
 
 Wadą komunikacji synchronicznej jest sprzężenie czasowe. Obie strony muszą być dostępne jednocześnie, a~niedostępność
 lub spowolnienie usługi wywoływanej propaguje się na wywołującą. W~łańcuchach wywołań prowadzi to do awarii
-kaskadowych, w~których problem jednej usługi unieruchamia kolejne \cite{richardson2018}. Powoduje to złamanie paradygmatu
+kaskadowych, w~których problem jednej usługi unieruchamia kolejne \parencite{richardson2018}. Powoduje to złamanie paradygmatu
 mikroserwisów czyli odporność na awarie. Z~tego względu komunikacje synchroniczną stosuje się głównie na styku użytkownik-system.
 
 \subsection{Komunikacja asynchroniczna i architektura sterowana zdarzeniami}
@@ -151,14 +151,14 @@ kontynuuje przetwarzanie, nie oczekując na odbiorców. Szczególną postacią t
 zdarzeniami (\emph{event-driven architecture}), w~której usługi publikują zdarzenia domenowe. Niemutowalne fakty
 opisujące to, co zaszło w~ich obszarze odpowiedzialności (np. \emph{utworzono zamówienie}). Subskrybeńci 
 pobierają te zdarzenia i obsługują je według własnej logiki. Dzięki temu rozszczepieniu serwisów, nadawca nie zna swoich
-odbiorców. Powoduje to łatwe dodawanie kolejnych subskrybentów bez zmian po stronie producenta \cite{kleppmann2017}.
+odbiorców. Powoduje to łatwe dodawanie kolejnych subskrybentów bez zmian po stronie producenta \parencite{kleppmann2017}.
 
 Model ten eliminuje sprzężenie czasowe. Chwilowa niedostępność konsumenta nie wpływa na producenta.
 Wiadomości nieprzetworzone będą czekały w systemie kolejkowym do ponownego działania subskrybenta. 
 Ceną jest rezygnacja z~natychmiastowej, silnej spójności danych na rzecz spójności ostatecznej (\emph{eventual consistency}).
 Stan rozproszony pomiędzy usługami mże być obsłużony z opóźnieniem, co system musi uwzględniać w finalnej architekturze.
 Istotne są również gwarancje dostarczania. Brokery komunikatów typowo zapewniają dostarczenie \emph{co najmniej raz}, co oznacza, że ten
-sam komunikat może zostać doręczony wielokrotnie. Konsumenci muszą zatem przetwarzać komunikaty w~sposób idempotentny \cite{kleppmann2017}.
+sam komunikat może zostać doręczony wielokrotnie. Konsumenci muszą zatem przetwarzać komunikaty w~sposób idempotentny \parencite{kleppmann2017}.
 
 W~zrealizowanym systemie oba modele zastosowano komplementarnie: żądania użytkownika obsługiwane są synchronicznie
 przez REST. Natomiast proces walidacji zamówienia i~rezerwacji stanów magazynowych przebiega asynchronicznie, poprzez
@@ -168,7 +168,7 @@ zdarzenia publikowane do brokera Apache Kafka. Szczegóły tego podziału omówi
 \label{sec:wzorce-projektowe}
 
 Problemy powtarzające się w~systemach mikroserwisowych doczekały się skatalogowanych rozwiązań (wzorców
-projektowych) \cite{richardson2018}. Poniżej omówiono wzorce, które znalazły bezpośrednie zastosowanie
+projektowych) \parencite{richardson2018}. Poniżej omówiono wzorce, które znalazły bezpośrednie zastosowanie
 w~zrealizowanym systemie; odwołania do ich implementacji zawiera rozdział~\ref{chap:implementacja-mikroserwisow}.
 
 \textbf{Baza danych na usługę (\emph{database-per-service}).} Każda usługa posiada wyłączność na swoje dane
@@ -199,7 +199,7 @@ klientów. Pozwala uniknąć CORS. Ukrywa wewnętrzną topologię systemu.
 
 \textbf{Konfiguracja zewnętrzna.} Zgodnie z~metodyką \emph{The Twelve-Factor App} konfiguracja zależna od środowiska
 (adresy usług, poświadczenia, przełączniki funkcji) przechowywana jest poza kodem. W~zmiennych środowiskowych.
-Dzięki czemu ten sam artefakt może być wdrażany w~różnych środowiskach bez rekompilacji \cite{twelvefactor}.
+Dzięki czemu ten sam artefakt może być wdrażany w~różnych środowiskach bez rekompilacji \parencite{twelvefactor}.
 
 \textbf{Kontrola zdrowia (\emph{health check}).} Każda usługa udostępnia punkt końcowy raportujący jej stan.
 Odpytywany jest przez platformę uruchomieniową w~celu wykrywania niezdrowych instancji. Zapobiega to awarii
@@ -212,7 +212,7 @@ Praktyczna realizacja architektury mikroserwisowej wymaga jednolitego sposobu pa
 niezależnych usług. Rolę tę pełni konteneryzacja. Jest to technika wirtualizacji na poziomie systemu operacyjnego.
 Procesy izolowane są od siebie przy użyciu jądra Linux, współdzieląc przy tym jądro systemu gospodarza.
 W~odróżnieniu od maszyn wirtualnych kontenery nie wymagają odrębnego systemu operacyjnego, dzięki czemu 
-uruchamiają się w~ułamkach sekund i~wprowadzają znikomy narzut wydajnościowy \cite{burns2022}.
+uruchamiają się w~ułamkach sekund i~wprowadzają znikomy narzut wydajnościowy \parencite{burns2022}.
 
 Jednostką dystrybucji jest obraz kontenera. Niemutowalny, warstwowy artefakt zawierający aplikację wraz z~kompletem
 jej zależności, budowany na podstawie deklaratywnego opisu (\emph{Dockerfile}). Przchowywany jest on w~rejestrze

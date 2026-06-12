@@ -4,7 +4,7 @@
 Kubernetes jest otwartoźródłową platformą orkiestracji kontenerów, automatyzującą ich rozmieszczanie, skalowanie
 i~eksploatację na klastrze maszyn. Projekt, zainicjowany przez firmę Google w~2014 roku i~czerpiący z~jej
 wieloletnich doświadczeń z~wewnętrznym systemem Borg, został przekazany fundacji Cloud Native Computing Foundation
-i~stał się standardem przemysłowym w~obszarze orkiestracji \cite{burns2022}.
+i~stał się standardem przemysłowym w~obszarze orkiestracji \parencite{burns2022}.
 
 U~podstaw działania Kubernetes leży model deklaratywny. Użytkownik zamiast wydawać platformie poleceń, opisuje
 pożądany stan systemu (np. \emph{trzy repliki usługi zamówień w~wersji 1.2}). Platforma ciągle porównuje stan
@@ -14,7 +14,7 @@ którą platforma próbuje usunąć.
 
 Architektura klastra Kubernetes obejmuje płaszczyznę sterowania (\emph{control plane}), serwer API, magazyn
 stanu etcd, planistę (\emph{scheduler}) oraz menedżery kontrolerów. Obejmuje również węzły robocze (\emph{worker nodes}),
-na których agent \emph{kubelet} uruchamia kontenery zgodnie z~decyzjami planisty \cite{k8sdocs}. Taka architektura
+na których agent \emph{kubelet} uruchamia kontenery zgodnie z~decyzjami planisty \parencite{k8sdocs}. Taka architektura
 pozwala usługom chmurowym wziąć odpowiedzialność za płaszczyznę sterwania. Dzięki czemu użytkownik zarządza wyłącznie
 wezłami roboczymi i~uruchamianymi obciążeniami (rozdział~\ref{chap:aws}).
 
@@ -64,7 +64,7 @@ zasilanych z~usługi AWS Secrets Manager (rozdział~\ref{chap:infrastruktura}).
 Skalowanie obciążeń realizowane jest na dwóch poziomach. Poziom pierwszy stanowi \textbf{Horizontal Pod Autoscaler}
 (HPA). Kontroler, który cyklicznie porównuje zmierzone wykorzystanie zasobów (domyślnie procesora, na podstawie
 danych z~komponentu \emph{metrics-server}). Z~wartością docelową i~odpowiednio zwiększa lub zmniejsza liczbę replik
-Deploymentu w~zadanym przedziale \cite{k8sdocs}. Poziom drugi to skalowanie samego klastra, czyli liczby węzłów
+Deploymentu w~zadanym przedziale \parencite{k8sdocs}. Poziom drugi to skalowanie samego klastra, czyli liczby węzłów
 roboczych.
 
 \section{Trwałe składowanie danych}
@@ -72,7 +72,7 @@ roboczych.
 
 Zgodnie z definicją Poda, system plików kontenera jest ulotny. Pody mogą być przenoszone między węzłami.
 Z tego powodu Kubernetes rozwiązuje ten problem warstwą abstrakcji nad pamięcią trwałą, 
-rozdzielającą perspektywę administratora i~aplikacji \cite{k8sdocs}.
+rozdzielającą perspektywę administratora i~aplikacji \parencite{k8sdocs}.
 
 \textbf{PersistentVolume} (PV) reprezentuje fizyczny zasób pamięci. Natomiast \textbf{PersistentVolumeClaim} (PVC) 
 jest żądaniem zapotrzebowania aplikacji na taki woluminu o potrzebnej pojemności i~trybu dos†ępu.
@@ -94,7 +94,7 @@ w~rozdziale~\ref{chap:aws}.
 Obserwowalność systemu rozproszonego opiera się na trzech filarach: metrykach (liczbowych szeregach czasowych
 opisujących stan systemu), logach (zapisach zdarzeń) oraz śladach rozproszonych (zapisach przebiegu pojedynczych
 żądań przez kolejne usługi). W~zrealizowanym systemie zastosowano dwa pierwsze filary, z~metrykami gromadzonymi
-przez Prometheus \cite{prometheusdocs}.
+przez Prometheus \parencite{prometheusdocs}.
 
 Prometheus działa w~modelu \emph{pull}. Aplikacje wystawiają punkty końcowe z metrykami, które cyklicznie pobiera.
 Zbiór celów nie jest konfigurowany statycznie, a w~środowisku Kubernetes Prometheus odkrywa je dynamicznie poprzez API klastra.
@@ -115,7 +115,7 @@ Zakres metryk publikowanych przez poszczególne mikroserwisy omówiono w~rozdzia
 \section{Mechanizmy bezpieczeństwa w Kubernetes}
 \label{sec:bezpieczenstwo-kubernetes}
 
-Bezpieczeństwo klastra Kubernetes obejmuje kilka współdziałających warstw \cite{k8sdocs}.
+Bezpieczeństwo klastra Kubernetes obejmuje kilka współdziałających warstw \parencite{k8sdocs}.
 
 Każde żądanie do serwera API podlega uwierzytelnieniu i~autoryzacji w~modelu RBAC (\emph{Role-Based Access Control}).
 Role definiują zestawy dozwolonych operacji na zasobach. Powiązania ról (\emph{role bindings}) przypisują je użytkownikom lub kontom usług.

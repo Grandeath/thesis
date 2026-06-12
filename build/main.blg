@@ -1,0 +1,14 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[0] Config.pm:331> INFO - Logfile is 'build/main.blg'
+[22] biber-darwin:342> INFO - === pt. cze 12, 2026, 18:23:38
+[28] Biber.pm:421> INFO - Reading 'build/main.bcf'
+[54] Biber.pm:1002> INFO - Found 15 citekeys in bib section 0
+[60] Biber.pm:4487> INFO - Processing section 0
+[63] Biber.pm:4678> INFO - Looking for bibtex file 'bibliografia.bib' for section 0
+[63] bibtex.pm:1713> INFO - LaTeX decoding ...
+[68] bibtex.pm:1519> INFO - Found BibTeX data source 'bibliografia.bib'
+[109] UCollate.pm:68> INFO - Overriding locale 'pl-PL' defaults 'variable = shifted' with 'variable = non-ignorable'
+[109] UCollate.pm:68> INFO - Overriding locale 'pl-PL' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[109] Biber.pm:4307> INFO - Sorting list 'apa/global//global/global/global' of type 'entry' with template 'apa' and locale 'pl-PL'
+[117] bbl.pm:676> INFO - Writing 'build/main.bbl' with encoding 'UTF-8'
+[119] bbl.pm:779> INFO - Output to build/main.bbl

@@ -15,7 +15,7 @@ Każdy z~nich jest oddzielną domeną awarii i~osobnym miejscem przechowywania d
 z~co najmniej trzech \textbf{stref dostępności} (\emph{Availability Zones}, AZ). Są to fizycznie rozdzielone 
 centra danych o~niezależnym zasilaniu i łączności. Połączone są one ze sobą łączami o~niskich opóźnieniach.
 Rozmieszczenie komponentów systemu w~wielu strefach dostępności jest podstawową techniką zapewniania
-wysokiej dostępności. Awaria pojedynczej strefy nie przerywa działania systemu \cite{awsdocs}.
+wysokiej dostępności. Awaria pojedynczej strefy nie przerywa działania systemu \parencite{awsdocs}.
 
 Model rozliczeń AWS ma wiele form. W podstawowej wersji opłaty naliczane są za faktyczne zużycie zasobów
 (czas działania instancji, pojemność, transfer danych). Bez zobowiązań wstępnych. W tym projekcie wykorzystana
@@ -25,13 +25,13 @@ wiele decyzji co do doboru parametrów środowiska została podjęta w zakresie 
 Istotnym elementem charakterystyki platformy jest \textbf{model odpowiedzialności współdzielonej} (\emph{shared
 responsibility model}). AWS odpowiada za bezpieczeństwo \emph{samej chmury}. Czyli infrastruktury fizycznej, hipernadzorcy,
 oprogramowania usług zarządzanych. Natomiast klient za bezpieczeństwo \emph{w~chmurze}. Czyli konfigurację sieci
-i~uprawnień, ochronę danych oraz poprawność własnych aplikacji \cite{awsdocs}.
+i~uprawnień, ochronę danych oraz poprawność własnych aplikacji \parencite{awsdocs}.
 
 \section{Amazon EKS - zarządzana usługa Kubernetes}
 \label{sec:amazon-eks}
 
 Amazon Elastic Kubernetes Service (EKS) udostępnia klaster Kubernetes. Płaszczyzna sterowania jest w~całości
-zarządzana przez AWS. Użytkownik widzi tylko punkt końcowy API \cite{awsdocs}. Użytkownik odpowiada
+zarządzana przez AWS. Użytkownik widzi tylko punkt końcowy API \parencite{awsdocs}. Użytkownik odpowiada
 za dobór wezłów roboczych oraz uruchomienie obciążenia. EKS wykorzystuje niezmodyfikowaną, certyfikowaną 
 dystrybucję Kubernetes, dzięki czemu obciążenia i~manifesty pozostają przenośne pomiędzy środowiskami.
 

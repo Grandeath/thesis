@@ -140,11 +140,38 @@
 \usepackage{xurl}
 \renewcommand{\figureautorefname}{Ilustracja}
 
-% Bibliografia - APA (7. edycja)
-\usepackage[style=apa,backend=biber]{biblatex}
-% biblatex-apa nie ma natywnego pliku polskiego - mapujemy na american-apa
-\DeclareLanguageMapping{polish}{american-apa}
+% Bibliografia - APA (zgodnie z instrukcją uczelni: przy pierwszym cytowaniu
+% pracy 3-5 autorów pełna lista nazwisk, w kolejnych "i in." - reguły APA 6)
+\usepackage[style=apa6,backend=biber]{biblatex}
+% biblatex-apa6 nie ma natywnego pliku polskiego - lokalna lokalizacja
+% w pliku polish-apa6.lbx (dziedziczy makra APA i polskie łańcuchy)
+\DeclareLanguageMapping{polish}{polish-apa6}
 \addbibresource{bibliografia.bib}
+
+% Skrócone formy zgodnie z instrukcją APA: "i in." zamiast "i inni",
+% "b.d." zamiast "bez daty"
+\DefineBibliographyStrings{polish}{
+  and       = {i},
+  andothers = {i\addabbrvspace in\adddot},
+  nodate    = {b\adddot d\adddot},
+}
+% Ostatnie nazwisko łączone przez "i" (bez przecinka i bez "&"),
+% zarówno w odsyłaczach w tekście, jak i w wykazie bibliografii
+\DeclareDelimFormat*{finalnamedelim}{\addspace\bibstring{and}\space}
+\renewcommand*{\finalnamedelim}{\addspace\bibstring{and}\space}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
+  \ifthenelse{\value{listcount}>\maxprtauth}
+    {}
+    {\addspace\bibstring{and}\space}}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim:apa:family-given}{%
+  \ifthenelse{\value{listcount}>\maxprtauth}
+    {}
+    {\addspace\bibstring{and}\space}}
+% Polski zapis numeru wydania: "wyd. 2" zamiast "2nd ed."
+\DeclareFieldFormat{edition}{%
+  \ifinteger{#1}
+    {\bibstring{edition}\addabbrvspace#1}
+    {#1\isdot}}
 
 % Ułatw LaTeX'owi łamanie linków w bibliografii
 \setcounter{biburlnumpenalty}{9000}
@@ -189,7 +216,7 @@
 
     % Imię, nazwisko, nr albumu
     \begin{center}
-        {\bfseries Jakub Głocki}\\[0.5cm]
+        {\bfseries Jakub Głocki}\\[0.2cm]
         s26523
     \end{center}
 
