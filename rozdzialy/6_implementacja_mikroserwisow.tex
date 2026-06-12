@@ -172,11 +172,83 @@ systemu bez implementacji rozproszonej sagi.
 \label{sec:implementacja-kafka}
 
 Warstwę zdarzeń zrealizowano biblioteką \code{franz-go}. Producent serializuje zdarzenia do JSON i~publikuje je
-do skonfigurowanego tematu w~trybie nieblokującym. Publikacja nie wydłuża obsługi żądania HTTP z~buforowaniem
+do skonfigurowanego tematu w~trybie nieblokującym. Publikacja nie wydłuża obsługi żądania HTTP, ponieważ rekordy
+trafiają do wewnętrznego bufora klienta i~są wysyłane wsadowo w~tle. Listing~\ref{lst:kafka-producer} przedstawia
+konfigurację producenta w~order-service oraz metodę publikującą zdarzenie. Krótki czas zwłoki
+(\code{ProducerLinger}) pozwala grupować rekordy w~większe wsady, ograniczenie bufora
+(\code{MaxBufferedRecords}) chroni proces przed nieograniczonym wzrostem pamięci przy niedostępności brokera,
+a~partycjonowanie po kluczu zachowuje kolejność zdarzeń dotyczących tego samego zamówienia.
+
+\begin{lstlisting}[caption={Konfiguracja i nieblokująca publikacja zdarzeń w order-service},label={lst:kafka-producer},language=Go]
+func kafkaOptionsNotifier(topic, urls string) []kgo.Opt {
+    return []kgo.Opt{
+        kgo.SeedBrokers(strings.Split(urls, ",")...),
+        kgo.DefaultProduceTopic(topic),
+        kgo.ProducerLinger(time.Duration(50) * time.Millisecond),
+        kgo.MaxBufferedRecords(20_000),
+        kgo.RecordPartitioner(kgo.StickyKeyPartitioner(nil)),
+    }
+}
+
+func (n *EventNotifier) Notify(log any) error {
+    if !n.enabled {
+        return nil
+    }
+    b, err := json.Marshal(log)
+    if err != nil {
+        return fmt.Errorf("unable to marshal log: %w", err)
+    }
+    n.producer.Produce(context.Background(), kgo.SliceRecord(b), nil)
+
+    return nil
+}
+\end{lstlisting}
 
 Konsument w~product-service działa w~ramach grupy konsumentów \code{product-service}, dzięki czemu pozycja odczytu
 tematu \code{order.events} jest trwała. Po restarcie serwis wznawia przetwarzanie od ostatniego zatwierdzonego
-przesunięcia, nie gubiąc zdarzeń opublikowanych w~czasie jego niedostępności.
+przesunięcia, nie gubiąc zdarzeń opublikowanych w~czasie jego niedostępności. Pętla odczytu
+(listing~\ref{lst:kafka-consumer}) pobiera wsady rekordów i~przekazuje każdy z~nich do funkcji obsługi
+przekazanej przy konstrukcji konsumenta. Błąd obsługi pojedynczego rekordu jest logowany, lecz nie zatrzymuje
+przetwarzania kolejnych zdarzeń.
+
+\begin{lstlisting}[caption={Pętla konsumenta zdarzeń w product-service},label={lst:kafka-consumer},language=Go]
+opts := []kgo.Opt{
+    kgo.SeedBrokers(strings.Split(cfg.URL, ",")...),
+    kgo.ConsumerGroup(cfg.Group),
+    kgo.ConsumeTopics(cfg.Topic),
+}
+
+func (c *Consumer) Run(ctx context.Context) error {
+    ...
+    defer c.client.Close()
+
+    slog.Info("kafka consumer started")
+    for {
+        if ctx.Err() != nil {
+            return nil
+        }
+
+        fetches := c.client.PollFetches(ctx)
+        if fetches.IsClientClosed() {
+            return nil
+        }
+        fetches.EachError(func(topic string, partition int32, err error) {
+            if errors.Is(err, context.Canceled) {
+                return
+            }
+            slog.Error("kafka fetch error", "topic", topic,
+                "partition", partition, "err", err)
+        })
+
+        fetches.EachRecord(func(r *kgo.Record) {
+            if err := c.handle(ctx, r.Value); err != nil {
+                slog.Error("handle kafka record failed", "topic", r.Topic,
+                    "offset", r.Offset, "err", err)
+            }
+        })
+    }
+}
+\end{lstlisting}
 
 \section{Walidacja tokenów JWT i integracja z Cognito}
 \label{sec:implementacja-auth}

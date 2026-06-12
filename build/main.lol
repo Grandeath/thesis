@@ -8,14 +8,16 @@
 \contentsline {lstlisting}{\numberline {5.2}{\ignorespaces Implementacja maszyny stanów zamówienia}}{37}{lstlisting.5.2}%
 \contentsline {lstlisting}{\numberline {5.3}{\ignorespaces Atomowe zajęcie klucza idempotencji}}{38}{lstlisting.5.3}%
 \contentsline {lstlisting}{\numberline {5.4}{\ignorespaces Warunkowe przesunięcie ilości w transakcji płatności}}{39}{lstlisting.5.4}%
-\contentsline {lstlisting}{\numberline {5.5}{\ignorespaces Weryfikacja tokenu JWT wobec kluczy Cognito}}{40}{lstlisting.5.5}%
-\contentsline {lstlisting}{\numberline {5.6}{\ignorespaces Wieloetapowy Dockerfile serwisu zamówień}}{41}{lstlisting.5.6}%
-\contentsline {lstlisting}{\numberline {6.1}{\ignorespaces Złożenie zamówienia z kluczem idempotencji (fragment http.ts)}}{47}{lstlisting.6.1}%
-\contentsline {lstlisting}{\numberline {6.2}{\ignorespaces Generowanie weryfikatora i wyzwania PKCE (Web Crypto)}}{48}{lstlisting.6.2}%
-\contentsline {lstlisting}{\numberline {7.1}{\ignorespaces Definicja podsieci prywatnych z tagami Kubernetes (vpc.tf)}}{51}{lstlisting.7.1}%
-\contentsline {lstlisting}{\numberline {7.2}{\ignorespaces Dodatek VPC CNI z delegacją prefiksów (eks.tf)}}{52}{lstlisting.7.2}%
-\contentsline {lstlisting}{\numberline {7.3}{\ignorespaces Funkcja CloudFront przepisująca trasy SPA (cloudfront.tf)}}{55}{lstlisting.7.3}%
-\contentsline {lstlisting}{\numberline {7.4}{\ignorespaces Reguła ALB wymagająca nagłówka weryfikacyjnego (alb.tf)}}{56}{lstlisting.7.4}%
-\contentsline {lstlisting}{\numberline {7.5}{\ignorespaces Reguły routingu wewnętrznego proxy nginx (fragment)}}{57}{lstlisting.7.5}%
-\contentsline {lstlisting}{\numberline {7.6}{\ignorespaces Odkrywanie celów pomiarowych na podstawie adnotacji (prometheus.yml)}}{58}{lstlisting.7.6}%
-\contentsline {lstlisting}{\numberline {8.1}{\ignorespaces Reakcja HorizontalPodAutoscaler na obciążenie (profil max)}}{64}{lstlisting.8.1}%
+\contentsline {lstlisting}{\numberline {5.5}{\ignorespaces Konfiguracja i nieblokująca publikacja zdarzeń w order-service}}{40}{lstlisting.5.5}%
+\contentsline {lstlisting}{\numberline {5.6}{\ignorespaces Pętla konsumenta zdarzeń w product-service}}{40}{lstlisting.5.6}%
+\contentsline {lstlisting}{\numberline {5.7}{\ignorespaces Weryfikacja tokenu JWT wobec kluczy Cognito}}{41}{lstlisting.5.7}%
+\contentsline {lstlisting}{\numberline {5.8}{\ignorespaces Wieloetapowy Dockerfile serwisu zamówień}}{42}{lstlisting.5.8}%
+\contentsline {lstlisting}{\numberline {6.1}{\ignorespaces Złożenie zamówienia z kluczem idempotencji (fragment http.ts)}}{49}{lstlisting.6.1}%
+\contentsline {lstlisting}{\numberline {6.2}{\ignorespaces Generowanie weryfikatora i wyzwania PKCE (Web Crypto)}}{50}{lstlisting.6.2}%
+\contentsline {lstlisting}{\numberline {7.1}{\ignorespaces Definicja podsieci prywatnych z tagami Kubernetes (vpc.tf)}}{53}{lstlisting.7.1}%
+\contentsline {lstlisting}{\numberline {7.2}{\ignorespaces Dodatek VPC CNI z delegacją prefiksów (eks.tf)}}{54}{lstlisting.7.2}%
+\contentsline {lstlisting}{\numberline {7.3}{\ignorespaces Funkcja CloudFront przepisująca trasy SPA (cloudfront.tf)}}{57}{lstlisting.7.3}%
+\contentsline {lstlisting}{\numberline {7.4}{\ignorespaces Reguła ALB wymagająca nagłówka weryfikacyjnego (alb.tf)}}{58}{lstlisting.7.4}%
+\contentsline {lstlisting}{\numberline {7.5}{\ignorespaces Reguły routingu wewnętrznego proxy nginx (fragment)}}{59}{lstlisting.7.5}%
+\contentsline {lstlisting}{\numberline {7.6}{\ignorespaces Odkrywanie celów pomiarowych na podstawie adnotacji (prometheus.yml)}}{60}{lstlisting.7.6}%
+\contentsline {lstlisting}{\numberline {8.1}{\ignorespaces Reakcja HorizontalPodAutoscaler na obciążenie (profil max)}}{66}{lstlisting.8.1}%

@@ -1,17 +1,17 @@
 # Fdb version 4
-["biber build/main"] 1781281416.605 "build/main.bcf" "build/main.bbl" "build/main" 1781281579.98984 0
+["biber build/main"] 1781281416.605 "build/main.bcf" "build/main.bbl" "build/main" 1781281937.86873 0
   "bibliografia.bib" 1781281344.16719 4369 f8317a2ad970123ac11ef858e7773cef ""
-  "build/main.bcf" 1781281577.2745 117670 1cd014db35cebc08aea6a743be2aae91 "xelatex"
+  "build/main.bcf" 1781281935.16511 117670 1cd014db35cebc08aea6a743be2aae91 "xelatex"
   (generated)
   "build/main.bbl"
   "build/main.blg"
   (rewritten before read)
-["xdvipdfmx"] 1781281577.34255 "build/main.xdv" "build/main.pdf" "build/main" 1781281579.99165 0
-  "build/main.xdv" 1781281577.27537 1751560 48dd67ef83537ecda779af0d9b2ff243 "xelatex"
+["xdvipdfmx"] 1781281935.22783 "build/main.xdv" "build/main.pdf" "build/main" 1781281937.87041 0
+  "build/main.xdv" 1781281935.16589 1796788 7110bdc3107b0e991bcd903f0b08e8af "xelatex"
   (generated)
   "build/main.pdf"
   (rewritten before read)
-["xelatex"] 1781281573.45897 "/Users/jglocki/Desktop/thesis/thesis/main.tex" "build/main.xdv" "main" 1781281579.9899 0
+["xelatex"] 1781281931.20036 "/Users/jglocki/Desktop/thesis/thesis/main.tex" "build/main.xdv" "main" 1781281937.86877 0
   "/Users/jglocki/Desktop/thesis/thesis/main.tex" 1781281471.35593 10384 3bba09d6de0b46b76254c5fde1294c3b ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -218,24 +218,24 @@
   "/usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf" 1770478701 43630 e9fa012910491fe5ae08a72c3c2997a7 ""
   "/usr/local/texlive/2026/texmf-var/web2c/xetex/xelatex.fmt" 1780591310 5948578 cc798fbfb8434c8104bc2915046a7aa5 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "build/main.aux" 1781281577.26678 5598 02b048449d20f432891b8fe47851a4c3 "xelatex"
+  "build/main.aux" 1781281935.15817 5598 a6bba0c3a7ba07ad3f666449790f3b73 "xelatex"
   "build/main.bbl" 1781281418.23357 22378 f98c0226603781f102d094b698d7d109 "biber build/main"
-  "build/main.lof" 1781281577.27528 13797 4a72a32e1f7b593fa7251581855025a2 "xelatex"
-  "build/main.lol" 1781281577.27534 2698 ac894ff4e204a4303090950d3a960cd2 "xelatex"
-  "build/main.lot" 1781281577.27532 1313 4e0bf00b12ab9a9bcd541c3b7e4ff80d "xelatex"
-  "build/main.out" 1781281577.2736 20830 6e25a47aaf43c3c023ab6a0390469715 "xelatex"
-  "build/main.run.xml" 1781281577.27512 2534 c6e5bb8c152da04dcb95ed98e89b7764 "xelatex"
-  "build/main.toc" 1781281577.27526 8167 4e1ff04830b94c3df5d4a15a42190944 "xelatex"
-  "build/rozdzialy/10_wnioski.aux" 1781281577.00441 5692 38b0ec7bde2174ce708b383ed2e88c58 "xelatex"
-  "build/rozdzialy/1_wstep.aux" 1781281575.99906 5213 d8e6e5973acc0f303894cee92022754c "xelatex"
-  "build/rozdzialy/2_podstawy_mikroserwisow.aux" 1781281576.10684 7197 444f98c39a0712d15f4201eec3c74033 "xelatex"
-  "build/rozdzialy/3_kubernetes.aux" 1781281576.16546 5928 bda74e14985016c2b6b1caae1c12c4d9 "xelatex"
-  "build/rozdzialy/4_aws.aux" 1781281576.20756 7211 fc2ad5cb44c9b3876813a88494b73a09 "xelatex"
-  "build/rozdzialy/5_projekt_systemu.aux" 1781281576.45192 12811 8a1c750bb197ddcd66e0703733264a28 "xelatex"
-  "build/rozdzialy/6_implementacja_mikroserwisow.aux" 1781281576.58087 8592 c4da9b1eb9fa3d81c8ab3211894ec279 "xelatex"
-  "build/rozdzialy/7_implementacja_portalu.aux" 1781281576.65218 10745 dd1205d04a3e5664022ffd3e8586e702 "xelatex"
-  "build/rozdzialy/8_infrastruktura.aux" 1781281576.91566 20892 f0c2d04d2310532451b50d9e56700bd4 "xelatex"
-  "build/rozdzialy/9_testy.aux" 1781281576.98323 14472 d749bd992d62c81c67b1f3390d135b12 "xelatex"
+  "build/main.lof" 1781281935.16579 13797 9419bb3a9463f206118d3d2b8ee11a47 "xelatex"
+  "build/main.lol" 1781281935.16585 2972 cbbfe9ee4b4e2426643e36d5b9ff746c "xelatex"
+  "build/main.lot" 1781281935.16583 1313 cb7d493b65727a5fc8117e2f5b1670ae "xelatex"
+  "build/main.out" 1781281935.16435 20830 6e25a47aaf43c3c023ab6a0390469715 "xelatex"
+  "build/main.run.xml" 1781281935.16565 2534 c6e5bb8c152da04dcb95ed98e89b7764 "xelatex"
+  "build/main.toc" 1781281935.16577 8167 84f58779565a2358d488dc751a5a47cc "xelatex"
+  "build/rozdzialy/10_wnioski.aux" 1781281934.90635 5692 ff2ac53e056a7b98e0651e185e857a22 "xelatex"
+  "build/rozdzialy/1_wstep.aux" 1781281933.86676 5213 d8e6e5973acc0f303894cee92022754c "xelatex"
+  "build/rozdzialy/2_podstawy_mikroserwisow.aux" 1781281933.97517 7197 444f98c39a0712d15f4201eec3c74033 "xelatex"
+  "build/rozdzialy/3_kubernetes.aux" 1781281934.03353 5928 bda74e14985016c2b6b1caae1c12c4d9 "xelatex"
+  "build/rozdzialy/4_aws.aux" 1781281934.07556 7211 fc2ad5cb44c9b3876813a88494b73a09 "xelatex"
+  "build/rozdzialy/5_projekt_systemu.aux" 1781281934.32771 12811 8a1c750bb197ddcd66e0703733264a28 "xelatex"
+  "build/rozdzialy/6_implementacja_mikroserwisow.aux" 1781281934.49408 9178 bffe03a7ae3eca785236b6b935dac0be "xelatex"
+  "build/rozdzialy/7_implementacja_portalu.aux" 1781281934.57116 10745 1d988644bf220d716fc30ed7c5e80d2d "xelatex"
+  "build/rozdzialy/8_infrastruktura.aux" 1781281934.82098 20892 4eb51dd296651b34c823c2a9b106d434 "xelatex"
+  "build/rozdzialy/9_testy.aux" 1781281934.88615 14472 cd61f369191429a3dcd47c501290d123 "xelatex"
   "main.tex" 1781281471.35593 10384 3bba09d6de0b46b76254c5fde1294c3b ""
   "pjatk-logo.png" 1763240772 133368 a98bd1e90f36159e1bc9f68f06a89cbe ""
   "polish-apa6.lbx" 1781281284.0708 2446 b5b0b668e6024e42da2ea0a727bcfe19 ""
@@ -245,7 +245,7 @@
   "rozdzialy/3_kubernetes.tex" 1781280624.03512 11078 457531b7a614d9b6b2e0d9630907b4f4 ""
   "rozdzialy/4_aws.tex" 1781280624.03825 10682 c482304f08bf11e903c9bc570860158c ""
   "rozdzialy/5_projekt_systemu.tex" 1781280624.0422 25386 c300511d2125d4e49ba6256b089abd69 ""
-  "rozdzialy/6_implementacja_mikroserwisow.tex" 1781280624.04622 15838 f1b38b5ef787ac49cf8131a828f6e27e ""
+  "rozdzialy/6_implementacja_mikroserwisow.tex" 1781281857.3717 18575 9101f651b2a41c11205ab13926fdf454 ""
   "rozdzialy/7_implementacja_portalu.tex" 1781280624.04942 10517 d60cebde97af9e473644b5270b68bfc4 ""
   "rozdzialy/8_infrastruktura.tex" 1781280624.05274 26666 0f7cd2d65a3b4ae8eb74083e80a173d0 ""
   "rozdzialy/9_testy.tex" 1781280624.05641 17529 6db884f7a6a40ec3dd1429b61dc7b26d ""

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.6.4)  12 JUN 2026 18:26
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.6.4)  12 JUN 2026 18:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1341,16 +1341,16 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 File: lstlang2.sty 2025/11/14 1.11b listings language file
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2025/11/14 1.11b listings language file
-) [37] [38] [39] [40] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
+) [37] [38] [39] [40] [41] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-)) [41]
+)) [42] [43]
 \openout2 = `rozdzialy/7_implementacja_portalu.aux'.
 
  (./rozdzialy/7_implementacja_portalu.tex
 Rozdział 6.
-[42
+[44
 
 
 
@@ -1362,7 +1362,7 @@ File: rysunki/CartView.png Graphic file (type bmp)
 <rysunki/CartView.png>
 File: rysunki/CheckoutView.png Graphic file (type bmp)
 <rysunki/CheckoutView.png>
- [43]
+ [45]
 Overfull \hbox (28.85292pt too wide) in paragraph at lines 65--68
 []\TU/TimesNewRoman(0)/m/n/12 Po jego utworzeniu użytkownik przechodzi do \TU/TimesNewRoman(0)/b/n/12 szczegółów zamówienia \TU/TimesNewRoman(0)/m/n/12 ([]
  []
@@ -1371,15 +1371,15 @@ File: rysunki/OrderDetailsView.png Graphic file (type bmp)
 <rysunki/OrderDetailsView.png>
 File: rysunki/PaymentView.png Graphic file (type bmp)
 <rysunki/PaymentView.png>
-[44]
+[46]
 File: rysunki/OrderHistory.png Graphic file (type bmp)
 <rysunki/OrderHistory.png>
 File: rysunki/DashboardView.png Graphic file (type bmp)
 <rysunki/DashboardView.png>
- [45]
+ [47]
 File: rysunki/NavigationPanel.png Graphic file (type bmp)
 <rysunki/NavigationPanel.png>
- [46]
+ [48]
 File: rysunki/HomeView.png Graphic file (type bmp)
 <rysunki/HomeView.png>
 
@@ -1387,15 +1387,15 @@ Overfull \hbox (31.37766pt too wide) in paragraph at lines 161--162
  [][] 
  []
 
-[47]
+[49]
 File: rysunki/CognitoLogin.png Graphic file (type bmp)
 <rysunki/CognitoLogin.png>
- [48]) [49]
+ [50]) [51]
 \openout2 = `rozdzialy/8_infrastruktura.aux'.
 
  (./rozdzialy/8_infrastruktura.tex
 Rozdział 7.
-[50
+[52
 
 
 
@@ -1403,26 +1403,26 @@ Rozdział 7.
 ]
 File: rysunki/ClusterEKS.png Graphic file (type bmp)
 <rysunki/ClusterEKS.png>
- [51]
+ [53]
 File: rysunki/NodesEKS.png Graphic file (type bmp)
 <rysunki/NodesEKS.png>
- [52]
+ [54]
 File: rysunki/AddonsEKS.png Graphic file (type bmp)
 <rysunki/AddonsEKS.png>
- [53]
+ [55]
 File: rysunki/PosgreSQL.png Graphic file (type bmp)
 <rysunki/PosgreSQL.png>
 File: rysunki/ServicesEKS.png Graphic file (type bmp)
 <rysunki/ServicesEKS.png>
- [54]
+ [56]
 File: rysunki/Kafka.png Graphic file (type bmp)
 <rysunki/Kafka.png>
- [55]
+ [57]
 File: rysunki/Cloudfront.png Graphic file (type bmp)
 <rysunki/Cloudfront.png>
 File: rysunki/CloudfrontPaths.png Graphic file (type bmp)
 <rysunki/CloudfrontPaths.png>
- [56]
+ [58]
 File: rysunki/Nginx.png Graphic file (type bmp)
 <rysunki/Nginx.png>
 
@@ -1430,17 +1430,17 @@ Overfull \hbox (9.6903pt too wide) in paragraph at lines 412--413
  [][] 
  []
 
-[57] [58]
+[59] [60]
 File: rysunki/PrometheusEKS.png Graphic file (type bmp)
 <rysunki/PrometheusEKS.png>
 File: rysunki/Grafana.png Graphic file (type bmp)
 <rysunki/Grafana.png>
-) [59] [60]
+) [61] [62]
 \openout2 = `rozdzialy/9_testy.aux'.
 
  (./rozdzialy/9_testy.tex
 Rozdział 8.
-[61
+[63
 
 
 
@@ -1465,66 +1465,66 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--65
 []|\TU/TimesNewRoman(0)/m/n/12 odmowa (autoryzacja
  []
 
-[62] [63]
+[64] [65]
 File: wykresy/max-grafana-order.png Graphic file (type bmp)
 <wykresy/max-grafana-order.png>
 File: wykresy/max-grafana-product.png Graphic file (type bmp)
 <wykresy/max-grafana-product.png>
- [64]
+ [66]
 File: rysunki/JuneBilling.png Graphic file (type bmp)
 <rysunki/JuneBilling.png>
 File: rysunki/ForecastCost.png Graphic file (type bmp)
 <rysunki/ForecastCost.png>
- [65]
+ [67]
 File: rysunki/order-service-flamegraph.png Graphic file (type bmp)
 <rysunki/order-service-flamegraph.png>
 File: rysunki/product-service-flamegraph.png Graphic file (type bmp)
 <rysunki/product-service-flamegraph.png>
- [66] [67]) [68]
+ [68] [69]) [70]
 \openout2 = `rozdzialy/10_wnioski.aux'.
 
- (./rozdzialy/10_wnioski.tex [69
+ (./rozdzialy/10_wnioski.tex [71
 
 
 
 
-] [70]) [71] (build/main.lof
+] [72]) [73] (build/main.lof
 Underfull \hbox (badness 10000) in paragraph at lines 7--7
  \TU/TimesNewRoman(0)/m/n/12 udFront+ALB+nginx), a uwierzytelnianie realizuje Amazon Cognito. 
  []
 
-[72
+[74
 
 
 
 
-] [73] [74])
+] [75] [76])
 \tf@lof=\write7
 \openout7 = `main.lof'.
 
- [75] (build/main.lot)
+ [77] (build/main.lot)
 \tf@lot=\write8
 \openout8 = `main.lot'.
 
- [76
+ [78
 
 
 ] (build/main.lol)
 \tf@lol=\write9
 \openout9 = `main.lol'.
 
- [77
+ [79
 
 
-] [78
+] [80
 
 
 ] (./rozdzialy/wykaz_skrotow.tex
-ignored: Infinite glue shrinkage found in box being split [79
+ignored: Infinite glue shrinkage found in box being split [81
 
 
 ]
-ignored: Infinite glue shrinkage found in box being split [80]) [81] (build/main.aux (build/rozdzialy/1_wstep.aux) (build/rozdzialy/2_podstawy_mikroserwisow.aux) (build/rozdzialy/3_kubernetes.aux) (build/rozdzialy/4_aws.aux) (build/rozdzialy/5_projekt_systemu.aux) (build/rozdzialy/6_implementacja_mikroserwisow.aux) (build/rozdzialy/7_implementacja_portalu.aux) (build/rozdzialy/8_infrastruktura.aux) (build/rozdzialy/9_testy.aux) (build/rozdzialy/10_wnioski.aux))
+ignored: Infinite glue shrinkage found in box being split [82]) [83] (build/main.aux (build/rozdzialy/1_wstep.aux) (build/rozdzialy/2_podstawy_mikroserwisow.aux) (build/rozdzialy/3_kubernetes.aux) (build/rozdzialy/4_aws.aux) (build/rozdzialy/5_projekt_systemu.aux) (build/rozdzialy/6_implementacja_mikroserwisow.aux) (build/rozdzialy/7_implementacja_portalu.aux) (build/rozdzialy/8_infrastruktura.aux) (build/rozdzialy/9_testy.aux) (build/rozdzialy/10_wnioski.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1536,12 +1536,12 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 41078 strings out of 468168
- 836804 string characters out of 5432816
- 2216570 words of memory out of 5000000
- 69067 multiletter control sequences out of 15000+600000
+ 41133 strings out of 468168
+ 837521 string characters out of 5432816
+ 2272736 words of memory out of 5000000
+ 69122 multiletter control sequences out of 15000+600000
  635343 words of font info for 121 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,16n,107p,1234b,6927s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on build/main.xdv (81 pages, 1751560 bytes).
+Output written on build/main.xdv (83 pages, 1796788 bytes).

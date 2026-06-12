@@ -46,41 +46,41 @@
 \contentsline {section}{\numberline {5.3}Serwis produktów - katalog i rezerwacja stanów magazynowych}{38}{section.5.3}%
 \contentsline {section}{\numberline {5.4}Serwis płatności - transakcyjna obsługa procesu płatności}{39}{section.5.4}%
 \contentsline {section}{\numberline {5.5}Publikacja i konsumpcja zdarzeń Kafka}{39}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Walidacja tokenów JWT i integracja z Cognito}{40}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Obserwowalność serwisów}{40}{section.5.7}%
-\contentsline {section}{\numberline {5.8}Konteneryzacja serwisów}{41}{section.5.8}%
-\contentsline {section}{\numberline {5.9}Testy jednostkowe i integracyjne}{41}{section.5.9}%
-\contentsline {chapter}{\numberline {6}Implementacja portalu obsługi zamówień}{42}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Architektura aplikacji frontendowej}{42}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Główne widoki i przepływy użytkownika}{42}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Warstwa komunikacji z API}{46}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Logowanie użytkownika - OAuth 2.0 z PKCE}{47}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Budowa środowiska chmurowego - infrastruktura jako kod}{50}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Terraform i zarządzanie stanem infrastruktury}{50}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Konfiguracja sieci VPC}{50}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Utworzenie klastra EKS i grup węzłów}{51}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Warstwa danych - RDS PostgreSQL i Secrets Manager}{54}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Wdrożenie mikroserwisów i brokera Kafka do klastra}{54}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Routing ruchu - CloudFront, ALB i reverse proxy}{55}{section.7.6}%
-\contentsline {section}{\numberline {7.7}Wdrożenie monitoringu - Prometheus i Grafana}{58}{section.7.7}%
-\contentsline {section}{\numberline {7.8}Skalowanie aplikacji i zarządzanie cyklem życia}{59}{section.7.8}%
-\contentsline {chapter}{\numberline {8}Testy i analiza działania systemu}{61}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Metodyka testowania}{61}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Testy funkcjonalne systemu}{62}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Testy wydajnościowe i skalowalność}{62}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Czasy odpowiedzi i efekt rozgrzania}{63}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}Opóźnienie asynchronicznej walidacji}{63}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}Automatyczne skalowanie pod obciążeniem}{63}{subsection.8.3.3}%
-\contentsline {section}{\numberline {8.4}Analiza kosztowa wykorzystania usług AWS}{65}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Profilowanie procesora}{66}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}Zidentyfikowane wąskie gardła}{67}{subsection.8.4.2}%
-\contentsline {chapter}{Wnioski i podsumowanie}{69}{section*.50}%
-\contentsline {section}{Stopień realizacji celów pracy}{69}{section*.51}%
-\contentsline {section}{Napotkane trudności i sposoby ich rozwiązania}{70}{section*.53}%
-\contentsline {section}{Rekomendacje dotyczące dalszego rozwoju systemu}{70}{section*.54}%
-\contentsline {section}{Podsumowanie końcowe}{71}{section*.55}%
-\contentsline {chapter}{Spis rysunków}{72}{section*.56}%
-\contentsline {chapter}{Spis tabel}{76}{section*.58}%
-\contentsline {chapter}{Spis listingów}{77}{section*.60}%
-\contentsline {chapter}{Bibliografia}{78}{chapter*.62}%
-\contentsline {chapter}{Wykaz skrótów}{79}{section*.64}%
+\contentsline {section}{\numberline {5.6}Walidacja tokenów JWT i integracja z Cognito}{41}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Obserwowalność serwisów}{41}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Konteneryzacja serwisów}{42}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Testy jednostkowe i integracyjne}{42}{section.5.9}%
+\contentsline {chapter}{\numberline {6}Implementacja portalu obsługi zamówień}{44}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Architektura aplikacji frontendowej}{44}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Główne widoki i przepływy użytkownika}{44}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Warstwa komunikacji z API}{48}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Logowanie użytkownika - OAuth 2.0 z PKCE}{49}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Budowa środowiska chmurowego - infrastruktura jako kod}{52}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Terraform i zarządzanie stanem infrastruktury}{52}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Konfiguracja sieci VPC}{52}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Utworzenie klastra EKS i grup węzłów}{53}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Warstwa danych - RDS PostgreSQL i Secrets Manager}{56}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Wdrożenie mikroserwisów i brokera Kafka do klastra}{56}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Routing ruchu - CloudFront, ALB i reverse proxy}{57}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Wdrożenie monitoringu - Prometheus i Grafana}{60}{section.7.7}%
+\contentsline {section}{\numberline {7.8}Skalowanie aplikacji i zarządzanie cyklem życia}{61}{section.7.8}%
+\contentsline {chapter}{\numberline {8}Testy i analiza działania systemu}{63}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Metodyka testowania}{63}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Testy funkcjonalne systemu}{64}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Testy wydajnościowe i skalowalność}{64}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Czasy odpowiedzi i efekt rozgrzania}{65}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Opóźnienie asynchronicznej walidacji}{65}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Automatyczne skalowanie pod obciążeniem}{65}{subsection.8.3.3}%
+\contentsline {section}{\numberline {8.4}Analiza kosztowa wykorzystania usług AWS}{67}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Profilowanie procesora}{68}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}Zidentyfikowane wąskie gardła}{69}{subsection.8.4.2}%
+\contentsline {chapter}{Wnioski i podsumowanie}{71}{section*.50}%
+\contentsline {section}{Stopień realizacji celów pracy}{71}{section*.51}%
+\contentsline {section}{Napotkane trudności i sposoby ich rozwiązania}{72}{section*.53}%
+\contentsline {section}{Rekomendacje dotyczące dalszego rozwoju systemu}{72}{section*.54}%
+\contentsline {section}{Podsumowanie końcowe}{73}{section*.55}%
+\contentsline {chapter}{Spis rysunków}{74}{section*.56}%
+\contentsline {chapter}{Spis tabel}{78}{section*.58}%
+\contentsline {chapter}{Spis listingów}{79}{section*.60}%
+\contentsline {chapter}{Bibliografia}{80}{chapter*.62}%
+\contentsline {chapter}{Wykaz skrótów}{81}{section*.64}%
