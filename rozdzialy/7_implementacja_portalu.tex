@@ -12,7 +12,7 @@ z~interfejsami REST mikroserwisów, implementację logowania w~przepływie OAuth
 Aplikację zbudowano we frameworku Vue~3 z~językiem TypeScript w~trybie ścisłym (\code{strict}), z~użyciem
 kompozycyjnego API. Kod podzielony jest na warstwy o~jasno określonych odpowiedzialnościach. Katalog
 \code{views} zawiera widoki powiązane z~trasami routera. Katalog \code{components} zawiera współdzielone komponenty powłoki
-aplikacji, Ścieżka \code{stores} zawiera magazyny stanu Pinia, a \code{services} warstwę dostępu do API.
+aplikacji. Ścieżka \code{stores} zawiera magazyny stanu Pinia, a \code{services} warstwę dostępu do API.
 Na koniec \code{composables} ma funkcje kompozycyjne wielokrotnego użytku. Warstwę
 prezentacji ostylowano biblioteką Tailwind CSS z~paletą i~typografią wzorowaną na Material Design~3.
 Nawigację obsługuje Vue Router z~dziewięcioma trasami. 
@@ -62,10 +62,9 @@ przedstawiono na~rysunku~\ref{fig:checkout-view}.
     \label{fig:checkout-view}
 \end{figure}
 
-Po jego utworzeniu użytkownik przechodzi do \textbf{szczegółów zamówienia} (\code{OrderDetailsView}).
+Po jego utworzeniu użytkownik przechodzi do \textbf{szczegółów zamówienia} (\code{OrderDetailsView}~).
 Prezentujących pozycje, adres, bieżący status wraz z~wizualizacją postępu w~cyklu życia. Widok ten
-przedstawiono na~rysunku~\ref{fig:order-details-view} --- pasek postępu odzwierciedla kolejne stany maszyny
-stanów zamówienia opisanej w~sekcji~\ref{sec:order-service}.
+przedstawiono na~rysunku~\ref{fig:order-details-view}.
 
 \begin{figure}[H]
     \centering
@@ -109,7 +108,7 @@ Całość spina powłoka aplikacji ze~stałym panelem nawigacyjnym, który przed
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{NavigationPanel.png}
-    \caption{Widok paneluj nawigacyjnego zrealizowanego serwisu. (źródło: opracowanie własne)}
+    \caption{Widok paneluj nawigacyjnego. (źródło: opracowanie własne)}
     \label{fig:navigation-panel}
 \end{figure}
 
@@ -139,11 +138,11 @@ async create(req: CreateOrderRequest): Promise<OrderDetail> {
 }
 \end{lstlisting}
 
-Adresy API są względne (\code{/api/orders}, \code{/api/products}, \code{/api/v1/payments}. Portal nie zna
+Adresy API są względne (\code{/api/orders}, \code{/api/products}, \code{/api/v1/payments}). Portal nie zna
 topologii backendu, a~rozdziałem żądań pomiędzy mikroserwisy zajmuje się warstwa brzegowa systemu
 (rozdział~\ref{chap:infrastruktura}). Eliminuje to problemy współdzielenia zasobów między domenami (CORS).
 
-\section{Logowanie użytkownika --- OAuth 2.0 z PKCE}
+\section{Logowanie użytkownika - OAuth 2.0 z PKCE}
 \label{sec:logowanie-pkce}
 
 Logowanie zaimplementowano zgodnie z~projektem przedstawionym w~sekcji~\ref{sec:projekt-uwierzytelniania}.

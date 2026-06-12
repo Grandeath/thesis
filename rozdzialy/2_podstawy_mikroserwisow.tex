@@ -10,13 +10,13 @@ stanowiące wprowadzenie do rozdziału~\ref{chap:kubernetes}.
 \label{sec:monolit-a-mikroserwisy}
 
 Architektura monolityczna to model budowy aplikacji, w której całość logiki biznesowej kompiluje się i wdraża jako
-pojedyńcza jednostka uruchomieniowa. Model ten ma istotne zalety. Jest on prosty koncepcyjnie. Tranzakcje mogą być
+pojedynczą jednostkę uruchomieniową. Model ten ma istotne zalety. Jest on prosty koncepcyjnie. Transakcje mogą być
 lokalne i obejmować cały stan aplikacji. Uproszczone jest testowanie i debugowanie, a~wdrożenie sprowadza się do uruchomienia 
 jednego artefaktu. Z~tych powodów monolit pozostaje racjonalnym wyborem dla małych zespołów i~systemów 
 o~ograniczonej złożoności \cite{newman2021}.
 
-Problemy architektury monolitycznej ujawniają się wraz ze wzrostem systemu i~organizacji. Skalowanie możliwe
-jest poprzez dodanie zasobów lub powielenie całej aplikacji. Nawet jeśli wąskim gardłem jest pojedyńczy moduł.
+Problemy architektury monolitycznej ujawniają się wraz z rozbudową systemu i~organizacji. Skalowanie możliwe
+jest poprzez dodanie zasobów lub powielenie całej aplikacji. Nawet jeśli wąskim gardłem jest pojedynczy moduł.
 Każda zmiana wymaga zbudowania i wdrożenia całej aplikacji. Co wydłuża cykl wydawniczy i~zwiększa ryzyko regresji.
 Brak wymuszenia granic pomiędzy modułami może powodować z czasem erozje, prowadząc do silnego sprzężenia kodu.
 Finalnie cały system związany jest jedną technologią i~jedną wersją zależności, a~awaria dowolnego fragmentu 
@@ -85,12 +85,6 @@ pomiędzy oboma podejściami przedstawia tabela~\ref{tab:monolit-vs-mikroserwisy
     \end{tabularx}
 \end{table}
 
-Należy podkreślić, że mikroserwisy nie są rozwiązaniem uniwersalnie lepszym --- przenoszą one złożoność z~wnętrza
-aplikacji do przestrzeni pomiędzy usługami: do sieci, infrastruktury i~procesów wdrożeniowych. Wybór tej architektury
-jest uzasadniony wówczas, gdy korzyści z~niezależnego skalowania i~wdrażania przewyższają koszt zwiększonej
-złożoności operacyjnej; właśnie dlatego praktyczna realizacja mikroserwisów jest dziś nierozerwalnie związana
-z~technologiami chmurowymi i~automatyzacją, które ten koszt istotnie redukują.
-
 Należy podkreślić, że mikroserwisy nie są rozwiązaniem uniwersalnie lepszym. Przenoszą one złożoność z~wnętrza aplikacji
 do przestrzeni pomiędzy usługami. Takimi jak sieć, infrastruktura czy procesy wdrożeniowe. Wybór tej architektury jest
 uzasadniony wówczas, gdy gdy korzyści z~niezależnego skalowania i~wdrażania przewyższają koszt zwiększonej
@@ -105,15 +99,16 @@ mikroserwisową, które można sprowadzić do następujących zasad.
 
 \textbf{Modelowanie wokół domeny biznesowej.} Granice usług powinny odpowiadać granicom kontekstów biznesowych
 (\emph{bounded contexts}) w~rozumieniu projektowania sterowanego domeną (\emph{Domain-Driven Design}) \cite{evans2003}.
-Usługa bierze odpowiedzialność za wyodrębniony fragment domeny. W reazlizowanym systemie ten podział widać na:
-zamówieniach, katalog produktów raz płatnościami. Minimalizuje on liczbę zmian wymagających na koordynacji między usługami.
+Usługa bierze odpowiedzialność za wyodrębniony fragment domeny. W realizowanym systemie te fragmenty to:
+zamówienia, katalog produktów oraz płatności. Minimalizuje to liczbę zmian wymaganych do koordynacji między
+usługami.
 
 \textbf{Niezależność wdrożeniowa.} Każda usługa może być zbudowana, przetestowana i~wdrożona bez udziału pozostałych. 
 Separacja ta pozwala rozwijać i testować aplikacje samodzielnie. Wymaga to jawnych wersjonowanych kontraktów komunikacyjnych 
 oraz unikanie współdzielenia struktur danych. Bardzo dobrą praktyką jest rozdzielenie struktur na komunikacyjną i transportową.
 
 \textbf{Ukrywanie informacji i~własność danych.} Usługa udostępnia na zewnątrz wyłącznie swój interfejs, ukrywając
-szczegóły implementacji. Konsekwencją jest zasada \emph{database-per-service} każda usługa jest wyłącznym właścicielem swoich danych.
+szczegóły implementacji. Konsekwencją jest zasada \emph{database-per-service}. Każda usługa jest wyłącznym właścicielem swoich danych.
 Inne usługi mogą uzyskać do nich dostęp jedynie poprzez jej interfejs. Złamanie tej zasady prowadzi do sprzężenia na poziomie schematu, 
 które w~praktyce odbiera usługom niezależność wdrożeniową \cite{newman2021}.
 
@@ -121,9 +116,9 @@ które w~praktyce odbiera usługom niezależność wdrożeniową \cite{newman202
 i~realizowane w~różnych technologiach, dobranych do charakteru problemu.
 
 \textbf{Odporność na awarie.} W systemie rozproszonym awarie są normalnym zjawiskiem. Architektura musi zakładać że usługi 
-mogą być chwilowo niedostępne. Ograniczenie takich awarii można osiągnąc poprzez asynchroniczną komunikacje oraz samonaprawiające się usługi.
+mogą być chwilowo niedostępne. Ograniczenie takich awarii można osiągnąć poprzez asynchroniczną komunikacje oraz samonaprawiające się usługi.
 
-\textbf{Obserwowalność.} Zachowanie systemu rozproszonego wymaga dokładnego monitorowania. Z powodu że każda usługa działa całkowicie oddzielnie.
+\textbf{Obserwowalność.} Zachowanie systemu rozproszonego wymaga dokładnego monitorowania, ponieważ każda usługa działa całkowicie oddzielnie.
 Wymagane jest dokładne monitorowanie każdej z nich w celu wykrywania anomalii. Niezbędne więc staje się gromadzenie metryk,
 logów i informacji o stanie każdej usługi. Zagadnienie to rozwinięto w~rozdziale~\ref{chap:kubernetes}
 oraz, w~odniesieniu do implementacji, w~rozdziale~\ref{chap:implementacja-mikroserwisow}.
@@ -134,19 +129,13 @@ oraz, w~odniesieniu do implementacji, w~rozdziale~\ref{chap:implementacja-mikros
 Dekompozycja systemu na usługi czyni z~komunikacji międzyusługowej zagadnienie architektonicznie pierwszorzędne.
 Wyróżnia się dwa zasadnicze modele tej komunikacji, różniące się sprzężeniem czasowym pomiędzy stronami.
 
-\subsection{Komunikacja synchroniczna --- REST}
+\subsection{Komunikacja synchroniczna - REST}
 \label{subsec:komunikacja-synchroniczna}
 
 W~modelu synchronicznym usługa wywołująca wysyła żądanie i~wstrzymuje przetwarzanie do czasu otrzymania odpowiedzi.
 Najpowszechniejszą realizacją tego modelu są interfejsy REST (\emph{Representational State Transfer}) oparte na
-protokole HTTP i~formacie JSON: zasoby identyfikowane są adresami URL, a~operacje na nich wyrażane metodami HTTP
-(GET, POST, PUT, DELETE). Zaletami podejścia są prostota, powszechna znajomość, łatwość testowania oraz naturalna
-zgodność z~modelem żądanie--odpowiedź, właściwym dla interakcji inicjowanych przez użytkownika.
-
-W~modelu synchronicznym usługa wywołująca wysyła żądanie i~wstrzymuje przetwarzanie do czasu otrzymania odpowiedzi.
-Najpowszechniejszą realizacją tego modelu są interfejsy REST (\emph{Representational State Transfer}) oparte na
 protokole HTTP i~formacie JSON. Zasoby identyfikowane są za pomocą adresów URL, a~operacje metodami HTTP (GET, POST, PUT, DELETE).
-Zaletami podejścia jest prostota, łatwość testowania oraz zgodność z~modelem żądanie--odpowiedź.
+Zaletami podejścia jest prostota, łatwość testowania oraz zgodność z~modelem żądanie-odpowiedź.
 Podobnym dla interakcji użytkownika z serwisem.
 
 Wadą komunikacji synchronicznej jest sprzężenie czasowe. Obie strony muszą być dostępne jednocześnie, a~niedostępność
@@ -161,16 +150,8 @@ W~modelu asynchronicznym nadawca przekazuje komunikat pośrednikowi brokerowi ko
 kontynuuje przetwarzanie, nie oczekując na odbiorców. Szczególną postacią tego modelu jest architektura sterowana
 zdarzeniami (\emph{event-driven architecture}), w~której usługi publikują zdarzenia domenowe. Niemutowalne fakty
 opisujące to, co zaszło w~ich obszarze odpowiedzialności (np. \emph{utworzono zamówienie}). Subskrybeńci 
-pobierają te zdażenia i obsługują je według własnej logiki. Dzięki temu rozszczepieniu serwisów, nadawca nie zna swoich
+pobierają te zdarzenia i obsługują je według własnej logiki. Dzięki temu rozszczepieniu serwisów, nadawca nie zna swoich
 odbiorców. Powoduje to łatwe dodawanie kolejnych subskrybentów bez zmian po stronie producenta \cite{kleppmann2017}.
-
-Model ten eliminuje sprzężenie czasowe: chwilowa niedostępność konsumenta nie wpływa na producenta, a~zaległe
-komunikaty zostaną przetworzone po przywróceniu jego działania. Ceną jest rezygnacja z~natychmiastowej, silnej
-spójności danych na rzecz spójności ostatecznej (\emph{eventual consistency}) --- stan rozproszony pomiędzy usługami
-uzgadnia się z~opóźnieniem, co projekt systemu musi jawnie uwzględniać. Istotne są również gwarancje dostarczania:
-brokery komunikatów typowo zapewniają dostarczenie \emph{co najmniej raz} (\emph{at-least-once}), co oznacza, że ten
-sam komunikat może zostać doręczony wielokrotnie --- konsumenci muszą zatem przetwarzać komunikaty w~sposób
-idempotentny \cite{kleppmann2017}.
 
 Model ten eliminuje sprzężenie czasowe. Chwilowa niedostępność konsumenta nie wpływa na producenta.
 Wiadomości nieprzetworzone będą czekały w systemie kolejkowym do ponownego działania subskrybenta. 
@@ -186,25 +167,25 @@ zdarzenia publikowane do brokera Apache Kafka. Szczegóły tego podziału omówi
 \section{Wzorce projektowe w systemach mikroserwisowych}
 \label{sec:wzorce-projektowe}
 
-Problemy powtarzające się w~systemach mikroserwisowych doczekały się skatalogowanych rozwiązań --- wzorców
-projektowych \cite{richardson2018}. Poniżej omówiono wzorce, które znalazły bezpośrednie zastosowanie
+Problemy powtarzające się w~systemach mikroserwisowych doczekały się skatalogowanych rozwiązań (wzorców
+projektowych) \cite{richardson2018}. Poniżej omówiono wzorce, które znalazły bezpośrednie zastosowanie
 w~zrealizowanym systemie; odwołania do ich implementacji zawiera rozdział~\ref{chap:implementacja-mikroserwisow}.
 
 \textbf{Baza danych na usługę (\emph{database-per-service}).} Każda usługa posiada wyłączność na swoje dane
 i~udostępnia je jedynie poprzez interfejs. Wzorzec ten został zaimplementowany tylko częściowo gdzie 
-serwis zamówień nie dotyka danych produktowych i płatniczych. Wysyłając asynchronicznie rządanie o rezerwacji
+serwis zamówień nie dotyka danych produktowych i płatniczych. Wysyłając asynchronicznie żądanie o rezerwację
 produktów.
 
-\textbf{Zdarzenia domenowe i~choreografia.} Proces biznesowy obejmujący wiele usług może być koordynowany
-centralnie (orkiestracja) lub realizować się jako łańcuch reakcji na zdarzenia (choreografia). Każda usługa,
+\textbf{Zdarzenia domenowe i~choreografia.} Proces biznesowy obejmujący wiele usług. Może być koordynowany
+centralnie (orkiestracja) lub być realizowany jako łańcuch reakcji na zdarzenia (choreografia). Każda usługa,
 przetworzywszy swój etap, publikuje zdarzenie, na które reagują kolejne. W~zrealizowanym systemie cykl walidacji
 zamówienia przebiega według choreografii. Serwis zamówień publikuje zdarzenie utworzenia zamówienia, na które
 serwis produktów odpowiada rezerwacją stanów magazynowych i~publikacją wyniku walidacji.
 
 \textbf{Idempotentny odbiorca i~klucz idempotencji.} Komunikaty mogą docierać wielokrotnie, a~klient może
 ponowić żądanie (np. po utracie odpowiedzi w~sieci). Operacje zmieniające stan muszą być odporne na powtórzenia.
-Realizuje się to poprzez klucz idempotencji. Jest ot unikalny identyfikator operacji przekazywany przez klienta i zapamiętywany przez usługe.
-Dzięki tej logice powtórne żądanie nie tworzy duplikatu, a zwraca wynik juz wykonanej operacji.
+Realizuje się to poprzez klucz idempotencji. Jest ot unikalny identyfikator operacji przekazywany przez klienta i zapamiętywany przez usługę.
+Dzięki tej logice powtórne żądanie nie tworzy duplikatu, a zwraca wynik już wykonanej operacji.
 
 
 \textbf{Maszyna stanów.} Cykl życia encji biznesowej w~omawianym systemie zamówienia modelowany jest jako
@@ -212,32 +193,31 @@ skończony automat stanów. Z~jawnie zdefiniowanym zbiorem dozwolonych przejść
 encji w~stan niespójny (np. opłacenie zamówienia anulowanego) i~porządkuje logikę biznesową wokół przejść pomiędzy
 stanami.
 
-\textbf{Brama API i~odwrócone proxy.} Klient systemu nie kmunikuje się z~usługami bezpośrednio. Istnieje pojedyńczy 
-punkt wejścia który przekierowuje żądania do odpowiednich serwisów na podstawie ścieżki. Upraszcza to konfiguracje 
+\textbf{Brama API i~odwrócone proxy.} Klient systemu nie komunikuje się z~usługami bezpośrednio. Istnieje pojedynczy 
+punkt wejścia, który przekierowuje żądania do odpowiednich serwisów na podstawie ścieżki. Upraszcza to konfiguracje 
 klientów. Pozwala uniknąć CORS. Ukrywa wewnętrzną topologię systemu.
 
 \textbf{Konfiguracja zewnętrzna.} Zgodnie z~metodyką \emph{The Twelve-Factor App} konfiguracja zależna od środowiska
 (adresy usług, poświadczenia, przełączniki funkcji) przechowywana jest poza kodem. W~zmiennych środowiskowych.
-dzięki czemu ten sam artefakt może być wdrażany w~różnych środowiskach bez rekompilacji \cite{twelvefactor}.
+Dzięki czemu ten sam artefakt może być wdrażany w~różnych środowiskach bez rekompilacji \cite{twelvefactor}.
 
 \textbf{Kontrola zdrowia (\emph{health check}).} Każda usługa udostępnia punkt końcowy raportujący jej stan.
-Odpytywany jest przez platformę uruchomieniową w~celu wykrywania niezdrowych instacji. Zapbiega to awarii
-pprzez automatyczny ich restart lub wyłączenie z~puli.
+Odpytywany jest przez platformę uruchomieniową w~celu wykrywania niezdrowych instancji. Zapobiega to awarii
+przez automatyczny ich restart lub wyłączenie z~puli.
 
 \section{Konteneryzacja i rola orkiestracji}
 \label{sec:konteneryzacja-i-orkiestracja}
 
 Praktyczna realizacja architektury mikroserwisowej wymaga jednolitego sposobu pakowania i~uruchamiania wielu
 niezależnych usług. Rolę tę pełni konteneryzacja. Jest to technika wirtualizacji na poziomie systemu operacyjnego.
-Proocesy izolowane są od siebie przy użyciu jądra Linux, współdzieląc przy tym jądro systemu gospodarza.
+Procesy izolowane są od siebie przy użyciu jądra Linux, współdzieląc przy tym jądro systemu gospodarza.
 W~odróżnieniu od maszyn wirtualnych kontenery nie wymagają odrębnego systemu operacyjnego, dzięki czemu 
 uruchamiają się w~ułamkach sekund i~wprowadzają znikomy narzut wydajnościowy \cite{burns2022}.
 
 Jednostką dystrybucji jest obraz kontenera. Niemutowalny, warstwowy artefakt zawierający aplikację wraz z~kompletem
 jej zależności, budowany na podstawie deklaratywnego opisu (\emph{Dockerfile}). Przchowywany jest on w~rejestrze
-obrazów. Niemutowalność obrazu zapewnia powtarzalność wdrożeń. Eleminuje to błędy wynikające z~różnic z~środowiskami.
+obrazów. Niemutowalność obrazu zapewnia powtarzalność wdrożeń. Eliminuje to błędy wynikające z~różnic z~środowiskami.
 
-Konteneryzacja rozwiązuje problem pojedyńczej usługi. Jednak nie odpowiada na pytania jak: Na którym węźle uruchomić kontener?
-Jak utrzymać zadaną liczbę jego replik mimo awarii węzłów? Jak kierować ruch do zmieniających się dynamicznie instancji? Jak przeprowadzić
-aktualizację bez przerwy w~działaniu? Jak skalować liczbę replik w~odpowiedzi na obciążenie. Zadania te są określane jako
-orkiestracja kontenerów. Wymaga to specjalnej platformy której standardem stał się Kubernetes, ktremu poświęcono następny rozdział.
+Konteneryzacja rozwiązuje problem pojedynczej usługi. Jednak nie odpowiada na pytania jak: na którym węźle uruchomić kontener?, jak utrzymać zadaną liczbę jego replik mimo awarii
+węzłów?, jak kierować ruch do zmieniających się dynamicznie instancji?, jak przeprowadzić aktualizację bez przerwy w działaniu?, jak skalować liczbę replik w odpowiedzi na obciążenie.
+Zadania te są określane jako orkiestracja kontenerów. Wymaga to specjalnej platformy której standardem stał się Kubernetes, któremu poświęcono następny rozdział.

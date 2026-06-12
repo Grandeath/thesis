@@ -1,4 +1,5 @@
 \chapter*{Wnioski i podsumowanie}
+\phantomsection
 \addcontentsline{toc}{chapter}{Wnioski i podsumowanie}
 \label{chap:wnioski}
 
@@ -6,6 +7,7 @@ Rozdział podsumowuje pracę: ocenia stopień realizacji postawionych celów, om
 napotkane w~trakcie wytwarzania systemu wraz z~przyjętymi rozwiązaniami oraz wskazuje kierunki dalszego rozwoju.
 
 \section*{Stopień realizacji celów pracy}
+\phantomsection
 \addcontentsline{toc}{section}{Stopień realizacji celów pracy}
 \label{sec:stopien-realizacji-celow}
 
@@ -23,7 +25,7 @@ tabela~\ref{tab:realizacja-celow}.
         \toprule
         \textbf{Cel szczegółowy} & \textbf{Realizacja} \\
         \midrule
-        Analiza teoretycznych podstaw mikroserwisów i~technologii chmurowych & rozdz.\ \ref{chap:podstawy-mikroserwisow}--\ref{chap:aws} \\
+        Analiza teoretycznych podstaw mikroserwisów i~technologii chmurowych & rozdz.\ \ref{chap:podstawy-mikroserwisow}-\ref{chap:aws} \\
         Projekt modelu domenowego, architektury i~kontraktów komunikacyjnych & rozdz.\ \ref{chap:projekt-systemu} \\
         Implementacja mikroserwisów (zamówienia, produkty, płatności) & rozdz.\ \ref{chap:implementacja-mikroserwisow} \\
         Implementacja aplikacji webowej (portal) & rozdz.\ \ref{chap:implementacja-portalu} \\
@@ -35,15 +37,16 @@ tabela~\ref{tab:realizacja-celow}.
 
 Zakres pracy zrealizowano zgodnie z~założeniami, z~jednym świadomym ograniczeniem. Spośród pierwotnie rozważanych
 usług pomocniczych zaimplementowano trzy serwisy realizujące rdzeń procesu zakupowego, pozostawiając usługi
-powiadomień i~analityki jako kierunek dalszego rozwoju (sekcja~\enquote{\nameref{sec:rekomendacje-rozwoju}}). Decyzja ta
+powiadomień i~analityki jako kierunek dalszego rozwoju. Decyzja ta
 pozwoliła skupić wysiłek na~kompletności pionowej systemu. Od~interfejsu użytkownika, przez logikę biznesową,
 po~infrastrukturę. Zamiast na~zwielokrotnianiu podobnych do~siebie usług.
 
 \section*{Napotkane trudności i sposoby ich rozwiązania}
+\phantomsection
 \addcontentsline{toc}{section}{Napotkane trudności i sposoby ich rozwiązania}
 \label{sec:napotkane-trudnosci}
 
-Wytwarzanie systemu wiązało się z~szeregiem problemów, których rozwiązania okazały się pouczające.
+Budowanie systemu wiązało się z~szeregiem problemów, których rozwiązania okazały się pouczające.
 
 \textbf{Limit adresów IP na~węzłach.} Dobór niewielkich instancji \code{t3.small} ze~względów kosztowych
 zderzył się z~ograniczeniem wtyczki sieciowej VPC~CNI. Domyślnie węzeł takiej klasy mieści zaledwie~11~podów,
@@ -72,6 +75,7 @@ rozwiązano dwojako. Warunkowymi, niepodzielnymi operacjami bazodanowymi odporny
 \ref{sec:payment-service}). Oraz~idempotentnym przetwarzaniem zarówno żądań~HTTP, jak~i~zdarzeń Kafki.
 
 \section*{Rekomendacje dotyczące dalszego rozwoju systemu}
+\phantomsection
 \addcontentsline{toc}{section}{Rekomendacje dotyczące dalszego rozwoju systemu}
 \label{sec:rekomendacje-rozwoju}
 
@@ -83,12 +87,11 @@ przestrzeń do~rozwoju w~kierunku wdrożenia produkcyjnego. Najistotniejsze reko
     \code{product.events}, eliminując przejściowe rozwiązanie, w~którym product-service zapisuje status zamówienia
     bezpośrednio (sekcja~\ref{sec:product-service}). Co~przywróci pełną wyłączność własności danych.
 
-    \item \textbf{Rozdzielenie warstwy danych.} Przydzielenie każdej usłudze własnej bazy oraz~zastąpienie
-    transakcyjnej, międzydomenowej finalizacji płatności wzorcem sagi przywróciłoby pełną zgodność ze~wzorcem
-    \emph{database-per-service}.
+    \item \textbf{Rozdzielenie warstwy danych.} Przydzielenie każdej usłudze własnej bazy oraz użycie realnej
+     finalizacji płatności przywróciłoby pełną zgodność ze~wzorcem \emph{database-per-service}.
 
     \item \textbf{Wysoka dostępność komponentów stanowych.} Pojedynczy broker Kafka oraz~jednostrefowa baza danych
-    powinny zostać zastąpione konfiguracjami wysokodostępnymi (klaster Kafka lub~Amazon~MSK, tryb~Multi-AZ~RDS),
+    powinny zostać zastąpione konfiguracjami o wysokiej dostępności (klaster Kafka lub~Amazon~MSK, tryb~Multi-AZ~RDS),
     a~wewnętrzne proxy zreplikowane i~objęte autoskalowaniem.
 
     \item \textbf{Rozbudowa funkcjonalna.} Naturalnym rozszerzeniem jest~implementacja usług powiadomień
@@ -100,13 +103,14 @@ przestrzeń do~rozwoju w~kierunku wdrożenia produkcyjnego. Najistotniejsze reko
 \end{itemize}
 
 \section*{Podsumowanie końcowe}
+\phantomsection
 \addcontentsline{toc}{section}{Podsumowanie końcowe}
 \label{sec:podsumowanie-koncowe}
 
 W~ramach pracy zaprojektowano, zaimplementowano i~wdrożono w~chmurze publicznej kompletny system obsługi zamówień
 oparty na~architekturze mikroserwisowej. Powstał system złożony z~trzech mikroserwisów w~języku~Go, komunikujących
 się synchronicznie poprzez~REST oraz~asynchronicznie poprzez~zdarzenia domenowe. Powstał z aplikacji webowej~Vue, oraz~brokera komunikatów. 
-Wszystkie te komponenty uruchomionych na~klastrze Kubernetes w~usłudze Amazon~EKS. Moduł perzystencji danych został postawiony w usłudze
+Wszystkie te komponenty uruchomiono na~klastrze Kubernetes w~usłudze Amazon~EKS. Moduł perzystencji danych został postawiony w usłudze
 Amazon RDS. Infrastruktura została zdefiniowana w~całości jako~kod i~objęta monitoringiem.
 
 Praca wykazała, że~zbudowanie tej~klasy systemu rozproszonego skalowalnego, obserwowalnego i~bezpiecznego

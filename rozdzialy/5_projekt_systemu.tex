@@ -1,7 +1,7 @@
 \chapter{Projekt systemu obsługi zamówień}
 \label{chap:projekt-systemu}
 
-W tym rozdziale omówiony jest projekt zrealizowanego systemu obsługi zamówień. Uzasadnione zostanie wybór technologii oraz
+W tym rozdziale omówiony jest projekt zrealizowanego systemu obsługi zamówień. Uzasadniony zostanie wybór technologii oraz
 decyzji implementacyjnych. Decyzje projektowe odwołują się do podstaw teoretycznych omówionych w~rozdziale~\ref{chap:podstawy-mikroserwisow}.
 
 \section{Opis funkcjonalny systemu}
@@ -10,6 +10,7 @@ decyzji implementacyjnych. Decyzje projektowe odwołują się do podstaw teorety
 System realizuje kompletny proces zakupowy w~sklepie internetowym. Jego użytkownikami są \textbf{klienci}.
 Są to zarejestrowani użytkownicy przeglądający ofertę i składający zamówienia.
 
+System ten obejmuje:
 \begin{itemize}
     \item rejestrację i~logowanie użytkowników,
     \item przeglądanie katalogu produktów z~filtrowaniem po kategorii, przedziale cenowym i~dostępności,
@@ -22,45 +23,8 @@ Są to zarejestrowani użytkownicy przeglądający ofertę i składający zamów
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        font=\small,
-        uc/.style={ellipse, draw, thick, align=center, minimum width=30mm,
-                   minimum height=8mm, inner sep=1pt, fill=black!4},
-        actor/.style={align=center, font=\small\bfseries},
-        node distance=4mm,
-    ]
-        % Aktorzy (proste piktogramy)
-        \node[actor] (klient) at (-5,-2.4) {Klient};
-        \draw[thick] (-5,-1.6) circle (2.2mm);
-        \draw[thick] (-5,-1.85) -- (-5,-2.55) (-5.35,-2.15) -- (-5.35+0.7,-2.15)
-                     (-5,-2.55) -- (-5.3,-3.0) (-5,-2.55) -- (-4.7,-3.0);
-
-        \node[actor] (admin) at (5,-2.4) {Administrator};
-        \draw[thick] (5,-1.6) circle (2.2mm);
-        \draw[thick] (5,-1.85) -- (5,-2.55) (4.65,-2.15) -- (4.65+0.7,-2.15)
-                     (5,-2.55) -- (4.7,-3.0) (5,-2.55) -- (5.3,-3.0);
-
-        % Przypadki użycia
-        \node[uc] (login)   at (0, 0.6)  {Logowanie};
-        \node[uc] (katalog) at (0,-0.8)  {Przeglądanie katalogu};
-        \node[uc] (koszyk)  at (0,-2.0)  {Kompletowanie koszyka};
-        \node[uc] (zamow)   at (0,-3.2)  {Złożenie zamówienia};
-        \node[uc] (platnosc)at (0,-4.4)  {Płatność};
-        \node[uc] (historia)at (0,-5.6)  {Podgląd zamówień};
-        \node[uc] (zarzadz) at (0,-7.0)  {Zarządzanie katalogiem};
-
-        \foreach \t in {login,katalog,koszyk,zamow,platnosc,historia}
-            \draw (klient) -- (\t);
-        \draw (admin) -- (login);
-        \draw (admin) -- (zarzadz);
-
-        \begin{scope}[on background layer]
-            \node[draw, densely dashed, rounded corners, inner sep=5mm,
-                  fit=(login)(katalog)(koszyk)(zamow)(platnosc)(historia)(zarzadz),
-                  label={[font=\small\itshape]above:System obsługi zamówień}] {};
-        \end{scope}
-    \end{tikzpicture}
-    \caption{Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy, administrator zarządza katalogiem produktów; logowanie jest~wspólne dla~obu ról. (źródło: opracowanie własne)}
+    \includegraphics[width=\textwidth]{DiagramPrzypadków2.png}
+    \caption{Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy (opracowanie własne)}
     \label{fig:przypadki-uzycia}
 \end{figure}
 
@@ -73,12 +37,12 @@ Przypadki użycia systemu wraz z~rolami aktorów przedstawia rysunek~\ref{fig:pr
 \section{Model domenowy}
 \label{sec:model-domenowy}
 
-Domene systemu podzielono zgodnia z~zasadą modelowania wokół kontekstów biznesowych (sekcja~\ref{sec:charakterystyka-mikroserwisow}).
+Domenę systemu podzielono zgodnie z~zasadą modelowania wokół kontekstów biznesowych (sekcja~\ref{sec:charakterystyka-mikroserwisow}).
 Na trzy konteksty: \emph{zamówienia}, \emph{katalog produktów} oraz \emph{płatności}. 
 
 \textbf{Zamówienie (Order)} jest centralnym zdarzeniem systemu. Obejmuje indetyfikator klienta, listę pozycji
-(produkt, ilość, cena jednostkowa i~łączna) kwotę całkowitą wraz z~walutą, adres dostawy oraz bieżący status.
-Kwoty pieniężne modelowane są typem dziesiętnym o~stałej precyzji. Eliminuje to błędy zaokrąfleń w operacjach
+(produkt, ilość, cena jednostkową i~łączna) kwotę całkowitą wraz z~walutą, adres dostawy oraz bieżący status.
+Kwoty pieniężne modelowane są typem dziesiętnym o~stałej precyzji. Eliminuje to błędy zaokrągleń w operacjach
 zmiennoprzecinkowych.
 
 Cykl życia zamówienia zamodelowano jako maszynę stanów (wzorzec omówiony w~sekcji~\ref{sec:wzorce-projektowe}).
@@ -110,39 +74,8 @@ terminalne. Każda próba przejścia spoza tego zbioru jest odrzucana na poziomi
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        node distance=8mm and 16mm,
-        every node/.style={font=\small},
-        state/.style={rectangle, rounded corners, draw, thick, minimum height=8mm,
-                      minimum width=22mm, align=center, font=\small\bfseries},
-        terminal/.style={state, fill=black!8},
-        >={Stealth[length=2mm]},
-        arr/.style={->, thick},
-    ]
-        \node[state] (new) {NEW};
-        \node[state, right=of new] (val) {VALIDATED};
-        \node[state, right=of val] (pp) {PAYMENT\_\\PENDING};
-        \node[state, right=of pp] (paid) {PAID};
-        \node[state, below=14mm of val] (proc) {PROCESSING};
-        \node[state, right=of proc] (ship) {SHIPPED};
-
-        \node[terminal, below=22mm of new] (canc) {CANCELLED};
-        \node[terminal, right=of canc] (fail) {FAILED};
-
-        \draw[arr] (new) -- (val);
-        \draw[arr] (val) -- (pp);
-        \draw[arr] (pp) -- (paid);
-        \draw[arr] (paid) |- (proc);
-        \draw[arr] (proc) -- (ship);
-
-        % Przejścia do stanów terminalnych z każdego stanu nieterminalnego
-        \draw[arr, densely dashed, black!55] (new)  -- (canc);
-        \draw[arr, densely dashed, black!55] (val)  to[bend right=10] (canc);
-        \draw[arr, densely dashed, black!55] (pp)   to[bend right=12] (fail);
-        \draw[arr, densely dashed, black!55] (paid) to[bend left=14] (fail);
-        \draw[arr, densely dashed, black!55] (proc) -- (fail);
-    \end{tikzpicture}
-    \caption{Maszyna stanów cyklu życia zamówienia. Linią ciągłą oznaczono ścieżkę główną, przerywaną --- przejścia do~stanów terminalnych \code{CANCELLED} i~\code{FAILED}, osiągalne z~każdego stanu nieterminalnego (dla~czytelności pokazano reprezentatywne krawędzie). Stany terminalne wyróżniono szarym tłem. (źródło: opracowanie własne)}
+    \includegraphics[scale=0.6]{DiagramStanow2.png}
+    \caption{Maszyna stanów cyklu życia zamówienia. Źródło: opracowanie własne}
     \label{fig:maszyna-stanow}
 \end{figure}
 
@@ -150,12 +83,12 @@ terminalne. Każda próba przejścia spoza tego zbioru jest odrzucana na poziomi
 zdjęcie. Istotnym elementem modelu jest rozbicie stanu magazynowego produktu na cztery pule ilościowe:
 \code{qty} (dostępne), \code{reserved\_qty} (zarezerwowane w~zamówieniach oczekujących na płatność),
 \code{paid\_qty} (opłacone). Operacje biznesowe przesuwają ilości pomiędzy tymi pulami. Każde przesunięcie
-jest warunkuowe i wymaga wystarczjącej ilości w~puli źródłowej. Chroni to przez sprzedażą ponad stan.
+jest warunkowe i wymaga wystarczjącej ilości w~puli źródłowej. Chroni to przez sprzedażą ponad stan.
 
 \textbf{Płatność (Payment)} wiąże zamówienie z~procesem zapłaty. Posiada dwa stany: \code{PENDING} (utworzona,
 oczekuje na realizację) oraz \code{SUCCEEDED} (zakończona). Integracja z rzeczywistym operatorem płatności
-pozostaje po za zakresem pracy, więc realizacja płatności jest symulowana. Klient wytwarza żadanie o wytworzenie płatności.
-Serwis opdowiada adresem URL płatności i ją finalizuje. Odpowiada to przepływowi stosowanemu przy integracjach
+pozostaje po za zakresem pracy, więc realizacja płatności jest symulowana. Klient wytwarza żądanie o wytworzenie płatności.
+Serwis odpowiada adresem URL płatności i ją finalizuje. Odpowiada to przepływowi stosowanemu przy integracjach
 zewnętrznych, co pozwala podmienić symulację na rzeczywistego operatora.
 
 \section{Architektura mikroserwisowa systemu}
@@ -171,53 +104,21 @@ rysunek~\ref{fig:architektura}.
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        font=\small,
-        >={Stealth[length=2mm]},
-        comp/.style={rectangle, rounded corners, draw, thick, minimum height=8mm,
-                     minimum width=20mm, align=center},
-        svc/.style={comp, fill=black!5},
-        infra/.style={comp, fill=black!12},
-        sync/.style={->, thick},
-        async/.style={->, thick, densely dashed},
-        node distance=10mm and 12mm,
-    ]
-        \node[comp] (user) {Przeglądarka\\(portal Vue)};
-        \node[infra, below=of user] (cf) {CloudFront\\ + ALB + nginx};
-        \node[svc, below left=14mm and 2mm of cf] (order) {order-\\service};
-        \node[svc, below=14mm of cf] (product) {product-\\service};
-        \node[svc, below right=14mm and 2mm of cf] (payment) {payment-\\service};
-        \node[infra, below=30mm of cf] (db) {PostgreSQL (RDS)};
-        \node[infra, right=14mm of cf] (cognito) {Cognito};
-        \node[infra, left=14mm of product, yshift=-8mm] (kafka) {Kafka};
-
-        \draw[sync] (user) -- node[right, font=\scriptsize]{HTTPS} (cf);
-        \draw[sync] (user.east) to[bend left=22] node[right, font=\scriptsize]{OAuth/PKCE} (cognito.north);
-        \draw[sync] (cf) -- (order);
-        \draw[sync] (cf) -- (product);
-        \draw[sync] (cf) -- (payment);
-        \draw[sync] (order) -- (db);
-        \draw[sync] (product) -- (db);
-        \draw[sync] (payment) -- (db);
-
-        \draw[async] (order.west) to[bend right=18] node[left, font=\scriptsize]{order.events} (kafka.north);
-        \draw[async] (kafka.south) to[bend right=18] node[left, font=\scriptsize]{} (product.west);
-    \end{tikzpicture}
-    \caption{Architektura systemu. Linia ciągła --- komunikacja synchroniczna (HTTPS/REST), linia przerywana --- asynchroniczna wymiana zdarzeń przez~Apache Kafka. Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności. (źródło: opracowanie własne)}
+    \includegraphics[width=\textwidth]{Architektura_systemu(1).png}
+    \caption{Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności. (źródło: opracowanie własne)}
     \label{fig:architektura}
 \end{figure}
 
-Ruch w~systemie przebiega diema ściażkami. Żądania użytkownika są składane przez portla i trafiają poprzez
-warstwę przebogwę do właściwego serwisu. Dzieje się to za pomocą prefiksu ścieżki i są obsługiwane synchronicznie (sekcja~\ref{sec:projekt-api-i-zdarzen}).
-Porces walidacji nie wymaga udziału użytkownika, więc jest obsłużony asynchronicznie poprzez brokera wiadomości.
+Ruch w~systemie przebiega dwiema ścieżkami. Żądania użytkownika są składane przez portal i trafiają poprzez
+warstwę brzegową do właściwego serwisu. Dzieje się to za pomocą prefiksu ścieżki i są obsługiwane synchronicznie (sekcja~\ref{sec:projekt-api-i-zdarzen}).
+Proces walidacji nie wymaga udziału użytkownika, więc jest obsłużony asynchronicznie poprzez brokera wiadomości.
 Podział ten odpowiada zaleceniom przedstawionym w~sekcji~\ref{sec:komunikacja-synchroniczna-asynchroniczna}.
 
-Świadomym odstępstwem od wzorca \emph{database-per-service} jest wykorzystanie wspólnej instancji bazy danych:
-ze względów kosztowych usługi współdzielą jedną instancję PostgreSQL, zachowując jednak rozłączne zestawy tabel,
+Świadomym odstępstwem od wzorca \emph{database-per-service} jest wykorzystanie wspólnej instancji bazy danych.
+Ze względów kosztowych usługi współdzielą jedną instancję PostgreSQL, zachowując jednak rozłączne zestawy tabel,
 których wyłącznym właścicielem pozostaje jedna usługa. Wyjątek stanowi proces finalizacji płatności, w~którym
-payment-service aktualizuje transakcyjnie również tabele zamówień i~produktów --- kompromis ten, jego konsekwencje
-oraz docelowe rozwiązanie omówiono w~rozdziałach~\ref{chap:implementacja-mikroserwisow}
-i~\ref{chap:testy-i-analiza}.
+payment-service aktualizuje również tabele zamówień i~produktów. Kompromis ten, jego konsekwencje
+oraz docelowe rozwiązanie omówiono w~rozdziałach~\ref{chap:implementacja-mikroserwisow} i~\ref{chap:testy-i-analiza}.
 
 \section{Projekt API REST/JSON oraz kontraktów zdarzeń}
 \label{sec:projekt-api-i-zdarzen}
@@ -225,10 +126,10 @@ i~\ref{chap:testy-i-analiza}.
 \subsection{Interfejsy REST}
 \label{subsec:interfejsy-rest}
 
-Interfejsy usług zaprojektowano zgodnie z~konwencjami REST: zasoby identyfikowane są ścieżkami, operacje metodami
+Interfejsy usług zaprojektowano zgodnie z~konwencjami REST. Zasoby identyfikowane są ścieżkami, operacje metodami
 HTTP, a~reprezentacją danych jest JSON. Zestawienie punktów końcowych przedstawia
-tabela~\ref{tab:endpointy-rest}. Wszystkie punkty końcowe --- z~wyjątkiem publicznego serwowania zdjęć
-produktów --- wymagają uwierzytelnienia tokenem JWT (sekcja~\ref{sec:projekt-uwierzytelniania}), a~zasoby zamówień
+tabela~\ref{tab:endpointy-rest}. Wszystkie punkty końcowe, z~wyjątkiem publicznego serwowania zdjęć
+produktów, wymagają uwierzytelnienia tokenem JWT (sekcja~\ref{sec:projekt-uwierzytelniania}). Zasoby zamówień
 i~płatności zwracane są wyłącznie ich właścicielowi, identyfikowanemu na podstawie tokenu. Listy stronicowane są
 parametrami \code{limit} i~\code{offset}, a~katalog produktów filtrowany parametrami zapytania
 (\code{category}, \code{minPrice}, \code{maxPrice}, \code{available}).
@@ -269,7 +170,7 @@ samym kluczem zwraca pierwotnie utworzone zamówienie zamiast tworzyć duplikat.
 \label{subsec:kontrakty-zdarzen}
 
 Zdarzenia domenowe są przesyłane jako JSON. System order-service publikuje wiadomość na temat \code{order.events}.
-Product-service, jako konsument tego zdarzenia, podejmuje próbę atomowej rezerwacj wszystkich pozycji zamówienia.
+Product-service, jako konsument tego zdarzenia, podejmuje próbę atomowej rezerwacji wszystkich pozycji zamówienia.
 Zależnie od wyniku ustawia jego status na poprawny albo anulowany. Kwtoy pieniężne są przesyłane jako znaki 
 w celu uniknięcia utraty precyzji podczas deserializacji JSON. \ref{lst:order-created}
 Pełny przebieg procesu zakupowego przedstawia rysunek~\ref{fig:sekwencja-zamowienia}.
@@ -357,40 +258,40 @@ Pełny przebieg procesu zakupowego przedstawia rysunek~\ref{fig:sekwencja-zamowi
     \label{fig:sekwencja-zamowienia}
 \end{figure}
 
-\section{Wybór technologii implementacyjnych --- Go i Vue 3}
+\section{Wybór technologii implementacyjnych - Go i Vue 3}
 \label{sec:wybor-technologii}
 
 Na język implementacji mikroserwisów wybrano \textbf{Go}. Język ten często określany jako język chmury \cite{medium}.
-Ma wiele zalet które idealnie sprawdzają się przy budowaniu mikroserwisów. Go kompiluje się do pojedyńczego,
+Ma wiele zalet które idealnie sprawdzają się przy budowaniu mikroserwisów. Go kompiluje się do pojedynczego,
 statycznie linkowanego pliku wykonywalnego. Pozwala to budować minimalne obrazy kontenerów pozbawione systemu
 operacyjnego (rozdział~\ref{chap:implementacja-mikroserwisow}). Ma bardzo niskie zużycie pamięci i szybki start procesu.
 Posiada bardzo lekki model współbieżności (gorutyny). Jest to bardzo ważne przy serwerach obsługujących wiele żądań na raz.
 Go poosiada też dojrzały ekosystem bibliotek. Spośród nich wykorzystano m.in. router HTTP \code{chi}, sterownik PostgreSQL 
 \code{pgx}, klienta Kafki \code{franz-go} oraz bibliotekę \code{jwx} do weryfikacji tokenów JWT.
-Jedną z wielkich zalet Go jest też bardzo bogata biblioteka standardowa, która umożliwia nie używania ciężkich
+Jedną z wielkich zalet Go jest też bardzo bogata biblioteka standardowa, która pozwala na nie używanie ciężkich
 frameworków.
 
 Warstwę frontendu zrealizowano we frameworku \textbf{Vue~3} z~językiem \textbf{TypeScript}. Vue~3 oferuje
 reaktywny model danych i~kompozycyjne API sprzyjające wielokrotnemu użyciu logiki. Statycznie typowany
-TypeScript pozwala wykryś znaczną ilości błędów w etapie kompilacji. Stan aplikacji (sesja użytkownika, koszyk)
+TypeScript pozwala wykryć znaczną ilość błędów w etapie kompilacji. Stan aplikacji (sesja użytkownika, koszyk)
 zarządzany jest biblioteką Pinia, a~proces budowania narzędziem Vite. Szczegóły architektury portalu przedstawiono
 w~rozdziale~\ref{chap:implementacja-portalu}.
 
-\section{Projekt bazy danych i persystencji --- PostgreSQL}
+\section{Projekt bazy danych i persystencji - PostgreSQL}
 \label{sec:projekt-bazy-danych}
 
-Warstwę persystencji oparto na relacyjnej bazie danych \textbf{PostgreSQL}. PostreSQL jest obecnie jedną z najlepiej
-rozwijanych baz danych. Bardzo dobra transakcyjność ACID byłą niezbędna przy warunkowych przesunięciach 
+Warstwę persystencji oparto na relacyjnej bazie danych \textbf{PostgreSQL}. PostgreSQL jest obecnie jedną z najlepiej
+rozwijanych baz danych. Bardzo dobra transakcyjność ACID była niezbędna przy warunkowych przesunięciach 
 stanów magazynowych i~finalizacji płatności. Dostępność PostgreSQL jako w~pełni zarządzanej usługi Amazon RDS
-była kolejnym powodem dlaczego został wybrany ten silnik (sekcja~\ref{subsec:rds}).
+była kolejnym powodem wybrania tego silnika (sekcja~\ref{subsec:rds}).
 
-Schemat głównej tabeli zamówień przedstawiono na~listingu~\ref{lst:schemat-orders}. Identyfikatory zapisano jako
-\code{TEXT}, pozycje zamówienia i~adres dostawy --- w~kolumnach \code{JSONB}, a~pełną historię przejść między stanami
+Schemat głównej tabeli zamówień przedstawiono na~fragmencie~\ref{lst:schemat-orders}. Identyfikatory zapisano jako
+\code{TEXT}. Pozycje zamówienia i~adres dostawy w~kolumnach \code{JSONB}. Pełną historię przejść między stanami
 utrwala kolumna \code{history}.
 
-\begin{lstlisting}[caption={Schemat tabeli orders},label={lst:schemat-orders},language=SQL]
+\begin{lstlisting}[caption={Fragment kodu SQL definiujący tabelę orders},label={lst:schemat-orders},language=SQL]
 CREATE TABLE orders (
-    id               TEXT PRIMARY KEY,
+    id               TEXT          PRIMARY KEY,
     customer_id      TEXT          NOT NULL,
     status           TEXT          NOT NULL,
     items            JSONB         NOT NULL,
@@ -468,7 +369,7 @@ CREATE TABLE IF NOT EXISTS payments (
 );
 \end{lstlisting}
 
-\section{Asynchroniczna wymiana zdarzeń --- Apache Kafka}
+\section{Asynchroniczna wymiana zdarzeń - Apache Kafka}
 \label{sec:kafka}
 
 Rolę brokera komunikatów pełni \textbf{Apache Kafka} . Jest to rozproszony dziennik zdarzeń (\emph{distributed log}),
@@ -494,7 +395,7 @@ Uwierzytelnianie użytkowników oparto na protokole \textbf{OAuth~2.0} \cite{rfc
 Connect, z~Amazon Cognito w~roli serwera autoryzacji (sekcja~\ref{subsec:cognito}). Ponieważ klientem jest
 aplikacja jednostronicowa, zastosowano przepływ \emph{authorization code} z~rozszerzeniem \textbf{PKCE} (\emph{Proof Key for Code Exchange})
 \cite{rfc7636}. Portal generuje przy każdym logowaniu jednorazowy weryfikator, którego skrót dołącza do żądania
-autoryzacji, a~oryginał przedstawia przy wymianie kodu na tokeny. Uniemożliwia wykorzystanie przechwyconego
+autoryzacji, a~oryginał przedstawia przy wymianie kodu na tokeny. Uniemożliwia to wykorzystanie przechwyconego
 kodu autoryzacyjnego przez stronę trzecią.
 
 Przebieg logowania jest następujący. Portal przekierowuje użytkownika do hostowanego interfejsu logowania Cognito.
@@ -532,7 +433,7 @@ aplikację. Uzyskany token dołączany jest do każdego żądania API w~nagłów
         \node[align=center, font=\scriptsize] at (\svcx,-7.6)
             {\textit{weryfikacja}\\\textit{podpisu (JWKS)}};
     \end{tikzpicture}
-    \caption{Przepływ uwierzytelniania OAuth~2.0 \emph{authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny --- wraz z~weryfikatorem --- na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS). (źródło: opracowanie własne)}
+    \caption{Przepływ uwierzytelniania OAuth~2.0 \emph{authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS). (źródło: opracowanie własne)}
     \label{fig:pkce}
 \end{figure}
 

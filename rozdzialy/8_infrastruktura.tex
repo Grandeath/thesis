@@ -1,4 +1,4 @@
-\chapter{Budowa środowiska chmurowego --- infrastruktura jako kod}
+\chapter{Budowa środowiska chmurowego - infrastruktura jako kod}
 \label{chap:infrastruktura}
 
 Całość środowiska uruchomieniowego systemu zdefiniowano deklaratywnie w~narzędziu Terraform.
@@ -29,7 +29,7 @@ sprowadza się do zmiany pliku zmiennych.
 Sieć systemu obejmuje VPC o~adresacji \code{10.0.0.0/16}, rozpiętą na dwie strefy dostępności. W~każdej strefie
 wydzielono po dwie podsieci \code{/24}.
 Publiczną (\code{10.0.0.0/24}, \code{10.0.1.0/24}) oraz prywatną (\code{10.0.100.0/24}, \code{10.0.101.0/24}).
-Podsieci publiczne posiadają trasę do bramy internetowej. Posiadają tylko elemety brzegowe: load balancer
+Podsieci publiczne posiadają trasę do bramy internetowej. Posiadają tylko elementy brzegowe: load balancer
 oraz bramę NAT. W~podsieciach prywatnych działają węzły klastra i~baza danych, których ruch wychodzący
 kierowany jest przez NAT (rysunek~\ref{fig:topologia-sieci}). Ze~względów kosztowych zastosowano pojedynczą bramę NAT.
 
@@ -99,7 +99,7 @@ resource "aws_subnet" "private" {
                   inner sep=5mm, label={[font=\scriptsize\bfseries]above:VPC 10.0.0.0/16}] {};
         \end{scope}
     \end{tikzpicture}
-    \caption{Topologia sieci VPC. Komponenty brzegowe (ALB, bramy NAT) działają w~podsieciach publicznych, a~węzły klastra i~baza danych --- w~prywatnych, pozbawionych bezpośredniej łączności z~Internetem. Zasoby rozmieszczono w~dwóch strefach dostępności. Baza danych w~środowisku pracuje jednostrefowo; wariant standby zaznaczono jako~opcję trybu Multi-AZ. (źródło: opracowanie własne)}
+    \caption{Topologia sieci VPC. Komponenty brzegowe (ALB, bramy NAT) działają w~podsieciach publicznych. Węzły klastra i~baza danych w~prywatnych, pozbawionych bezpośredniej łączności z~Internetem. Zasoby rozmieszczono w~dwóch strefach dostępności. Baza danych w~środowisku pracuje jednostrefowo; wariant standby zaznaczono jako~opcję trybu Multi-AZ. (źródło: opracowanie własne)}
     \label{fig:topologia-sieci}
 \end{figure}
 
@@ -148,7 +148,7 @@ zwraca uwagę wyraźnie wyższe wykorzystanie pamięci niż~procesora.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{NodesEKS.png}
-    \caption{Cztery węzły grupy \code{order-portal-prod-ng} (instancje \code{t3.small}) w~stanie \emph{Ready}. Wykorzystanie pamięci (56--68\%) wyraźnie przewyższa wykorzystanie procesora (21--34\%) --- co~potwierdza ustalenie z~rozdziału~\ref{chap:testy-i-analiza}, że~to~pamięć, a~nie~procesor, jest~czynnikiem ograniczającym gęstość podów. (źródło: opracowanie własne)}
+    \caption{Cztery węzły grupy \code{order-portal-prod-ng} (instancje \code{t3.small}) w~stanie \emph{Ready}. Wykorzystanie pamięci (56-68\%) wyraźnie przewyższa wykorzystanie procesora (21-34\%). Co~potwierdza ustalenie z~rozdziału~\ref{chap:testy-i-analiza}, że~to~pamięć, a~nie~procesor, jest~czynnikiem ograniczającym gęstość podów. (źródło: opracowanie własne)}
     \label{fig:nodes-eks}
 \end{figure}
 
@@ -165,7 +165,7 @@ Komplet aktywnych dodatków klastra przedstawiono na~rysunku~\ref{fig:addons-eks
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{AddonsEKS.png}
-    \caption{Zarządzane dodatki klastra EKS --- agent Pod Identity, VPC CNI, sterownik EBS CSI, CoreDNS oraz metrics-server --- wszystkie w~stanie aktywnym. (źródło: opracowanie własne)}
+    \caption{Zarządzane dodatki klastra EKS. Agent Pod Identity, VPC CNI, sterownik EBS CSI, CoreDNS oraz metrics-server. Wszystkie w~stanie aktywnym. (źródło: opracowanie własne)}
     \label{fig:addons-eks}
 \end{figure}
 
@@ -183,7 +183,7 @@ wielostrefowym. Wolumin EBS jest~przypisany do~jednej strefy dostępności i~nie
 działającego w~innej. Odroczenie utworzenia woluminu gwarantuje, że~powstanie on~w~tej~samej strefie, co~pod,
 który ma~go używać.
 
-\section{Warstwa danych --- RDS PostgreSQL i Secrets Manager}
+\section{Warstwa danych - RDS PostgreSQL i Secrets Manager}
 \label{sec:warstwa-danych-rds}
 
 Bazę danych utworzono jako instancję RDS PostgreSQL~18 klasy \code{db.t4g.micro} z~20~GiB szyfrowanego składowania gp3.
@@ -218,7 +218,7 @@ na~rysunku~\ref{fig:serices-eks}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{ServicesEKS.png}
-    \caption{Trzy mikroserwisy wdrożone w~przestrzeni nazw \code{order-portal} jako obiekty Deployment --- każdy w~stanie gotowości (1~Ready / 1~Desired). (źródło: opracowanie własne)}
+    \caption{Trzy mikroserwisy wdrożone w~przestrzeni nazw \code{order-portal} jako obiekty Deployment. Każdy w~stanie gotowości (1~Ready / 1~Desired). (źródło: opracowanie własne)}
     \label{fig:serices-eks}
 \end{figure}
 
@@ -231,17 +231,17 @@ na~rysunku~\ref{fig:kafka-eks}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Kafka.png}
-    \caption{Broker Apache Kafka (\code{apache/kafka:4.3.0}) uruchomiony w~klastrze jako pojedynczy pod, ze~strategią \emph{Recreate} --- zgodnie z~projektem jednowęzłowego brokera w~trybie KRaft. (źródło: opracowanie własne)}
+    \caption{Broker Apache Kafka (\code{apache/kafka:4.3.0}) uruchomiony w~klastrze jako pojedynczy pod, ze~strategią \emph{Recreate}. Zgodnie z~projektem jednowęzłowego brokera w~trybie KRaft. (źródło: opracowanie własne)}
     \label{fig:kafka-eks}
 \end{figure}
 
-\section{Routing ruchu --- CloudFront, ALB i reverse proxy}
+\section{Routing ruchu - CloudFront, ALB i reverse proxy}
 \label{sec:routing-ruchu}
 
 Jedynym publicznym punktem wejścia do systemu jest dystrybucja CloudFront z~dwoma originami. Domyślne zachowanie
 kieruje żądania do prywatnego bucketa S3 z~aplikacją webową, z~polityką agresywnego buforowania i~kompresją. Ponieważ trasy SPA (np.
 \code{/orders/123}) nie odpowiadają obiektom w~S3, do zachowania dołączono funkcję CloudFront wykonywaną przy
-każdym żądaniu (listing~\ref{lst:spa-router}). Żądania bez rozszerzenia pliku przepisywane są na \code{/index.html},
+każdym żądaniu (listing~\ref{lst:spa-router}). Żądania bez rozszerzenia pliku przepisywane są na \code{/index.html}~,
 dzięki czemu głębokie odnośniki i~odświeżenie strony działają poprawnie. Skonfigurowaną dystrybucję
 CloudFront wraz z~jej dwoma originami przedstawiono na~rysunku~\ref{fig:cloudfront}.
 
@@ -277,7 +277,7 @@ brzegową, wraz z~jej terminacją TLS i~ochroną przed atakami wolumetrycznymi. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{CloudfrontPaths.png}
-    \caption{Reguły zachowań (\emph{behaviors}) CloudFront: ścieżki \code{/api/*} oraz~\code{/grafana*} kierowane są~do~ALB z~wyłączonym buforowaniem, a~pozostałe --- domyślnie do~bucketa S3 z~buforowaniem zoptymalizowanym. (źródło: opracowanie własne)}
+    \caption{Reguły zachowań (\emph{behaviors}) CloudFront: ścieżki \code{/api/*} oraz~\code{/grafana*} kierowane są~do~ALB z~wyłączonym buforowaniem. Pozostałe przekierowano domyślnie do~bucketa S3 z~buforowaniem zoptymalizowanym. (źródło: opracowanie własne)}
     \label{fig:cloudfront-paths}
 \end{figure}
 
@@ -304,7 +304,7 @@ Celem ALB jest grupa docelowa obejmująca węzły klastra
 na porcie \code{NodePort} 30080, pod którym działa wewnętrzne odwrócone proxy. Proxy rozdziela ruch
 na podstawie prefiksu ścieżki do usług klastra (listing~\ref{lst:nginx-routing}). Odpowiada na ścieżce
 \code{/healthz} na potrzeby kontroli zdrowia ALB. Udostępnia również pod ścieżką \code{/grafana} interfejs
-Grafany. Żądania niepasujące do żadnej reguły odrzuca. Pełna droga żądania API przebiega więc: przeglądarka
+Grafany. Żądania niepasujące do żadnej reguły odrzuca. Pełna droga żądania API przebiega więc tak: przeglądarka
 $\rightarrow$ CloudFront $\rightarrow$ ALB $\rightarrow$ NodePort $\rightarrow$ Proxy $\rightarrow$ Service
 $\rightarrow$ pod mikroserwisu, co~ilustruje rysunek~\ref{fig:przeplyw-zadania}.
 
@@ -415,7 +415,7 @@ Działający pojedynczy pod proxy (Deployment \code{router}) w~klastrze przedsta
     \label{fig:przeplyw-zadania}
 \end{figure}
 
-\section{Wdrożenie monitoringu --- Prometheus i Grafana}
+\section{Wdrożenie monitoringu - Prometheus i Grafana}
 \label{sec:wdrozenie-monitoringu}
 
 Podsystem monitoringu działa w~osobnej przestrzeni nazw \code{monitoring}. Serwer Prometheus skonfigurowano
@@ -448,10 +448,10 @@ scrape_configs:
 \end{lstlisting}
 
 Grafanę provisionowano w~pełni deklaratywnie: źródło danych (wewnątrzklastrowy adres Prometheusa).
- Interfejs Grafany udostępniono pod ścieżką \code{/grafana} publicznej dystrybucji CloudFront (poprzez regułę proxy z~sekcji~\ref{sec:routing-ruchu}), dzięki
+Interfejs Grafany udostępniono pod ścieżką \code{/grafana} publicznej dystrybucji CloudFront (poprzez regułę proxy z~sekcji~\ref{sec:routing-ruchu}), dzięki
 czemu wgląd w~stan systemu nie wymaga dostępu administracyjnego do klastra. Wdrożony podsystem monitoringu
-w~przestrzeni nazw \code{monitoring} przedstawiono na~rysunku~\ref{fig:prometheus-eks}, a~udostępniony interfejs
-Grafany z~kokpitami mikroserwisów --- na~rysunku~\ref{fig:grafana}.
+w~przestrzeni nazw \code{monitoring} przedstawiono na~rysunku~\ref{fig:prometheus-eks}. Interfejs
+Grafany z~kokpitami mikroserwisów pokazano na~rysunku~\ref{fig:grafana}.
 
 \begin{figure}[H]
     \centering
@@ -479,7 +479,7 @@ Niższy próg pozwala dołożyć replikę z~wyprzedzeniem, zanim rosnący ruch w
 (proces strojenia opisano w~rozdziale~\ref{chap:testy-i-analiza}). Źródłem metryk dla HPA jest komponent
 \code{metrics-server}, który nie wchodzi w~skład domyślnej instalacji EKS. Zainstalowano go jako zarządzany dodatek EKS (\emph{community add-on}) zasobem
 \code{aws\_eks\_addon}, analogicznie do pozostałych dodatków klastra. Wąski przedział replik jest konsekwencją pojemności
-środowiska. Czterowęzłowy klaster instancji \code{t3.small} mieści ograniczoną liczbę podów. Zachowanie HPA pod
+środowiska. Klaster poosiada cztery węzły instancji \code{t3.small} przec co mieści ograniczoną liczbę podów. Zachowanie HPA pod
 obciążeniem zbadano w~rozdziale~\ref{chap:testy-i-analiza}.
 
 Cykl życia aplikacji zarządzany jest przez zmiany w~kodzie infrastruktury. Nowa wersja obrazu wskazywana jest

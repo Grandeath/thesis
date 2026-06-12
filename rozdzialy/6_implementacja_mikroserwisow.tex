@@ -33,14 +33,14 @@ order-service/
         `-- api/          # handlery HTTP, DTO, walidacja wejścia
 \end{lstlisting}
 
-Zależności składane są jawnie w~funkcji \code{main}, bezwstrzykiwania zależności. Granice pomiędzy
+Zależności składane są jawnie w~funkcji \code{main}, bez wstrzykiwania zależności. Granice pomiędzy
 warstwami wyznaczają małe interfejsy definiowane po stronie konsumenta, co jest idiomatycznym wzorcem języka Go.
-Tworzy to pakiety bez zewnętrznych zależoności co pozwala testować logikę biznesową w odpowiedniej izolacji.
+Tworzy to pakiety bez zewnętrznych zależności co pozwala testować logikę biznesową w odpowiedniej izolacji.
 
 Każdy serwis uruchamia dwa niezależne serwery HTTP na oddzielnych portach. Serwer \textbf{API} obsługuje ruch biznesowy. Serwer
 \textbf{techniczny} udostępnia punkty końcowe eksploatacyjne: \code{/ping} (kontrola zdrowia), 
 \code{/metrics} (metryki Prometheus), \code{/version} oraz \code{/debug/pprof} (profilowanie procesu).
-Rozdzielenie portów gwarantuje, że dane eksploatacyjne nigdy nie sąosiągalne ścieżką publiczną, nawet przy błędnej konfiguracji routingu.
+Rozdzielenie portów gwarantuje, że dane eksploatacyjne nigdy nie są osiągalne ścieżką publiczną, nawet przy błędnej konfiguracji routingu.
 
 Konfiguracja serwisów realizuje wzorzec konfiguracji zewnętrznej (sekcja~\ref{sec:wzorce-projektowe}). Wszystkie
 parametry wczytywane są ze zmiennych środowiskowych do struktur Go.
@@ -84,7 +84,7 @@ func CanTransition(from, to OrderStatus) bool {
 \end{lstlisting}
 
 Każde wykonane przejście dopisywane jest do historii zamówienia (stan poprzedni, nowy, znacznik czasu, opcjonalny
-powód), utrwalanej w~kolumnie \code{JSONB}. Daje to pełny ślad audytowy cyklu życia każdego zamówienia.
+powód), utrwalanej w~kolumnie \code{JSONB}. Daje to pełny ślad cyklu życia każdego zamówienia.
 
 Idempotencję operacji utworzenia zamówienia zrealizowano na poziomie bazy danych, w~sposób odporny na wyścigi
 współbieżnych żądań (listing~\ref{lst:idempotencja}). Klucz z~nagłówka \code{Idempotency-Key} zapisywany jest

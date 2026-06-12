@@ -1,57 +1,57 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Projekt systemu obsługi zamówień}{27}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Projekt systemu obsługi zamówień}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:projekt-systemu}{{4}{27}{Projekt systemu obsługi zamówień}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Opis funkcjonalny systemu}{27}{section.4.1}\protected@file@percent }
-\newlabel{sec:opis-funkcjonalny}{{4.1}{27}{Opis funkcjonalny systemu}{section.4.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy, administrator zarządza katalogiem produktów; logowanie jest~wspólne dla~obu ról. (źródło: opracowanie własne)}}{28}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:przypadki-uzycia}{{4.1}{28}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy, administrator zarządza katalogiem produktów; logowanie jest~wspólne dla~obu ról. (źródło: opracowanie własne)}{figure.caption.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Model domenowy}{28}{section.4.2}\protected@file@percent }
-\newlabel{sec:model-domenowy}{{4.2}{28}{Model domenowy}{section.4.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Stany cyklu życia zamówienia}}{29}{table.caption.7}\protected@file@percent }
-\newlabel{tab:stany-zamowienia}{{4.1}{29}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Stany cyklu życia zamówienia}{table.caption.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Maszyna stanów cyklu życia zamówienia. Linią ciągłą oznaczono ścieżkę główną, przerywaną --- przejścia do~stanów terminalnych \lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{CANCELLED} i~\lstinline [basicstyle=\ttfamily , numbers=none, frame=none, columns=fullflexible, breaklines=true, breakatwhitespace=false, literate={_}{\_}{1} ]{FAILED}, osiągalne z~każdego stanu nieterminalnego (dla~czytelności pokazano reprezentatywne krawędzie). Stany terminalne wyróżniono szarym tłem. (źródło: opracowanie własne)}}{29}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:maszyna-stanow}{{4.2}{29}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Maszyna stanów cyklu życia zamówienia. Linią ciągłą oznaczono ścieżkę główną, przerywaną --- przejścia do~stanów terminalnych \code {CANCELLED} i~\code {FAILED}, osiągalne z~każdego stanu nieterminalnego (dla~czytelności pokazano reprezentatywne krawędzie). Stany terminalne wyróżniono szarym tłem. (źródło: opracowanie własne)}{figure.caption.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Architektura mikroserwisowa systemu}{30}{section.4.3}\protected@file@percent }
-\newlabel{sec:architektura-systemu}{{4.3}{30}{Architektura mikroserwisowa systemu}{section.4.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Architektura systemu. Linia ciągła --- komunikacja synchroniczna (HTTPS/REST), linia przerywana --- asynchroniczna wymiana zdarzeń przez~Apache Kafka. Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności. (źródło: opracowanie własne)}}{30}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:architektura}{{4.3}{30}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Architektura systemu. Linia ciągła --- komunikacja synchroniczna (HTTPS/REST), linia przerywana --- asynchroniczna wymiana zdarzeń przez~Apache Kafka. Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności. (źródło: opracowanie własne)}{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Projekt API REST/JSON oraz kontraktów zdarzeń}{31}{section.4.4}\protected@file@percent }
-\newlabel{sec:projekt-api-i-zdarzen}{{4.4}{31}{Projekt API REST/JSON oraz kontraktów zdarzeń}{section.4.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Interfejsy REST}{31}{subsection.4.4.1}\protected@file@percent }
-\newlabel{subsec:interfejsy-rest}{{4.4.1}{31}{Interfejsy REST}{subsection.4.4.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Punkty końcowe REST mikroserwisów}}{31}{table.caption.10}\protected@file@percent }
-\newlabel{tab:endpointy-rest}{{4.2}{31}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Punkty końcowe REST mikroserwisów}{table.caption.10}{}}
+\newlabel{chap:projekt-systemu}{{4}{25}{Projekt systemu obsługi zamówień}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Opis funkcjonalny systemu}{25}{section.4.1}\protected@file@percent }
+\newlabel{sec:opis-funkcjonalny}{{4.1}{25}{Opis funkcjonalny systemu}{section.4.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy (opracowanie własne)}}{26}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:przypadki-uzycia}{{4.1}{26}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Diagram przypadków użycia systemu. Klient realizuje pełny proces zakupowy (opracowanie własne)}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Model domenowy}{26}{section.4.2}\protected@file@percent }
+\newlabel{sec:model-domenowy}{{4.2}{26}{Model domenowy}{section.4.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Stany cyklu życia zamówienia}}{27}{table.caption.11}\protected@file@percent }
+\newlabel{tab:stany-zamowienia}{{4.1}{27}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Stany cyklu życia zamówienia}{table.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Maszyna stanów cyklu życia zamówienia. Źródło: opracowanie własne}}{28}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:maszyna-stanow}{{4.2}{28}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Maszyna stanów cyklu życia zamówienia. Źródło: opracowanie własne}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Architektura mikroserwisowa systemu}{29}{section.4.3}\protected@file@percent }
+\newlabel{sec:architektura-systemu}{{4.3}{29}{Architektura mikroserwisowa systemu}{section.4.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności. (źródło: opracowanie własne)}}{29}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:architektura}{{4.3}{29}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Cały ruch użytkownika przechodzi przez~warstwę brzegową (CloudFront\,+\,ALB\,+\,nginx), a~uwierzytelnianie realizuje Amazon Cognito. Komponenty walidacji JWT po~stronie serwisów pominięto dla~czytelności. (źródło: opracowanie własne)}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Projekt API REST/JSON oraz kontraktów zdarzeń}{30}{section.4.4}\protected@file@percent }
+\newlabel{sec:projekt-api-i-zdarzen}{{4.4}{30}{Projekt API REST/JSON oraz kontraktów zdarzeń}{section.4.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Interfejsy REST}{30}{subsection.4.4.1}\protected@file@percent }
+\newlabel{subsec:interfejsy-rest}{{4.4.1}{30}{Interfejsy REST}{subsection.4.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Punkty końcowe REST mikroserwisów}}{30}{table.caption.14}\protected@file@percent }
+\newlabel{tab:endpointy-rest}{{4.2}{30}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Punkty końcowe REST mikroserwisów}{table.caption.14}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Kontrakty zdarzeń}{31}{subsection.4.4.2}\protected@file@percent }
 \newlabel{subsec:kontrakty-zdarzen}{{4.4.2}{31}{Kontrakty zdarzeń}{subsection.4.4.2}{}}
-\newlabel{lst:order-created}{{4.1}{32}{Struktura zdarzenia order.created}{lstlisting.4.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Struktura zdarzenia order.created}}{32}{lstlisting.4.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Diagram sekwencji przepływu zakupowego. Po~synchronicznym utworzeniu zamówienia jego walidacja przebiega asynchronicznie, według choreografii zdarzeń Kafki (order-service $\rightarrow $ product-service); płatność i~jej finalizacja są~ponownie operacjami synchronicznymi. (źródło: opracowanie własne)}}{32}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:sekwencja-zamowienia}{{4.4}{32}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Diagram sekwencji przepływu zakupowego. Po~synchronicznym utworzeniu zamówienia jego walidacja przebiega asynchronicznie, według choreografii zdarzeń Kafki (order-service $\rightarrow $ product-service); płatność i~jej finalizacja są~ponownie operacjami synchronicznymi. (źródło: opracowanie własne)}{figure.caption.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Wybór technologii implementacyjnych --- Go i Vue 3}{32}{section.4.5}\protected@file@percent }
-\newlabel{sec:wybor-technologii}{{4.5}{32}{Wybór technologii implementacyjnych --- Go i Vue 3}{section.4.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}Projekt bazy danych i persystencji --- PostgreSQL}{33}{section.4.6}\protected@file@percent }
-\newlabel{sec:projekt-bazy-danych}{{4.6}{33}{Projekt bazy danych i persystencji --- PostgreSQL}{section.4.6}{}}
-\newlabel{lst:schemat-orders}{{4.2}{33}{Schemat tabeli orders}{lstlisting.4.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Schemat tabeli orders}}{33}{lstlisting.4.2}\protected@file@percent }
+\newlabel{lst:order-created}{{4.1}{31}{Struktura zdarzenia order.created}{lstlisting.4.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.1}{\ignorespaces Struktura zdarzenia order.created}}{31}{lstlisting.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Diagram sekwencji przepływu zakupowego. Po~synchronicznym utworzeniu zamówienia jego walidacja przebiega asynchronicznie, według choreografii zdarzeń Kafki (order-service $\rightarrow $ product-service); płatność i~jej finalizacja są~ponownie operacjami synchronicznymi. (źródło: opracowanie własne)}}{31}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:sekwencja-zamowienia}{{4.4}{31}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Diagram sekwencji przepływu zakupowego. Po~synchronicznym utworzeniu zamówienia jego walidacja przebiega asynchronicznie, według choreografii zdarzeń Kafki (order-service $\rightarrow $ product-service); płatność i~jej finalizacja są~ponownie operacjami synchronicznymi. (źródło: opracowanie własne)}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Wybór technologii implementacyjnych - Go i Vue 3}{32}{section.4.5}\protected@file@percent }
+\newlabel{sec:wybor-technologii}{{4.5}{32}{Wybór technologii implementacyjnych - Go i Vue 3}{section.4.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Projekt bazy danych i persystencji - PostgreSQL}{32}{section.4.6}\protected@file@percent }
+\newlabel{sec:projekt-bazy-danych}{{4.6}{32}{Projekt bazy danych i persystencji - PostgreSQL}{section.4.6}{}}
+\newlabel{lst:schemat-orders}{{4.2}{32}{Fragment kodu SQL definiujący tabelę orders}{lstlisting.4.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.2}{\ignorespaces Fragment kodu SQL definiujący tabelę orders}}{32}{lstlisting.4.2}\protected@file@percent }
 \newlabel{lst:schemat-idempotency_keys}{{4.3}{33}{Schemat tabeli idempotency keys}{lstlisting.4.3}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.3}{\ignorespaces Schemat tabeli idempotency keys}}{33}{lstlisting.4.3}\protected@file@percent }
-\newlabel{lst:schemat-products}{{4.4}{34}{Schemat tabeli products}{lstlisting.4.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces Schemat tabeli products}}{34}{lstlisting.4.4}\protected@file@percent }
-\newlabel{lst:schemat-images}{{4.5}{34}{Schemat tabeli images}{lstlisting.4.5}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces Schemat tabeli images}}{34}{lstlisting.4.5}\protected@file@percent }
-\newlabel{lst:schemat-payments}{{4.6}{34}{Schemat tabeli payments}{lstlisting.4.6}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Schemat tabeli payments}}{34}{lstlisting.4.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.7}Asynchroniczna wymiana zdarzeń --- Apache Kafka}{34}{section.4.7}\protected@file@percent }
-\newlabel{sec:kafka}{{4.7}{34}{Asynchroniczna wymiana zdarzeń --- Apache Kafka}{section.4.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.8}Projekt uwierzytelniania i autoryzacji}{35}{section.4.8}\protected@file@percent }
-\newlabel{sec:projekt-uwierzytelniania}{{4.8}{35}{Projekt uwierzytelniania i autoryzacji}{section.4.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Przepływ uwierzytelniania OAuth~2.0 \emph  {authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny --- wraz z~weryfikatorem --- na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS). (źródło: opracowanie własne)}}{36}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:pkce}{{4.5}{36}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Przepływ uwierzytelniania OAuth~2.0 \emph {authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny --- wraz z~weryfikatorem --- na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS). (źródło: opracowanie własne)}{figure.caption.12}{}}
+\newlabel{lst:schemat-products}{{4.4}{33}{Schemat tabeli products}{lstlisting.4.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.4}{\ignorespaces Schemat tabeli products}}{33}{lstlisting.4.4}\protected@file@percent }
+\newlabel{lst:schemat-images}{{4.5}{33}{Schemat tabeli images}{lstlisting.4.5}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}{\ignorespaces Schemat tabeli images}}{33}{lstlisting.4.5}\protected@file@percent }
+\newlabel{lst:schemat-payments}{{4.6}{33}{Schemat tabeli payments}{lstlisting.4.6}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Schemat tabeli payments}}{33}{lstlisting.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.7}Asynchroniczna wymiana zdarzeń - Apache Kafka}{34}{section.4.7}\protected@file@percent }
+\newlabel{sec:kafka}{{4.7}{34}{Asynchroniczna wymiana zdarzeń - Apache Kafka}{section.4.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.8}Projekt uwierzytelniania i autoryzacji}{34}{section.4.8}\protected@file@percent }
+\newlabel{sec:projekt-uwierzytelniania}{{4.8}{34}{Projekt uwierzytelniania i autoryzacji}{section.4.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces \xpg@aux {}{polish}\ignorespaces Przepływ uwierzytelniania OAuth~2.0 \emph  {authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS). (źródło: opracowanie własne)}}{35}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:pkce}{{4.5}{35}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Przepływ uwierzytelniania OAuth~2.0 \emph {authorization code} z~rozszerzeniem PKCE. Portal generuje weryfikator i~jego skrót; po~zalogowaniu wymienia kod autoryzacyjny na~tokeny JWT. Każdy mikroserwis weryfikuje podpis tokenu samodzielnie, na~podstawie kluczy publicznych Cognito (JWKS). (źródło: opracowanie własne)}{figure.caption.16}{}}
 \@setckpt{rozdzialy/5_projekt_systemu}{
-\setcounter{page}{37}
+\setcounter{page}{36}
 \setcounter{equation}{0}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -89,7 +89,7 @@
 \setcounter{citetotal}{0}
 \setcounter{multicitecount}{0}
 \setcounter{multicitetotal}{0}
-\setcounter{instcount}{36}
+\setcounter{instcount}{34}
 \setcounter{maxnames}{2}
 \setcounter{minnames}{1}
 \setcounter{maxitems}{999}

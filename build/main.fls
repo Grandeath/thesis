@@ -478,6 +478,12 @@ OUTPUT build/rozdzialy/5_projekt_systemu.aux
 INPUT ./rozdzialy/5_projekt_systemu.tex
 INPUT ./rozdzialy/5_projekt_systemu.tex
 INPUT rozdzialy/5_projekt_systemu.tex
+INPUT ./wykresy/DiagramPrzypadków2.png
+INPUT ./wykresy/DiagramPrzypadków2.png
+INPUT ./wykresy/DiagramStanow2.png
+INPUT ./wykresy/DiagramStanow2.png
+INPUT ./wykresy/Architektura_systemu(1).png
+INPUT ./wykresy/Architektura_systemu(1).png
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmex10.tfm

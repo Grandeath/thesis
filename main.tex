@@ -180,9 +180,9 @@
 
     % Nazwa wydziału / katedry / specjalizacji
     \begin{center}
-        {\bfseries Programowanie aplikacji biznesowych}\\[1cm]
-        {\bfseries Katedra Inżynierii Oprogramowania}\\[0.5cm]
-        Wydział Informatyki
+        {\bfseries Wydział Informatyki}\\[1cm]
+        {\bfseries Katedra Metod Oprogramowania}\\[0.2cm]
+        Programowanie aplikacji biznesowych
     \end{center}
 
     \vspace{1.5cm}
@@ -197,7 +197,7 @@
 
     % Tytuł pracy
     \begin{center}
-        {\bfseries\Large Wytworzenie systemu obsługi zamówień z~użyciem technologii chmurowych oraz mikroserwisów}
+        {\bfseries\Large System obsługi zamówień z~użyciem technologii chmurowych oraz mikroserwisów}
     \end{center}
 
     \vspace{2.0cm}
@@ -206,14 +206,14 @@
     \begin{flushright}
         Praca Inżynierska\\[1cm]
         Promotor:\\
-        dr Krzysztof Barteczko, prof. PJATK
+        {\bfseries dr Krzysztof Barteczko, prof. PJATK}
     \end{flushright}
 
     \vfill
 
     % Miejsce, miesiąc rok obrony - wyśrodkowane na dole
     \begin{center}
-        Warszawa, czerwiec 2026
+        Warszawa, lipiec 2026
     \end{center}
 
 \end{titlepage}
@@ -227,18 +227,18 @@
 \chapter*{Streszczenie}
 
 Niniejsza praca przedstawia projekt, implementację oraz wdrożenie w~chmurze publicznej kompletnego systemu obsługi
-zamówień, zbudowanego w~architekturze mikroserwisowej. System składa się z~trzech mikroserwisów napisanych
-w~języku Go --- odpowiedzialnych za~zamówienia, katalog produktów oraz~płatności --- komunikujących się
+zamówień. Zbudowany jest w~architekturze mikroserwisowej. System składa się z~trzech mikroserwisów napisanych
+w~języku Go. Odpowiedzialnych za~zamówienia, katalog produktów oraz~płatności. Komunikując się
 synchronicznie poprzez~interfejsy REST oraz~asynchronicznie poprzez~zdarzenia domenowe publikowane do~brokera
-Apache Kafka, a~także z~aplikacji webowej (Vue~3) stanowiącej interfejs użytkownika. Warstwę danych zrealizowano
-na~bazie PostgreSQL, a~uwierzytelnianie --- w~oparciu o~protokół OAuth~2.0 z~rozszerzeniem PKCE i~usługę Amazon
+Apache Kafka. Interfejs użytkownika składa się z~aplikacji webowej napisanej w Vue~3. Warstwę danych zrealizowano
+na~bazie PostgreSQL. Natomiast uwierzytelnianie utworzono w~oparciu o~protokół OAuth~2.0 z~rozszerzeniem PKCE i~usługę Amazon
 Cognito.
 
 System uruchomiono na~zarządzanym klastrze Kubernetes (Amazon EKS), w~ramach infrastruktury zdefiniowanej
-w~całości jako~kod (Terraform), objętej automatyzacją wdrożeń (GitHub Actions) oraz~monitoringiem (Prometheus,
-Grafana). Działanie systemu zweryfikowano w~docelowym środowisku chmurowym testami funkcjonalnymi
-i~wydajnościowymi; w~teście obciążeniowym system obsłużył kilkaset żądań na~sekundę bez~błędów, automatycznie
-skalując liczbę replik. Pracę uzupełniają analiza kosztów utrzymania środowiska oraz~identyfikacja wąskich gardeł
+w~całości jako~kod (Terraform). Objęto je monitoringiem (Prometheus, Grafana). 
+Działanie systemu zweryfikowano w~docelowym środowisku chmurowym testami funkcjonalnymi
+i~wydajnościowymi. W~teście obciążeniowym system obsłużył kilkaset żądań na~sekundę bez~błędów, automatycznie
+skalując liczbę replik. Pracę uzupełnia analiza kosztów utrzymania środowiska oraz~identyfikacja wąskich gardeł
 wraz z~rekomendacjami optymalizacji.
 
 \noindent\textbf{Słowa kluczowe:} mikroserwisy, Kubernetes, Amazon Web Services, architektura sterowana
@@ -271,16 +271,19 @@ zdarzeniami, infrastruktura jako kod, Go
 % SPIS RYSUNKÓW, TABEL, LISTINGÓW - przed bibliografią
 % ======================
 \clearpage
-\listoffigures
+\phantomsection
 \addcontentsline{toc}{chapter}{Spis rysunków}
+\listoffigures
 
 \clearpage
-\listoftables
+\phantomsection
 \addcontentsline{toc}{chapter}{Spis tabel}
+\listoftables
 
 \clearpage
-\lstlistoflistings
+\phantomsection
 \addcontentsline{toc}{chapter}{Spis listingów}
+\lstlistoflistings
 
 % ======================
 % BIBLIOGRAFIA (IEEE)

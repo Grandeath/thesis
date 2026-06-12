@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.6.4)  8 JUN 2026 21:19
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.6.4)  12 JUN 2026 17:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1246,12 +1246,7 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (
  [6]
 \openout2 = `rozdzialy/1_wstep.aux'.
 
- (./rozdzialy/1_wstep.tex
-
-Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 29.
-
-[7
+ (./rozdzialy/1_wstep.tex [7
 
 
 
@@ -1261,70 +1256,78 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 7116) in paragraph at lines 58--61
+Underfull \hbox (badness 7116) in paragraph at lines 53--56
 [][][][][][][]\TU/TimesNewRoman(0)/m/n/12 ), serwisu produktów ([][][][][][][][]) oraz serwisu płatności
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--61
+Underfull \hbox (badness 10000) in paragraph at lines 53--56
 \TU/TimesNewRoman(0)/m/n/12 ([][][][][][][][]), komunikujących się synchronicznie poprzez interfejsy
  []
 
-[8] [9] [10]) [11]
+[8] [9]) [10]
 \openout2 = `rozdzialy/2_podstawy_mikroserwisow.aux'.
 
  (./rozdzialy/2_podstawy_mikroserwisow.tex
 Rozdział 1.
-[12
+[11
 
 
 
 
-] [13] [14] [15] [16]) [17]
+] [12] [13] [14] [15]) [16]
 \openout2 = `rozdzialy/3_kubernetes.aux'.
 
  (./rozdzialy/3_kubernetes.tex
 Rozdział 2.
-[18
+[17
 
 
 
 
-] [19] [20] [21]) [22]
+] [18] [19]) [20]
 \openout2 = `rozdzialy/4_aws.aux'.
 
  (./rozdzialy/4_aws.tex
 Rozdział 3.
-[23
+[21
 
 
 
 
-] [24] [25]) [26]
+] [22] [23]) [24]
 \openout2 = `rozdzialy/5_projekt_systemu.aux'.
 
  (./rozdzialy/5_projekt_systemu.tex
 Rozdział 4.
-[27
+File: wykresy/DiagramPrzypadków2.png Graphic file (type bmp)
+<wykresy/DiagramPrzypadków2.png>
+[25
 
 
 
 
-] [28] [29] [30]
-Underfull \hbox (badness 10000) in paragraph at lines 253--253
+] [26]
+File: wykresy/DiagramStanow2.png Graphic file (type bmp)
+<wykresy/DiagramStanow2.png>
+ [27] [28]
+File: wykresy/Architektura_systemu(1).png Graphic file (type bmp)
+<wykresy/Architektura_systemu(1).png>
+ [29]
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
 []|[][][][][][][][][][][][][][][][][]
  []
 
-[31]
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 277.
- [32] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
+[30]
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 178.
+ [31] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-) [33] [34] [35]) [36]
+) [32] [33] [34]) [35]
 \openout2 = `rozdzialy/6_implementacja_mikroserwisow.aux'.
 
  (./rozdzialy/6_implementacja_mikroserwisow.tex
 Rozdział 5.
-[37
+[36
 
 
 
@@ -1335,16 +1338,16 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 File: lstlang2.sty 2025/11/14 1.11b listings language file
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2025/11/14 1.11b listings language file
-) [38] [39] [40] [41] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
+) [37] [38] [39] [40] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-)) [42]
+)) [41]
 \openout2 = `rozdzialy/7_implementacja_portalu.aux'.
 
  (./rozdzialy/7_implementacja_portalu.tex
 Rozdział 6.
-[43
+[42
 
 
 
@@ -1356,40 +1359,40 @@ File: rysunki/CartView.png Graphic file (type bmp)
 <rysunki/CartView.png>
 File: rysunki/CheckoutView.png Graphic file (type bmp)
 <rysunki/CheckoutView.png>
- [44]
-Overfull \hbox (28.85292pt too wide) in paragraph at lines 65--69
+ [43]
+Overfull \hbox (28.85292pt too wide) in paragraph at lines 65--68
 []\TU/TimesNewRoman(0)/m/n/12 Po jego utworzeniu użytkownik przechodzi do \TU/TimesNewRoman(0)/b/n/12 szczegółów zamówienia \TU/TimesNewRoman(0)/m/n/12 ([]
  []
 
 File: rysunki/OrderDetailsView.png Graphic file (type bmp)
 <rysunki/OrderDetailsView.png>
-[45]
 File: rysunki/PaymentView.png Graphic file (type bmp)
 <rysunki/PaymentView.png>
+[44]
 File: rysunki/OrderHistory.png Graphic file (type bmp)
 <rysunki/OrderHistory.png>
 File: rysunki/DashboardView.png Graphic file (type bmp)
 <rysunki/DashboardView.png>
- [46]
+ [45]
 File: rysunki/NavigationPanel.png Graphic file (type bmp)
 <rysunki/NavigationPanel.png>
- [47]
+ [46]
 File: rysunki/HomeView.png Graphic file (type bmp)
 <rysunki/HomeView.png>
 
-Overfull \hbox (31.37766pt too wide) in paragraph at lines 162--163
+Overfull \hbox (31.37766pt too wide) in paragraph at lines 161--162
  [][] 
  []
 
-[48]
+[47]
 File: rysunki/CognitoLogin.png Graphic file (type bmp)
 <rysunki/CognitoLogin.png>
- [49]) [50]
+ [48]) [49]
 \openout2 = `rozdzialy/8_infrastruktura.aux'.
 
  (./rozdzialy/8_infrastruktura.tex
 Rozdział 7.
-[51
+[50
 
 
 
@@ -1397,26 +1400,26 @@ Rozdział 7.
 ]
 File: rysunki/ClusterEKS.png Graphic file (type bmp)
 <rysunki/ClusterEKS.png>
- [52]
+ [51]
 File: rysunki/NodesEKS.png Graphic file (type bmp)
 <rysunki/NodesEKS.png>
- [53]
+ [52]
 File: rysunki/AddonsEKS.png Graphic file (type bmp)
 <rysunki/AddonsEKS.png>
- [54]
+ [53]
 File: rysunki/PosgreSQL.png Graphic file (type bmp)
 <rysunki/PosgreSQL.png>
 File: rysunki/ServicesEKS.png Graphic file (type bmp)
 <rysunki/ServicesEKS.png>
- [55]
+ [54]
 File: rysunki/Kafka.png Graphic file (type bmp)
 <rysunki/Kafka.png>
- [56]
+ [55]
 File: rysunki/Cloudfront.png Graphic file (type bmp)
 <rysunki/Cloudfront.png>
 File: rysunki/CloudfrontPaths.png Graphic file (type bmp)
 <rysunki/CloudfrontPaths.png>
- [57]
+ [56]
 File: rysunki/Nginx.png Graphic file (type bmp)
 <rysunki/Nginx.png>
 
@@ -1424,17 +1427,17 @@ Overfull \hbox (9.6903pt too wide) in paragraph at lines 412--413
  [][] 
  []
 
-[58] [59]
+[57] [58]
 File: rysunki/PrometheusEKS.png Graphic file (type bmp)
 <rysunki/PrometheusEKS.png>
 File: rysunki/Grafana.png Graphic file (type bmp)
 <rysunki/Grafana.png>
-) [60] [61]
+) [59] [60]
 \openout2 = `rozdzialy/9_testy.aux'.
 
  (./rozdzialy/9_testy.tex
 Rozdział 8.
-[62
+[61
 
 
 
@@ -1459,91 +1462,83 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--65
 []|\TU/TimesNewRoman(0)/m/n/12 odmowa (autoryzacja
  []
 
-[63] [64]
+[62] [63]
 File: wykresy/max-grafana-order.png Graphic file (type bmp)
 <wykresy/max-grafana-order.png>
 File: wykresy/max-grafana-product.png Graphic file (type bmp)
 <wykresy/max-grafana-product.png>
- [65]
+ [64]
 File: rysunki/JuneBilling.png Graphic file (type bmp)
 <rysunki/JuneBilling.png>
 File: rysunki/ForecastCost.png Graphic file (type bmp)
 <rysunki/ForecastCost.png>
- [66]
+ [65]
 File: rysunki/order-service-flamegraph.png Graphic file (type bmp)
 <rysunki/order-service-flamegraph.png>
 File: rysunki/product-service-flamegraph.png Graphic file (type bmp)
 <rysunki/product-service-flamegraph.png>
- [67] [68]) [69]
+ [66] [67]) [68]
 \openout2 = `rozdzialy/10_wnioski.aux'.
 
- (./rozdzialy/10_wnioski.tex
-
-Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 9.
-
-
-Package hyperref Warning: Suppressing empty link on input line 38.
-
-[70
+ (./rozdzialy/10_wnioski.tex [69
 
 
 
 
-] [71]) [72] (build/main.lof
-Underfull \hbox (badness 6332) in paragraph at lines 7--7
- \TU/TimesNewRoman(0)/m/n/12 (HTTPS/REST), linia przerywana — asynchroniczna wymiana zdarzeń 
+] [70]) [71] (build/main.lof
+Underfull \hbox (badness 10000) in paragraph at lines 7--7
+ \TU/TimesNewRoman(0)/m/n/12 udFront+ALB+nginx), a uwierzytelnianie realizuje Amazon Cognito. 
  []
 
-[73
+[72
 
 
 
 
-] [74] [75])
+] [73] [74])
 \tf@lof=\write7
 \openout7 = `main.lof'.
 
- [76] (build/main.lot)
+ [75] (build/main.lot)
 \tf@lot=\write8
 \openout8 = `main.lot'.
 
- [77
+ [76
 
 
 ] (build/main.lol)
 \tf@lol=\write9
 \openout9 = `main.lol'.
 
- [78
+ [77
 
 
-] [79
+] [78
 
 
 ] (./rozdzialy/wykaz_skrotow.tex
-ignored: Infinite glue shrinkage found in box being split [80
+ignored: Infinite glue shrinkage found in box being split [79
 
 
 ]
-ignored: Infinite glue shrinkage found in box being split [81]) [82] (build/main.aux (build/rozdzialy/1_wstep.aux) (build/rozdzialy/2_podstawy_mikroserwisow.aux) (build/rozdzialy/3_kubernetes.aux) (build/rozdzialy/4_aws.aux) (build/rozdzialy/5_projekt_systemu.aux) (build/rozdzialy/6_implementacja_mikroserwisow.aux) (build/rozdzialy/7_implementacja_portalu.aux) (build/rozdzialy/8_infrastruktura.aux) (build/rozdzialy/9_testy.aux) (build/rozdzialy/10_wnioski.aux))
+ignored: Infinite glue shrinkage found in box being split [80]) [81] (build/main.aux (build/rozdzialy/1_wstep.aux) (build/rozdzialy/2_podstawy_mikroserwisow.aux) (build/rozdzialy/3_kubernetes.aux) (build/rozdzialy/4_aws.aux) (build/rozdzialy/5_projekt_systemu.aux) (build/rozdzialy/6_implementacja_mikroserwisow.aux) (build/rozdzialy/7_implementacja_portalu.aux) (build/rozdzialy/8_infrastruktura.aux) (build/rozdzialy/9_testy.aux) (build/rozdzialy/10_wnioski.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C6767E311927DC4F14BAB6B64A78DCA0;20884.
+(rerunfilecheck)             Checksum: 6E25A47AAF43C3C023AB6A0390469715;20830.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 41686 strings out of 468168
- 848935 string characters out of 5432816
- 2278163 words of memory out of 5000000
- 69673 multiletter control sequences out of 15000+600000
+ 41419 strings out of 468168
+ 844745 string characters out of 5432816
+ 2316516 words of memory out of 5000000
+ 69403 multiletter control sequences out of 15000+600000
  635343 words of font info for 121 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,16n,107p,1234b,7218s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on build/main.xdv (82 pages, 1864596 bytes).
+Output written on build/main.xdv (81 pages, 1750508 bytes).

@@ -1,4 +1,5 @@
 \chapter*{Wykaz skrótów}
+\phantomsection
 \addcontentsline{toc}{chapter}{Wykaz skrótów}
 \label{chap:wykaz-skrotow}
 
@@ -7,65 +8,65 @@
 \renewcommand{\arraystretch}{1.3}
 
 \begin{longtable}{@{}>{\bfseries}l@{\hspace{1.5em}}p{0.80\textwidth}@{}}
-ACID    & Atomicity, Consistency, Isolation, Durability --- zbiór właściwości gwarantujących niezawodność transakcji bazodanowych \\
-AKS     & Azure Kubernetes Service --- zarządzana usługa Kubernetes w~chmurze Microsoft Azure \\
-ALB     & Application Load Balancer --- load balancer warstwy aplikacji (L7) w~AWS \\
-API     & Application Programming Interface --- interfejs programistyczny aplikacji \\
-AWS     & Amazon Web Services --- platforma chmurowa firmy Amazon \\
-AZ      & Availability Zone --- strefa dostępności (odizolowane centrum danych w~regionie AWS) \\
-CD      & Continuous Delivery / Deployment --- ciągłe dostarczanie / wdrażanie oprogramowania \\
-CDN     & Content Delivery Network --- sieć dostarczania treści \\
-CI      & Continuous Integration --- ciągła integracja \\
-CNI     & Container Network Interface --- standard wtyczek sieciowych dla kontenerów \\
-CORS    & Cross-Origin Resource Sharing --- mechanizm współdzielenia zasobów między różnymi źródłami \\
-CPU     & Central Processing Unit --- procesor (centralna jednostka obliczeniowa) \\
-CSI     & Container Storage Interface --- standard wtyczek pamięci masowej dla kontenerów \\
-CSRF    & Cross-Site Request Forgery --- atak fałszowania żądań międzywitrynowych \\
-DNS     & Domain Name System --- system nazw domenowych \\
-DTO     & Data Transfer Object --- obiekt transferu danych \\
-EBS     & (Amazon) Elastic Block Store --- usługa blokowej pamięci masowej w~AWS \\
-EC2     & (Amazon) Elastic Compute Cloud --- usługa maszyn wirtualnych w~AWS \\
-ECR     & (Amazon) Elastic Container Registry --- rejestr obrazów kontenerów w~AWS \\
-EKS     & (Amazon) Elastic Kubernetes Service --- zarządzana usługa Kubernetes w~AWS \\
-ELB     & Elastic Load Balancing --- usługa równoważenia obciążenia w~AWS \\
-GKE     & Google Kubernetes Engine --- zarządzana usługa Kubernetes w~Google Cloud \\
-HPA     & Horizontal Pod Autoscaler --- mechanizm poziomego skalowania podów w~Kubernetes \\
-HTTP    & Hypertext Transfer Protocol --- protokół przesyłania dokumentów hipertekstowych \\
-HTTPS   & HTTP Secure --- protokół HTTP szyfrowany warstwą TLS \\
-IaC     & Infrastructure as Code --- infrastruktura jako kod \\
-IAM     & Identity and Access Management --- usługa zarządzania tożsamością i~dostępem w~AWS \\
-IP      & Internet Protocol --- protokół internetowy (adresacja hostów) \\
-IRSA    & IAM Roles for Service Accounts --- mechanizm przypisywania ról IAM kontom usług w~EKS \\
-JSON    & JavaScript Object Notation --- tekstowy format wymiany danych \\
-JWKS    & JSON Web Key Set --- zbiór kluczy publicznych do weryfikacji tokenów JWT \\
-JWT     & JSON Web Token --- token dostępu w~formacie JSON \\
+ACID    & Atomicity, Consistency, Isolation, Durability - zbiór właściwości gwarantujących niezawodność transakcji bazodanowych \\
+AKS     & Azure Kubernetes Service - zarządzana usługa Kubernetes w~chmurze Microsoft Azure \\
+ALB     & Application Load Balancer - load balancer warstwy aplikacji (L7) w~AWS \\
+API     & Application Programming Interface - interfejs programistyczny aplikacji \\
+AWS     & Amazon Web Services - platforma chmurowa firmy Amazon \\
+AZ      & Availability Zone - strefa dostępności (odizolowane centrum danych w~regionie AWS) \\
+CD      & Continuous Delivery / Deployment - ciągłe dostarczanie / wdrażanie oprogramowania \\
+CDN     & Content Delivery Network - sieć dostarczania treści \\
+CI      & Continuous Integration - ciągła integracja \\
+CNI     & Container Network Interface - standard wtyczek sieciowych dla kontenerów \\
+CORS    & Cross-Origin Resource Sharing - mechanizm współdzielenia zasobów między różnymi źródłami \\
+CPU     & Central Processing Unit - procesor (centralna jednostka obliczeniowa) \\
+CSI     & Container Storage Interface - standard wtyczek pamięci masowej dla kontenerów \\
+CSRF    & Cross-Site Request Forgery - atak fałszowania żądań międzywitrynowych \\
+DNS     & Domain Name System - system nazw domenowych \\
+DTO     & Data Transfer Object - obiekt transferu danych \\
+EBS     & (Amazon) Elastic Block Store - usługa blokowej pamięci masowej w~AWS \\
+EC2     & (Amazon) Elastic Compute Cloud - usługa maszyn wirtualnych w~AWS \\
+ECR     & (Amazon) Elastic Container Registry - rejestr obrazów kontenerów w~AWS \\
+EKS     & (Amazon) Elastic Kubernetes Service - zarządzana usługa Kubernetes w~AWS \\
+ELB     & Elastic Load Balancing - usługa równoważenia obciążenia w~AWS \\
+GKE     & Google Kubernetes Engine - zarządzana usługa Kubernetes w~Google Cloud \\
+HPA     & Horizontal Pod Autoscaler - mechanizm poziomego skalowania podów w~Kubernetes \\
+HTTP    & Hypertext Transfer Protocol - protokół przesyłania dokumentów hipertekstowych \\
+HTTPS   & HTTP Secure - protokół HTTP szyfrowany warstwą TLS \\
+IaC     & Infrastructure as Code - infrastruktura jako kod \\
+IAM     & Identity and Access Management - usługa zarządzania tożsamością i~dostępem w~AWS \\
+IP      & Internet Protocol - protokół internetowy (adresacja hostów) \\
+IRSA    & IAM Roles for Service Accounts - mechanizm przypisywania ról IAM kontom usług w~EKS \\
+JSON    & JavaScript Object Notation - tekstowy format wymiany danych \\
+JWKS    & JSON Web Key Set - zbiór kluczy publicznych do weryfikacji tokenów JWT \\
+JWT     & JSON Web Token - token dostępu w~formacie JSON \\
 k6      & narzędzie do~testów obciążeniowych i~wydajnościowych \\
-KRaft   & Kafka Raft --- tryb konsensusu Apache Kafka działający bez~usługi ZooKeeper \\
-MIME    & Multipurpose Internet Mail Extensions --- standard określania typów treści \\
-MSK     & (Amazon) Managed Streaming for Apache Kafka --- zarządzana usługa Apache Kafka w~AWS \\
-NAT     & Network Address Translation --- translacja adresów sieciowych \\
-OAC     & Origin Access Control --- mechanizm kontroli dostępu CloudFront do~źródła \\
-OAuth   & Open Authorization --- protokół autoryzacji dostępu do~zasobów \\
-PKCE    & Proof Key for Code Exchange --- rozszerzenie OAuth~2.0 dla~klientów publicznych \\
-PromQL  & Prometheus Query Language --- język zapytań systemu Prometheus \\
-PV      & Persistent Volume --- trwały wolumen pamięci masowej w~Kubernetes \\
-PVC     & Persistent Volume Claim --- żądanie trwałego wolumenu w~Kubernetes \\
-RAM     & Random Access Memory --- pamięć operacyjna \\
-RBAC    & Role-Based Access Control --- kontrola dostępu oparta na~rolach \\
-RDS     & (Amazon) Relational Database Service --- zarządzana usługa relacyjnych baz danych w~AWS \\
-REST    & Representational State Transfer --- styl architektury usług sieciowych \\
-RSA     & Rivest--Shamir--Adleman --- algorytm kryptografii asymetrycznej \\
-S3      & (Amazon) Simple Storage Service --- usługa obiektowej pamięci masowej w~AWS \\
-SHA     & Secure Hash Algorithm --- rodzina kryptograficznych funkcji skrótu \\
-SPA     & Single-Page Application --- aplikacja jednostronicowa \\
-SQL     & Structured Query Language --- strukturalny język zapytań do~baz danych \\
-TCP     & Transmission Control Protocol --- protokół sterowania transmisją \\
-TLS     & Transport Layer Security --- protokół szyfrowania warstwy transportowej \\
-UI      & User Interface --- interfejs użytkownika \\
-URL     & Uniform Resource Locator --- ujednolicony adres zasobu \\
-vCPU    & virtual CPU --- wirtualny rdzeń procesora \\
-VPC     & (Amazon) Virtual Private Cloud --- wirtualna sieć prywatna w~AWS \\
-VU      & Virtual User --- wirtualny użytkownik (w~testach obciążeniowych) \\
+KRaft   & Kafka Raft - tryb konsensusu Apache Kafka działający bez~usługi ZooKeeper \\
+MIME    & Multipurpose Internet Mail Extensions - standard określania typów treści \\
+MSK     & (Amazon) Managed Streaming for Apache Kafka - zarządzana usługa Apache Kafka w~AWS \\
+NAT     & Network Address Translation - translacja adresów sieciowych \\
+OAC     & Origin Access Control - mechanizm kontroli dostępu CloudFront do~źródła \\
+OAuth   & Open Authorization - protokół autoryzacji dostępu do~zasobów \\
+PKCE    & Proof Key for Code Exchange - rozszerzenie OAuth~2.0 dla~klientów publicznych \\
+PromQL  & Prometheus Query Language - język zapytań systemu Prometheus \\
+PV      & Persistent Volume - trwały wolumen pamięci masowej w~Kubernetes \\
+PVC     & Persistent Volume Claim - żądanie trwałego wolumenu w~Kubernetes \\
+RAM     & Random Access Memory - pamięć operacyjna \\
+RBAC    & Role-Based Access Control - kontrola dostępu oparta na~rolach \\
+RDS     & (Amazon) Relational Database Service - zarządzana usługa relacyjnych baz danych w~AWS \\
+REST    & Representational State Transfer - styl architektury usług sieciowych \\
+RSA     & Rivest--Shamir--Adleman - algorytm kryptografii asymetrycznej \\
+S3      & (Amazon) Simple Storage Service - usługa obiektowej pamięci masowej w~AWS \\
+SHA     & Secure Hash Algorithm - rodzina kryptograficznych funkcji skrótu \\
+SPA     & Single-Page Application - aplikacja jednostronicowa \\
+SQL     & Structured Query Language - strukturalny język zapytań do~baz danych \\
+TCP     & Transmission Control Protocol - protokół sterowania transmisją \\
+TLS     & Transport Layer Security - protokół szyfrowania warstwy transportowej \\
+UI      & User Interface - interfejs użytkownika \\
+URL     & Uniform Resource Locator - ujednolicony adres zasobu \\
+vCPU    & virtual CPU - wirtualny rdzeń procesora \\
+VPC     & (Amazon) Virtual Private Cloud - wirtualna sieć prywatna w~AWS \\
+VU      & Virtual User - wirtualny użytkownik (w~testach obciążeniowych) \\
 \end{longtable}
 
 \endgroup

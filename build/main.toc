@@ -1,86 +1,86 @@
 \xpg@aux {}{polish}
-\contentsline {chapter}{Wstęp}{7}{chapter*.3}%
-\contentsline {section}{Cel i zakres pracy}{7}{section*.4}%
-\contentsline {section}{Uzasadnienie wyboru tematu}{9}{section*.4}%
-\contentsline {section}{Przegląd technologii chmurowych w kontekście mikroserwisów}{10}{section*.4}%
-\contentsline {section}{Struktura pracy}{10}{section*.4}%
-\contentsline {chapter}{\numberline {1}Teoretyczne podstawy architektury mikroserwisowej}{12}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Architektura monolityczna a mikroserwisowa}{12}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Charakterystyka mikroserwisów}{14}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Komunikacja synchroniczna i asynchroniczna}{14}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Komunikacja synchroniczna --- REST}{15}{subsection.1.3.1}%
-\contentsline {subsection}{\numberline {1.3.2}Komunikacja asynchroniczna i architektura sterowana zdarzeniami}{15}{subsection.1.3.2}%
-\contentsline {section}{\numberline {1.4}Wzorce projektowe w systemach mikroserwisowych}{16}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Konteneryzacja i rola orkiestracji}{17}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Kubernetes jako platforma uruchomieniowa mikroserwisów}{18}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Podstawowe obiekty Kubernetes}{18}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Zarządzanie konfiguracją i skalowaniem}{19}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Trwałe składowanie danych}{20}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Obserwowalność: Prometheus i Grafana}{21}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Mechanizmy bezpieczeństwa w Kubernetes}{21}{section.2.5}%
-\contentsline {chapter}{\numberline {3}Amazon Web Services jako środowisko chmurowe}{23}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Charakterystyka AWS i jego architektury globalnej}{23}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Amazon EKS --- zarządzana usługa Kubernetes}{24}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Usługi powiązane wykorzystane w projekcie}{24}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Amazon EC2 jako warstwa obliczeniowa}{24}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Amazon RDS for PostgreSQL jako warstwa danych}{24}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Amazon ECR --- rejestr obrazów kontenerów}{25}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Amazon Cognito --- uwierzytelnianie użytkowników}{25}{subsection.3.3.4}%
-\contentsline {subsection}{\numberline {3.3.5}Amazon S3 i CloudFront --- hosting aplikacji webowej}{25}{subsection.3.3.5}%
-\contentsline {subsection}{\numberline {3.3.6}Amazon VPC, ALB i architektura sieciowa}{26}{subsection.3.3.6}%
-\contentsline {subsection}{\numberline {3.3.7}IAM i Secrets Manager}{26}{subsection.3.3.7}%
-\contentsline {chapter}{\numberline {4}Projekt systemu obsługi zamówień}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Opis funkcjonalny systemu}{27}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Model domenowy}{28}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Architektura mikroserwisowa systemu}{30}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Projekt API REST/JSON oraz kontraktów zdarzeń}{31}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Interfejsy REST}{31}{subsection.4.4.1}%
+\contentsline {chapter}{Wstęp}{7}{section*.4}%
+\contentsline {section}{Cel i zakres pracy}{7}{section*.5}%
+\contentsline {section}{Uzasadnienie wyboru tematu}{9}{section*.6}%
+\contentsline {section}{Przegląd technologii chmurowych w kontekście mikroserwisów}{9}{section*.7}%
+\contentsline {section}{Struktura pracy}{10}{section*.8}%
+\contentsline {chapter}{\numberline {1}Teoretyczne podstawy architektury mikroserwisowej}{11}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Architektura monolityczna a mikroserwisowa}{11}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Charakterystyka mikroserwisów}{12}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Komunikacja synchroniczna i asynchroniczna}{13}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Komunikacja synchroniczna - REST}{13}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Komunikacja asynchroniczna i architektura sterowana zdarzeniami}{14}{subsection.1.3.2}%
+\contentsline {section}{\numberline {1.4}Wzorce projektowe w systemach mikroserwisowych}{14}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Konteneryzacja i rola orkiestracji}{15}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Kubernetes jako platforma uruchomieniowa mikroserwisów}{17}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Podstawowe obiekty Kubernetes}{17}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Zarządzanie konfiguracją i skalowaniem}{18}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Trwałe składowanie danych}{19}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Obserwowalność: Prometheus i Grafana}{19}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Mechanizmy bezpieczeństwa w Kubernetes}{20}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Amazon Web Services jako środowisko chmurowe}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Charakterystyka AWS i jego architektury globalnej}{21}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Amazon EKS - zarządzana usługa Kubernetes}{22}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Usługi powiązane wykorzystane w projekcie}{22}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Amazon EC2 jako warstwa obliczeniowa}{22}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Amazon RDS for PostgreSQL jako warstwa danych}{22}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Amazon ECR - rejestr obrazów kontenerów}{23}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Amazon Cognito - uwierzytelnianie użytkowników}{23}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Amazon S3 i CloudFront - hosting aplikacji webowej}{23}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}Amazon VPC, ALB i architektura sieciowa}{24}{subsection.3.3.6}%
+\contentsline {subsection}{\numberline {3.3.7}IAM i Secrets Manager}{24}{subsection.3.3.7}%
+\contentsline {chapter}{\numberline {4}Projekt systemu obsługi zamówień}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Opis funkcjonalny systemu}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Model domenowy}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Architektura mikroserwisowa systemu}{29}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Projekt API REST/JSON oraz kontraktów zdarzeń}{30}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Interfejsy REST}{30}{subsection.4.4.1}%
 \contentsline {subsection}{\numberline {4.4.2}Kontrakty zdarzeń}{31}{subsection.4.4.2}%
-\contentsline {section}{\numberline {4.5}Wybór technologii implementacyjnych --- Go i Vue 3}{32}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Projekt bazy danych i persystencji --- PostgreSQL}{33}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Asynchroniczna wymiana zdarzeń --- Apache Kafka}{34}{section.4.7}%
-\contentsline {section}{\numberline {4.8}Projekt uwierzytelniania i autoryzacji}{35}{section.4.8}%
-\contentsline {chapter}{\numberline {5}Implementacja mikroserwisów}{37}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Struktura projektu i wspólne wzorce serwisów}{37}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Serwis zamówień - logika biznesowa, maszyna stanów i idempotencja}{38}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Serwis produktów - katalog i rezerwacja stanów magazynowych}{39}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Serwis płatności - transakcyjna obsługa procesu płatności}{40}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Publikacja i konsumpcja zdarzeń Kafka}{40}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Walidacja tokenów JWT i integracja z Cognito}{41}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Obserwowalność serwisów}{41}{section.5.7}%
-\contentsline {section}{\numberline {5.8}Konteneryzacja serwisów}{42}{section.5.8}%
-\contentsline {section}{\numberline {5.9}Testy jednostkowe i integracyjne}{42}{section.5.9}%
-\contentsline {chapter}{\numberline {6}Implementacja portalu obsługi zamówień}{43}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Architektura aplikacji frontendowej}{43}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Główne widoki i przepływy użytkownika}{43}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Warstwa komunikacji z API}{47}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Logowanie użytkownika --- OAuth 2.0 z PKCE}{48}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Budowa środowiska chmurowego --- infrastruktura jako kod}{51}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Terraform i zarządzanie stanem infrastruktury}{51}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Konfiguracja sieci VPC}{51}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Utworzenie klastra EKS i grup węzłów}{52}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Warstwa danych --- RDS PostgreSQL i Secrets Manager}{55}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Wdrożenie mikroserwisów i brokera Kafka do klastra}{55}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Routing ruchu --- CloudFront, ALB i reverse proxy}{56}{section.7.6}%
-\contentsline {section}{\numberline {7.7}Wdrożenie monitoringu --- Prometheus i Grafana}{59}{section.7.7}%
-\contentsline {section}{\numberline {7.8}Skalowanie aplikacji i zarządzanie cyklem życia}{60}{section.7.8}%
-\contentsline {chapter}{\numberline {8}Testy i analiza działania systemu}{62}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Metodyka testowania}{62}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Testy funkcjonalne systemu}{63}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Testy wydajnościowe i skalowalność}{63}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Czasy odpowiedzi i efekt rozgrzania}{64}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}Opóźnienie asynchronicznej walidacji}{64}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}Automatyczne skalowanie pod obciążeniem}{64}{subsection.8.3.3}%
-\contentsline {section}{\numberline {8.4}Analiza kosztowa wykorzystania usług AWS}{66}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Profilowanie procesora}{67}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}Zidentyfikowane wąskie gardła}{68}{subsection.8.4.2}%
-\contentsline {chapter}{Wnioski i podsumowanie}{70}{chapter*.45}%
-\contentsline {section}{Stopień realizacji celów pracy}{70}{section*.46}%
-\contentsline {section}{Napotkane trudności i sposoby ich rozwiązania}{71}{table.caption.47}%
-\contentsline {section}{Rekomendacje dotyczące dalszego rozwoju systemu}{71}{table.caption.47}%
-\contentsline {section}{Podsumowanie końcowe}{72}{table.caption.47}%
-\contentsline {chapter}{Spis rysunków}{76}{chapter*.48}%
-\contentsline {chapter}{Spis tabel}{77}{chapter*.49}%
-\contentsline {chapter}{Spis listingów}{78}{chapter*.50}%
-\contentsline {chapter}{Bibliografia}{79}{chapter*.51}%
-\contentsline {chapter}{Wykaz skrótów}{80}{chapter*.52}%
+\contentsline {section}{\numberline {4.5}Wybór technologii implementacyjnych - Go i Vue 3}{32}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Projekt bazy danych i persystencji - PostgreSQL}{32}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Asynchroniczna wymiana zdarzeń - Apache Kafka}{34}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Projekt uwierzytelniania i autoryzacji}{34}{section.4.8}%
+\contentsline {chapter}{\numberline {5}Implementacja mikroserwisów}{36}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Struktura projektu i wspólne wzorce serwisów}{36}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Serwis zamówień - logika biznesowa, maszyna stanów i idempotencja}{37}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Serwis produktów - katalog i rezerwacja stanów magazynowych}{38}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Serwis płatności - transakcyjna obsługa procesu płatności}{39}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Publikacja i konsumpcja zdarzeń Kafka}{39}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Walidacja tokenów JWT i integracja z Cognito}{40}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Obserwowalność serwisów}{40}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Konteneryzacja serwisów}{41}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Testy jednostkowe i integracyjne}{41}{section.5.9}%
+\contentsline {chapter}{\numberline {6}Implementacja portalu obsługi zamówień}{42}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Architektura aplikacji frontendowej}{42}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Główne widoki i przepływy użytkownika}{42}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Warstwa komunikacji z API}{46}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Logowanie użytkownika - OAuth 2.0 z PKCE}{47}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Budowa środowiska chmurowego - infrastruktura jako kod}{50}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Terraform i zarządzanie stanem infrastruktury}{50}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Konfiguracja sieci VPC}{50}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Utworzenie klastra EKS i grup węzłów}{51}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Warstwa danych - RDS PostgreSQL i Secrets Manager}{54}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Wdrożenie mikroserwisów i brokera Kafka do klastra}{54}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Routing ruchu - CloudFront, ALB i reverse proxy}{55}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Wdrożenie monitoringu - Prometheus i Grafana}{58}{section.7.7}%
+\contentsline {section}{\numberline {7.8}Skalowanie aplikacji i zarządzanie cyklem życia}{59}{section.7.8}%
+\contentsline {chapter}{\numberline {8}Testy i analiza działania systemu}{61}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Metodyka testowania}{61}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Testy funkcjonalne systemu}{62}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Testy wydajnościowe i skalowalność}{62}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Czasy odpowiedzi i efekt rozgrzania}{63}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Opóźnienie asynchronicznej walidacji}{63}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Automatyczne skalowanie pod obciążeniem}{63}{subsection.8.3.3}%
+\contentsline {section}{\numberline {8.4}Analiza kosztowa wykorzystania usług AWS}{65}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Profilowanie procesora}{66}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}Zidentyfikowane wąskie gardła}{67}{subsection.8.4.2}%
+\contentsline {chapter}{Wnioski i podsumowanie}{69}{section*.50}%
+\contentsline {section}{Stopień realizacji celów pracy}{69}{section*.51}%
+\contentsline {section}{Napotkane trudności i sposoby ich rozwiązania}{70}{section*.53}%
+\contentsline {section}{Rekomendacje dotyczące dalszego rozwoju systemu}{70}{section*.54}%
+\contentsline {section}{Podsumowanie końcowe}{71}{section*.55}%
+\contentsline {chapter}{Spis rysunków}{72}{section*.56}%
+\contentsline {chapter}{Spis tabel}{76}{section*.58}%
+\contentsline {chapter}{Spis listingów}{77}{section*.60}%
+\contentsline {chapter}{Bibliografia}{78}{chapter*.62}%
+\contentsline {chapter}{Wykaz skrótów}{79}{section*.64}%

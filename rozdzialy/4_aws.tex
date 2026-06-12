@@ -10,7 +10,7 @@ zarządzanymi usługami Kubernetes.
 \section{Charakterystyka AWS i jego architektury globalnej}
 \label{sec:charakterystyka-aws}
 
-Infrastruktura AWS jest podzielona \textbf{regiony}. Są to geograficznie odseparowane lokalizacje (np. \code{eu-central-1} we Frankfurcie).
+Infrastruktura AWS jest podzielona na \textbf{regiony}. Są to geograficznie odseparowane lokalizacje (np. \code{eu-central-1} we Frankfurcie).
 Każdy z~nich jest oddzielną domeną awarii i~osobnym miejscem przechowywania danych. Każdy region składa się
 z~co najmniej trzech \textbf{stref dostępności} (\emph{Availability Zones}, AZ). Są to fizycznie rozdzielone 
 centra danych o~niezależnym zasilaniu i łączności. Połączone są one ze sobą łączami o~niskich opóźnieniach.
@@ -27,7 +27,7 @@ responsibility model}). AWS odpowiada za bezpieczeństwo \emph{samej chmury}. Cz
 oprogramowania usług zarządzanych. Natomiast klient za bezpieczeństwo \emph{w~chmurze}. Czyli konfigurację sieci
 i~uprawnień, ochronę danych oraz poprawność własnych aplikacji \cite{awsdocs}.
 
-\section{Amazon EKS --- zarządzana usługa Kubernetes}
+\section{Amazon EKS - zarządzana usługa Kubernetes}
 \label{sec:amazon-eks}
 
 Amazon Elastic Kubernetes Service (EKS) udostępnia klaster Kubernetes. Płaszczyzna sterowania jest w~całości
@@ -41,10 +41,10 @@ aktualizacje i~wymianę instancji EC2. AWS Fargate, model bezserwerowy, w~który
 uruchamiane są bez jawnie widocznych węzłów. W~zrealizowanym systemie wybrano zarządzane grupy węzłów: w~odróżnieniu
 od Fargate zachowują one pełną kontrolę nad typem instancji.
 
-Integralną częścią EKS są \textbf{dodatki} (\emph{add-ons}). Zarządzame przez AWS komponenty systemowe klastra.
+Integralną częścią EKS są \textbf{dodatki} (\emph{add-ons}). Zarządzane przez AWS komponenty systemowe klastra.
 Przykładem takiej wtyczki może być sieciowa VPC CNI. Przydziela ona podom adresy IP bezpośrednio z~puli
-adresowej sieci VPC. Bez niej liczba podów na weźle jest ograniczona liczbą interfejsów sieciowych instacji.
-W tym projekcie użyłem małych instacji co stanowiłob bariere przy wdrożeniu wszystkich komponentów.
+adresowej sieci VPC. Bez niej liczba podów na węźle jest ograniczona liczbą interfejsów sieciowych instancji.
+W tym projekcie użyłem małych instancji co stanowiło bariere przy wdrożeniu wszystkich komponentów.
 
 Tożsamość i~dostęp do klastra EKS realizowane są poprzez integrację z~systemem IAM. Zarówno administratorzy, jak
 i~węzły robocze uwierzytelniają się wobec API Kubernetes przy użyciu tożsamości IAM (sekcja~\ref{sec:bezpieczenstwo-kubernetes}).
@@ -56,9 +56,9 @@ i~węzły robocze uwierzytelniają się wobec API Kubernetes przy użyciu tożsa
 \label{subsec:ec2}
 
 Amazon Elastic Compute Cloud (EC2) dostarcza maszyny wirtualne (\emph{instancje}). Mają one zróżnicowane zasoby
-opisane typami instancji. W zrealizowanym systemie użyte zostały jako węzły EKS. Stanowią one wartswe obliczeniową klastra.
-W celu zmieszczenia w darmowym programie użyte zostały instacje \code{t3.small} w~trybie \emph{on-demand}.
-Grupa węzłów posiada konfigurowalny przedział wielkości (minimalna,pożądana i~maksymalna liczba instancji). 
+opisane typami instancji. W zrealizowanym systemie użyte zostały jako węzły EKS. Stanowią one warstwę obliczeniową klastra.
+W celu zmieszczenia w darmowym programie użyte zostały instancje \code{t3.small} w~trybie \emph{on-demand}.
+Grupa węzłów posiada konfigurowalny przedział wielkości (minimalna, pożądana i~maksymalna liczba instancji). 
 Stanowi to infrastrukturalny fundament skalowania klastra.
 
 \subsection{Amazon RDS for PostgreSQL jako warstwa danych}
@@ -66,11 +66,11 @@ Stanowi to infrastrukturalny fundament skalowania klastra.
 
 Amazon Relational Database Service (RDS) jest zarządzaną usługą relacyjnych baz danych, przejmującą od użytkownika
 instalację, łatanie, kopie zapasowe i~odtwarzanie silnika bazodanowego. W~realizowanym systemie użyto RDS PosgreSQL.
-Korzystają z~niej wszystkie 3 mikroserwisy. Instacja umieszczona jest w~podsieci prywatnej. Z~grupą bezpieczeństwa,
+Korzystają z~niej wszystkie 3 mikroserwisy. Instancja umieszczona jest w~podsieci prywatnej. Z~grupą bezpieczeństwa,
 która umożliwia dostęp tylko z sieci klastra. Decyzja użycia RDS zamiast bazy uruchamianej w~klastrze, wynika
 z~dostarczenia wszystkich potrzebnych mechanizmów dla bazy produkcyjnej przez serwis.
 
-\subsection{Amazon ECR --- rejestr obrazów kontenerów}
+\subsection{Amazon ECR - rejestr obrazów kontenerów}
 \label{subsec:ecr}
 
 Amazon Elastic Container Registry (ECR) jest prywatnym rejestrem obrazów kontenerów, zintegrowanym z~systemem
@@ -81,10 +81,10 @@ Węzły klastra pobierają obrazy na mocy roli IAM z~uprawnieniem tylko do odczy
 poświadczeń.
 
 Amazon Elastic Container Registry (ECR) jest prywatnym rejestrem obrazów kontenerów. W systemie utworzono repozytorium
-dla serwisu z skanowaniem obrazów pod kątem podatności. Ustawiono również cykl życia ograniczającą liczbę przechowywanych wersji
-obrazó∑. System ten zintegrowany jest z IAM. EKS za pomocą roli tylko do odczytu pobiera podczas deploymentu ostatnią wersje obrazu.
+dla serwisu ze skanowaniem obrazów pod kątem podatności. Ustawiono również cykl życia ograniczający liczbę przechowywanych wersji
+obrazów. System ten zintegrowany jest z IAM. EKS za pomocą roli tylko do odczytu pobiera podczas deploymentu ostatnią wersje obrazu.
 
-\subsection{Amazon Cognito --- uwierzytelnianie użytkowników}
+\subsection{Amazon Cognito - uwierzytelnianie użytkowników}
 \label{subsec:cognito}
 
 Amazon Cognito jest zarządzaną usługą tożsamości użytkowników końcowych. Jej centralnym pojęciem jest \emph{pula
@@ -95,7 +95,7 @@ przez usługę. Serwis udostępnia również interfejs logowania (\emph{Hosted U
 musi mieć formularza do logowania tylko korzysta z udostępnionego przez AWS. Szczegóły projektu uwierzytelniania 
 przedstawiono w~rozdziale~\ref{chap:projekt-systemu}.
 
-\subsection{Amazon S3 i CloudFront --- hosting aplikacji webowej}
+\subsection{Amazon S3 i CloudFront - hosting aplikacji webowej}
 \label{subsec:s3-cloudfront}
 
 Amazon Simple Storage Service (S3) jest obiektowym magazynem danych o~praktycznie nieograniczonej pojemności.
@@ -104,8 +104,8 @@ blisko użytkowników. Połączenie obu usług stanowi wzorcową architekturę h
 (SPA). Zbudowane statyczne artefakty przechowywane są w S3, a~CloudFront udostępnia je użytkownikom.
 Bucket w którym przechowywana jest strona jest prywatny. Z tego powodu publiczny dostęp jest tylko z serwisu
 CloudFront. Dostęp do niego CDN ma przez mechanizm emph{Origin Access Control} (OAC). Cloudfront
-pełni w~systemie również role pojedyńczego punktu wejścia dla API który kieruje ruch do load balancera.
-Cloudfront cacheuje również statyczne dane na lokalizacjach brzegowych, więc ogranicza on zapytania do S3
+pełni w~systemie również role pojedynczego punktu wejścia dla API który kieruje ruch do load balancera.
+Cloudfront również trzyma w pamięci podręcznej statyczne dane na lokalizacjach brzegowych, więc ogranicza on zapytania do S3
 i przyspiesza dostarczenia strony. Konfigurację tę omówiono w~rozdziale~\ref{chap:infrastruktura}.
 
 \subsection{Amazon VPC, ALB i architektura sieciowa}
@@ -113,11 +113,11 @@ i przyspiesza dostarczenia strony. Konfigurację tę omówiono w~rozdziale~\ref{
 
 Amazon Virtual Private Cloud (VPC) udostępnia logicznie izolowaną sieć wirtualną o~adresacji definiowanej przez
 użytkownika, dzieloną na podsieci rozmieszczone w~strefach dostępności. Podstawowym wzorcem zastosowanym
-w zrealizowanym systemie jest podział na podsieci publicze i prywatne. Sieć publiczna ma dostęp do internetu
+w zrealizowanym systemie jest podział na podsieci publiczne i prywatne. Sieć publiczna ma dostęp do internetu
 dzięki temu może dostać ruch sieciowy. Sieć prywatna za to go nie ma i ruch do niej przechodzi przez bramę NAT.
 Z tego powodu generalną praktyką jest wysyłanie ruchu internetowego do sieci publicznej i z sieci publicznej przez
 NAT do prywatnej. Ruch sieciowy filtrowany jest przez \textbf{grupy bezpieczeństwa} (\emph{security groups}).
-Są to tanowe zapory przypisywane zasobom, zezwalające wyłącznie na jawnie zdefiniowane przepływy.
+Są to stanowe zapory przypisywane zasobom, zezwalające wyłącznie na jawnie zdefiniowane przepływy.
 
 Application Load Balancer (ALB) jest balancerem warstwy siódmej, trasującym żądania HTTP do zarejestrowanych celów
 i~weryfikującym ich zdrowie. W~zrealizowanym systemie ALB przyjmuje ruch API od CloudFront i~kieruje go do węzłów
@@ -129,10 +129,10 @@ CloudFront nagłówka weryfikacyjnego są odrzucane. Wymusza przepływ całego r
 
 AWS Identity and Access Management (IAM) jest systemem zarządzania tożsamością i~uprawnieniami obejmującym całą
 platformę. Uprawnienia działają na zasadzie polityk przypisywanych użytkownikom i i~\textbf{rolom}.
-Role to tożsamości przyjmowane tymczasowo przez usługi i procesy. Działają na zasadzie najmnijeszych 
+Role to tożsamości przyjmowane tymczasowo przez usługi i procesy. Działają na zasadzie najmniejszych 
 uprawnień (\emph{principle of least privilege}). Każda tożsamość powinna posiadać wyłącznie uprawnienia niezbędne do swoich zadań. 
 W~zrealizowanym systemie role IAM posiadają m.in.: płaszczyzna sterowania klastra, węzły robocze, sterownik EBS CSI.
 
-AWS Secrets Manager uzupełnia IAM o~scentralizowane przechowywanie sekretów aplikacyjnych jak haseł, kluczy
+AWS Secrets Manager uzupełnia IAM o~scentralizowane przechowywanie sekretów aplikacyjnych. Czyli haseł, kluczy
 i~parametrów połączeń. Główną zaletą tego systemu jest szyfrowanie, kontrola dostępu i~audyt przechowanych sekretów.
 Pozwala to nie trzymać haseł w kodzie źródłowym, a w pełni bezpiecznym środowisku.

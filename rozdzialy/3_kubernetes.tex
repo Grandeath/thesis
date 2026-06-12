@@ -6,16 +6,16 @@ i~eksploatację na klastrze maszyn. Projekt, zainicjowany przez firmę Google w~
 wieloletnich doświadczeń z~wewnętrznym systemem Borg, został przekazany fundacji Cloud Native Computing Foundation
 i~stał się standardem przemysłowym w~obszarze orkiestracji \cite{burns2022}.
 
-U~podstaw działania Kubernetes leży model deklaratywny. Użytownik zamiast wydawać platformie poleceń, opisuje
+U~podstaw działania Kubernetes leży model deklaratywny. Użytkownik zamiast wydawać platformie poleceń, opisuje
 pożądany stan systemu (np. \emph{trzy repliki usługi zamówień w~wersji 1.2}). Platforma ciągle porównuje stan
 faktyczny z~pożądanym. Przy różnicach niweluje rozbieżności (pętla uzgadniania, \emph{reconciliation loop}).
-Z takiego modelu wynika samonaprawialność systemu. Awaria jakiegoś kontenera, węzła czy usługi powoduje rozbieżność
+Z takiego modelu wynika samonaprawialność systemu. Awaria jakiegoś kontenera, węzła czy usługi powoduje rozbieżność,
 którą platforma próbuje usunąć.
 
 Architektura klastra Kubernetes obejmuje płaszczyznę sterowania (\emph{control plane}), serwer API, magazyn
 stanu etcd, planistę (\emph{scheduler}) oraz menedżery kontrolerów. Obejmuje również węzły robocze (\emph{worker nodes}),
 na których agent \emph{kubelet} uruchamia kontenery zgodnie z~decyzjami planisty \cite{k8sdocs}. Taka architektura
-pozwala usługom chmurowym wziąć odpwiedzialność za płaszczyznę sterwania. Dzięki czemu użytkownik zarządza wyłącznie
+pozwala usługom chmurowym wziąć odpowiedzialność za płaszczyznę sterwania. Dzięki czemu użytkownik zarządza wyłącznie
 wezłami roboczymi i~uruchamianymi obciążeniami (rozdział~\ref{chap:aws}).
 
 \section{Podstawowe obiekty Kubernetes}
@@ -26,9 +26,9 @@ ich konkretne definicje przedstawiono w~rozdziale~\ref{chap:infrastruktura}.
 
 \textbf{Pod} jest najmniejszą jednostką wdrożeniową. Grupą jednego lub kilku kontenerów współdzielących przestrzeń
 sieciową (wspólny adres IP) i~woluminy. Najczęściej w praktyce zwiera jeden kontener aplikacyjny. Pody są ulotne,
-czyli w każdej chwili mogą zostać usunięte i odtworzone w innym miejscu (węźle). Dzieje się tak np podczas balansowania
-gdzie Kubernetes próbuje zmieścić nowe Pody podczas wdrożenia. Wiąże się to z tym że jeśli aplikacja wymaga utrzymania stanu
-to musi ją trzymać w zewnętrznym miejscu jak baza danych.
+czyli w każdej chwili mogą zostać usunięte i odtworzone w innym miejscu (węźle). Dzieje się tak np. podczas balansowania
+gdzie Kubernetes próbuje zmieścić nowe Pody podczas wdrożenia. Wiąże się to z tym, że jeśli aplikacja wymaga utrzymania stanu
+to musi ją trzymać w zewnętrznym miejscu.
 
 \textbf{Deployment} deklaruje pożądaną liczbę replik poda wraz z~szablonem jego specyfikacji i~strategią
 aktualizacji. Za pośrednictwem obiektu ReplicaSet utrzymuje zadaną liczbę replik. Przy zmianie szablonu (np.
@@ -36,34 +36,24 @@ nowej wersji obrazu) przeprowadza aktualizację kroczącą (\emph{rolling update
 stopniowo, równolegle z~wygaszaniem starych. Pozwala to wdrażać zmiany bez przerwy w~dostępności usługi.
 W~zrealizowanym systemie każdy z~trzech mikroserwisów opisany jest własnym Deploymentem.
 
-\textbf{Service} rozwiązuje problem ulotności podów, udostępniając stabilny, wirtualny punkt dostępu (nazwę DNS
-i~adres IP) dla dynamicznie zmieniającego się zbioru replik, wraz z~równoważeniem obciążenia pomiędzy nimi.
-Wariant ClusterIP udostępnia usługę wewnątrz klastra, NodePort --- na stałym porcie każdego węzła (wariant ten
-wykorzystano do wystawienia ruchu z~zewnętrznego load balancera), a~LoadBalancer zleca utworzenie zewnętrznego
-balancera dostawcy chmury.
+\textbf{Service} rozwiązuje problem ulotności podów. Udostępnia stabilny, wirtualny punkt dostępu (nazwę DNS
+i~adres IP). Jest to wymagane dla dynamicznie zmieniającego się zbioru replik i zapewnia równoważenie obciążenia pomiędzy nimi.
 
 \textbf{Namespace} dzieli klaster na logiczne przestrzenie nazw, izolując zasoby różnych zespołów lub systemów
 i~stanowiąc granicę dla uprawnień oraz limitów zasobów. Komponenty zrealizowanego systemu działają w~dedykowanej
 przestrzeni \code{order-portal}.
 
-\textbf{ConfigMap i~Secret} przechowują konfigurację oddzieloną od obrazów kontenerów. ConfigMap zawiere jawną,
-a~secret pofuną. Udostępniają one podom zmienne środowiskowe lub pliki. Obiekty te są infrastrukturalną realizacją 
+\textbf{ConfigMap i~Secret} przechowują konfigurację oddzieloną od obrazów kontenerów. ConfigMap zawiera jawną,
+a~secret poufną. Udostępniają one podom zmienne środowiskowe lub pliki. Obiekty te są infrastrukturalną realizacją 
 wzorca konfiguracji zewnętrznej (sekcja~\ref{sec:wzorce-projektowe}).
 
 \section{Zarządzanie konfiguracją i skalowaniem}
 \label{sec:konfiguracja-i-skalowanie}
 
-Specyfikacja każdego kontenera może określać zapotrzebowanie na zasoby w~postaci żądań (\emph{requests}) i~limitów
-(\emph{limits}) dla procesora i~pamięci. Żądania stanowią podstawę decyzji planisty --- pod zostanie umieszczony
-wyłącznie na węźle dysponującym wolnymi zasobami w~zadeklarowanej wielkości --- natomiast limity wyznaczają górną
-granicę zużycia, której przekroczenie skutkuje dławieniem procesora lub zakończeniem procesu w~przypadku pamięci.
-Poprawne określenie tych wartości ma szczególne znaczenie na węzłach o~małej pojemności, jakie wykorzystano
-w~środowisku zrealizowanego systemu.
-
 W specyfikacji każdego kontenera należy określić zapotrzebowanie na zasoby. Występuję one w postaci żądań (\emph{requests})
 i~limitów (\emph{limits}) dla procesora i~pamięci. Na podstawie żądań planista rozmieszcza pody w węzłach
-dysponującymi wolnymi zasobami w zadeklarowanej wielkości. Limity natmiast wyznaczają górną granicę zużycia, której 
-przekroczenie powoduje dławieniem procesora lub zakończeniem procesu w przypadku pamięci.
+dysponującymi wolnymi zasobami w zadeklarowanej wielkości. Limity natomiast wyznaczają górną granicę zużycia, której 
+przekroczenie skutkuje dławieniem procesora lub zakończeniem procesu w przypadku pamięci.
 Poprawne określenie tych wartości ma szczególne znaczenie na węzłach o~małej pojemności, jakie wykorzystano
 w~środowisku zrealizowanego systemu.
 
@@ -71,7 +61,7 @@ Konfiguracja aplikacji dostarczana jest podom ze źródeł zewnętrznych. Obiekt
 W~zrealizowanym systemie poświadczenia bazy danych trafiają do podów jako zmienne środowiskowe z~obiektów Secret, 
 zasilanych z~usługi AWS Secrets Manager (rozdział~\ref{chap:infrastruktura}).
 
-Skalowanie obciążeń realizowane jest na dwóch poziomach. Poziomy pierwszy stanowi \textbf{Horizontal Pod Autoscaler}
+Skalowanie obciążeń realizowane jest na dwóch poziomach. Poziom pierwszy stanowi \textbf{Horizontal Pod Autoscaler}
 (HPA). Kontroler, który cyklicznie porównuje zmierzone wykorzystanie zasobów (domyślnie procesora, na podstawie
 danych z~komponentu \emph{metrics-server}). Z~wartością docelową i~odpowiednio zwiększa lub zmniejsza liczbę replik
 Deploymentu w~zadanym przedziale \cite{k8sdocs}. Poziom drugi to skalowanie samego klastra, czyli liczby węzłów
@@ -80,25 +70,13 @@ roboczych.
 \section{Trwałe składowanie danych}
 \label{sec:trwale-skladowanie-danych}
 
-System plików kontenera jest ulotny --- ginie wraz z~jego restartem --- a~pody mogą być przenoszone pomiędzy
-węzłami, co czyni przechowywanie danych na dysku węzła zawodnym. Kubernetes rozwiązuje ten problem warstwą
-abstrakcji nad pamięcią trwałą, rozdzielającą perspektywę administratora i~aplikacji \cite{k8sdocs}.
-
 Zgodnie z definicją Poda, system plików kontenera jest ulotny. Pody mogą być przenoszone między węzłami.
-Z tego powdu Kubernetes rozwiązuje ten problem warstwą abstrakcji nad pamięcią trwałą, 
+Z tego powodu Kubernetes rozwiązuje ten problem warstwą abstrakcji nad pamięcią trwałą, 
 rozdzielającą perspektywę administratora i~aplikacji \cite{k8sdocs}.
 
-\textbf{PersistentVolume} (PV) reprezentuje fizyczny zasób pamięci --- np. wolumin blokowy dostawcy chmury ---
-natomiast \textbf{PersistentVolumeClaim} (PVC) jest żądaniem aplikacji: deklaracją potrzebnej pojemności i~trybu
-dostępu, niezależną od tego, skąd zasób pochodzi. \textbf{StorageClass} opisuje klasę pamięci (typ nośnika,
-parametry wydajnościowe) i~umożliwia provisionowanie dynamiczne: wolumin tworzony jest automatycznie w~chwili
-pojawienia się żądania, bez ręcznego przygotowywania zasobów przez administratora. Tworzeniem i~dołączaniem
-woluminów zarządza sterownik zgodny ze standardem CSI (\emph{Container Storage Interface}), specyficzny dla danego
-dostawcy infrastruktury.
-
 \textbf{PersistentVolume} (PV) reprezentuje fizyczny zasób pamięci. Natomiast \textbf{PersistentVolumeClaim} (PVC) 
-jest żądaniem zapotrzebowania aplikacja na taki woluminu o potrzebnej pojemności i~trybu dos†ępu.
-\textbf{StorageClass} opisuje klasę pamięci (typ nośnika,parametry wydajnościowe) i~umożliwia provisionowanie dynamiczne.
+jest żądaniem zapotrzebowania aplikacji na taki woluminu o potrzebnej pojemności i~trybu dos†ępu.
+\textbf{StorageClass} opisuje klasę pamięci (typ nośnika, parametry wydajnościowe) i~umożliwia provisionowanie dynamiczne.
 Wolumin tworzony jest automatycznie w~chwili pojawienia się żądania. Tworzeniem i~dołączaniem
 woluminów zarządza sterownik zgodny ze standardem CSI (\emph{Container Storage Interface}), specyficzny dla danego
 dostawcy infrastruktury.
@@ -121,7 +99,7 @@ przez Prometheus \cite{prometheusdocs}.
 Prometheus działa w~modelu \emph{pull}. Aplikacje wystawiają punkty końcowe z metrykami, które cyklicznie pobiera.
 Zbiór celów nie jest konfigurowany statycznie, a w~środowisku Kubernetes Prometheus odkrywa je dynamicznie poprzez API klastra.
 O objęciu poda monitoringiem decydują jego adnotacje (\code{prometheus.io/scrape}, \code{prometheus.io/port}).
-ozwiązanie to wykorzystano w~zrealizowanym systemie: każdy mikroserwis opatrzony jest adnotacjami wskazującymi 
+Rozwiązanie to wykorzystano w~zrealizowanym systemie: każdy mikroserwis opatrzony jest adnotacjami wskazującymi 
 port techniczny, na którym udostępnia metryki.
 
 Metryki przyjmują postać nazwanych szeregów czasowych z~etykietami (\emph{labels}), umożliwiającymi agregację
@@ -130,14 +108,7 @@ i~filtrowanie np. liczba żądań HTTP w~podziale na ścieżkę i~kod odpowiedzi
 Zapytania do zgromadzonych danych formułowane są w~języku PromQL, który umożliwia m.in. wyznaczanie szybkości
 zmian liczników czy agregacje po etykietach.
 
-Warstwę prezentacji stanowi Grafana --- narzędzie wizualizacji, które na podstawie zapytań PromQL buduje
-interaktywne kokpity (\emph{dashboards}) prezentujące stan systemu w~czasie rzeczywistym i~historycznie. W~obu
-narzędziach konfigurację (źródła danych, definicje kokpitów) można dostarczać deklaratywnie, co w~zrealizowanym
-systemie wykorzystano do provisionowania Grafany z~poziomu kodu infrastruktury (rozdział~\ref{chap:infrastruktura}).
-Zakres metryk publikowanych przez poszczególne mikroserwisy --- w~tym metryk domenowych, takich jak liczba
-utworzonych zamówień --- omówiono w~rozdziale~\ref{chap:implementacja-mikroserwisow}.
-
-Warstwę prezentacji stanowi Grafana --- narzędzie wizualizacji, które na podstawie zapytań PromQL buduje
+Warstwę prezentacji stanowi Grafana (narzędzie wizualizacji), które na podstawie zapytań PromQL buduje
 interaktywne kokpity (\emph{dashboards}) prezentujące stan systemu w~czasie rzeczywistym i~historycznie.
 Zakres metryk publikowanych przez poszczególne mikroserwisy omówiono w~rozdziale~\ref{chap:implementacja-mikroserwisow}.
 
@@ -146,19 +117,11 @@ Zakres metryk publikowanych przez poszczególne mikroserwisy omówiono w~rozdzia
 
 Bezpieczeństwo klastra Kubernetes obejmuje kilka współdziałających warstw \cite{k8sdocs}.
 
-\textbf{Uwierzytelnianie i~autoryzacja dostępu do API.} Każde żądanie do serwera API podlega uwierzytelnieniu,
-a~następnie autoryzacji w~modelu RBAC (\emph{Role-Based Access Control}): role definiują zestawy dozwolonych
-operacji na zasobach, a~powiązania ról (\emph{role bindings}) przypisują je użytkownikom lub kontom usług.
-Procesy działające w~klastrze występują wobec API jako \textbf{ServiceAccount} --- konta usług o~jawnie nadawanych,
-minimalnych uprawnieniach. W~zrealizowanym systemie własne konto usługi z~ograniczoną rolą posiada serwer
-Prometheus, któremu do dynamicznego odkrywania celów pomiarowych wystarczą uprawnienia tylko do odczytu metadanych
-podów.
-
-Każde żądanie do serwera API pdlega uwierzytelnieniu i~autoryzacji w~mdelu RBAC (\emph{Role-Based Access Control}).
+Każde żądanie do serwera API podlega uwierzytelnieniu i~autoryzacji w~modelu RBAC (\emph{Role-Based Access Control}).
 Role definiują zestawy dozwolonych operacji na zasobach. Powiązania ról (\emph{role bindings}) przypisują je użytkownikom lub kontom usług.
 Procesy działające w~klastrze występują wobec API jako \textbf{ServiceAccount}. Konta usług o~jawnie nadawanych,
 minimalnych uprawnieniach. W~zrealizowanym systemie własne konto usługi z~ograniczoną rolą posiada serwer
-Prometheus. Psiada uprawnienia do dynamicznego odkrywania celów poprzez odczyt metadanych podów.
+Prometheus. Posiada uprawnienia do dynamicznego odkrywania celów poprzez odczyt metadanych podów.
 
 \textbf{Ochrona danych poufnych.} Obiekty Secret oddzielają poświadczenia od obrazów i~manifestów aplikacji,
 a~dostęp do nich podlega RBAC. W~zrealizowanym systemie źródłem poświadczeń bazy danych jest AWS Secrets Manager.
@@ -172,12 +135,6 @@ Podejście to zastosowano dla wszystkich mikroserwisów systemu (rozdział~\ref{
 NetworkPolicy pozwalają zawęzić ją do jawnie dozwolonych przepływów. W~zrealizowanym systemie segmentację ruchu
 zrealizowano przede wszystkim na poziomie infrastruktury chmurowej. Grup bezpieczeństwa i~topologii podsieci
 (rozdział~\ref{chap:infrastruktura}).
-
-\textbf{Integracja z~systemem uprawnień chmury.} W~środowiskach zarządzanych pody często wymagają dostępu do usług
-dostawcy chmury (np. tworzenia woluminów EBS). Zamiast statycznych kluczy stosuje się mechanizmy wiążące konta
-usług Kubernetes z~rolami IAM --- w~EKS są to IRSA (\emph{IAM Roles for Service Accounts}) oraz nowszy mechanizm
-EKS Pod Identity, który w~zrealizowanym systemie nadaje uprawnienia sterownikowi EBS CSI. Proces otrzymuje wówczas
-poświadczenia krótkoterminowe, automatycznie rotowane, o~zakresie ograniczonym do przypisanej roli.
 
 \textbf{Integracja z~systemem uprawnień chmury.} W~środowiskach zarządzanych pody często wymagają dostępu do usług
 dostawcy chmury. Wiąże się wtedy konta usług Kubernetes z rolami dostawcy. W~zrealizowanym systemie użyty został

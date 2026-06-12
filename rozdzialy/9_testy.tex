@@ -2,7 +2,7 @@
 \label{chap:testy-i-analiza}
 
 Rozdział przedstawia weryfikację systemu wdrożonego w~docelowym środowisku chmurowym. Omówiono metodykę
-testowania, wyniki testów funkcjonalnych oraz testy wydajnościowe i~skalowalności. Rozdział zamykają analiza kosztów
+testowania, wyniki testów funkcjonalnych oraz testy wydajnościowe i~skalowalności. Rozdział zamykają: analiza kosztów
 utrzymania środowiska oraz identyfikacja wąskich gardeł wraz z~rekomendacjami optymalizacji.
 
 \section{Metodyka testowania}
@@ -45,7 +45,7 @@ wyczerpały zapasów w~trakcie testu.
 
 Poprawność funkcjonalną zweryfikowano scenariuszami pokrywającymi główne przypadki użycia, wykonanymi zarówno
 manualnie przez portal, jak i masowo jako część scenariusza zakupowego testów wydajnościowych. Wyniki
-zestawia tabela~\ref{tab:testy-funkcjonalne}.
+przedstawiono w tabeli~\ref{tab:testy-funkcjonalne}.
 
 \begin{table}[H]
     \centering
@@ -107,7 +107,7 @@ Uwagę zwraca kontrintuicyjna zależność. Czasy odpowiedzi \emph{malały} wraz
 z~efektu rozgrzania. Profil \emph{load} był pierwszym przebiegiem po~wdrożeniu, wykonywanym na~,,zimnym''
 systemie z~pustymi pulami połączeń do~bazy danych, nieuzupełnionym cache kluczy JWKS oraz niewykorzystanym
 zapasem kredytów procesora instancji. Kolejne przebiegi korzystały już z~rozgrzanych zasobów.
-Wniosek metodyczny konieczność rozgrzania systemu przed pomiarem wydajności odnotowano jako istotny dla
+Wniosek metodyczny to konieczność rozgrzania systemu przed pomiarem wydajności odnotowano jako istotny dla
 wiarygodności tego typu testów.
 
 \subsection{Opóźnienie asynchronicznej walidacji}
@@ -115,8 +115,8 @@ wiarygodności tego typu testów.
 
 Mediana opóźnienia walidacji zamówienia okazała się \emph{niewrażliwa} na~obciążenie. Wyniosła 543, 542 i~547~ms
 odpowiednio w~profilach \emph{load}, \emph{stress} i~\emph{max}, mimo czterdziestokrotnego wzrostu przepustowości.
-Oznacza to, że asynchroniczna ścieżka oparta na~Kafce nie stała się wąskim gardłem nawet przy~445~req/s ---
-przetwarzanie zdarzeń nadążało za~ich napływem, bez narastania zaległości w~kolejce.
+Oznacza to, że asynchroniczna ścieżka oparta na~Kafce nie stała się wąskim gardłem nawet przy~445~req/s.
+Przetwarzanie zdarzeń nadążało za~ich napływem, bez narastania zaległości w~kolejce.
 
 Wartość ta wymaga interpretacji w~świetle metodyki. Status zamówienia odpytywano co~500~ms, mediana
 bliska~540~ms oznacza, że zamówienie było już zwalidowane przy~\emph{pierwszym} odpytaniu (po~ok.~500~ms snu),
@@ -135,8 +135,8 @@ HPA do~60\% (sekcja~\ref{sec:skalowanie-i-cykl-zycia}), aby skalowanie wyprzedza
 
 W~profilu \emph{max} mechanizm zadziałał zgodnie z~projektem. Wraz ze~wzrostem ruchu wykorzystanie procesora
 serwisu produktów przekroczyło próg, co~wyzwoliło zwiększenie liczby replik z~jednej do~dwóch. Analogicznie
-przeskalowany został serwis zamówień. Przebieg skalowania ilustruje listing~\ref{lst:hpa-scaling} ---
-fragment ciągłej obserwacji stanu HPA, na~którym widać przekroczenie progu i~następujące po~nim zwiększenie liczby
+przeskalowany został serwis zamówień. Przebieg skalowania ilustruje fragment~\ref{lst:hpa-scaling} 
+ciągłej obserwacji stanu HPA, na~którym widać przekroczenie progu i~następujące po~nim zwiększenie liczby
 replik.
 
 \begin{lstlisting}[caption={Reakcja HorizontalPodAutoscaler na obciążenie (profil max)},label={lst:hpa-scaling}]
@@ -149,7 +149,7 @@ order-service     .../order-service         cpu: 95%/60%   2   <- skalowanie
 product-service   .../product-service      cpu: 264%/60%  2   <- limit replik
 \end{lstlisting}
 
-Po~osiągnięciu maksymalnej liczby replik (2, ograniczonej pojemnością czterowęzłowego klastra) wykorzystanie
+Po~osiągnięciu maksymalnej liczby replik (2, ograniczonej pojemnością czterech węzłów klastra) wykorzystanie
 procesora pojedynczego poda produktów rosło dalej (do~ponad~260\% wartości żądanej). Co~unaocznia granicę
 skalowania poziomego przy~stałej liczbie węzłów. Po~wyczerpaniu limitu replik dalszy wzrost ruchu absorbowany jest
 już~tylko przez~rezerwę wydajności istniejących podów (limit~CPU ustawiono pięciokrotnie powyżej żądania)
@@ -184,7 +184,7 @@ rysunki~\ref{fig:june-billing} i~\ref{fig:forecast-cost}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{JuneBilling.png}
-    \caption{Rzeczywisty koszt środowiska w~czerwcu 2026 w~podziale na~usługi (AWS Cost Explorer). Dominuje płaszczyzna sterowania EKS (67,90~USD) --- składnik nieobjęty bezpłatnym limitem; pozostałe usługi (EC2, ELB, RDS) generują koszty rzędu pojedynczych dolarów dzięki Free Tier. (źródło: opracowanie własne)}
+    \caption{Rzeczywisty koszt środowiska w~czerwcu 2026 w~podziale na~usługi (AWS Cost Explorer). Dominuje płaszczyzna sterowania EKS (67,90~USD) - składnik nieobjęty bezpłatnym limitem; pozostałe usługi (EC2, ELB, RDS) generują koszty rzędu pojedynczych dolarów dzięki Free Tier. (źródło: opracowanie własne)}
     \label{fig:june-billing}
 \end{figure}
 
@@ -199,7 +199,7 @@ rysunki~\ref{fig:june-billing} i~\ref{fig:forecast-cost}.
 \label{subsec:profilowanie}
 
 Profile procesora serwisów, pobrane przez~\code{pprof} w~szczycie obciążenia profilu \emph{max}, wskazują, że~obie
-usługi są~\emph{ograniczone operacjami wejścia--wyjścia}, nie~zaś mocą obliczeniową. Dominującą pozycją w~obu
+usługi są~\emph{ograniczone operacjami wejścia-wyjścia}, nie~zaś mocą obliczeniową. Dominującą pozycją w~obu
 profilach są~wywołania systemowe (ok.~18\% próbek dla~serwisu zamówień, ok.~22\% dla~produktów) związane
 z~komunikacją sieciową oraz~zapytaniami do~bazy danych. Całkowite zużycie procesora w~oknie pomiaru pozostawało
 niskie. Oznacza to, że~kod aplikacyjny w~języku~Go nie~jest czynnikiem ograniczającym wydajność. Profile obu
@@ -209,14 +209,14 @@ i~\ref{fig:product-service-flamegraph}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{order-service-flamegraph.png}
-    \caption{Flamegraph profilu procesora serwisu zamówień (\code{pprof}), zarejestrowany w~szczycie obciążenia profilu \emph{max}. Szerokość słupka odpowiada udziałowi funkcji w~czasie procesora. Widoczne są: obsługa żądań HTTP, weryfikacja tokenu JWT (\code{CognitoVerifier.Verify}), zapytania do~PostgreSQL przez~\code{pgx} oraz~(de)serializacja JSON. Znaczną część stanowią wywołania systemowe związane z~siecią i~bazą danych, co~potwierdza ograniczenie operacjami wejścia--wyjścia, nie~mocą obliczeniową. (źródło: opracowanie własne)}
+    \caption{Flamegraph profilu procesora serwisu zamówień (\code{pprof}), zarejestrowany w~szczycie obciążenia profilu \emph{max}. Szerokość słupka odpowiada udziałowi funkcji w~czasie procesora. Widoczne są: obsługa żądań HTTP, weryfikacja tokenu JWT (\code{CognitoVerifier.Verify}), zapytania do~PostgreSQL przez~\code{pgx} oraz~(de)serializacja JSON. Znaczną część stanowią wywołania systemowe związane z~siecią i~bazą danych, co~potwierdza ograniczenie operacjami wejścia-wyjścia, nie~mocą obliczeniową. (źródło: opracowanie własne)}
     \label{fig:order-service-flamegraph}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{product-service-flamegraph.png}
-    \caption{Flamegraph profilu procesora serwisu produktów (\code{pprof}) w~szczycie obciążenia profilu \emph{max}. Podobnie jak w~serwisie zamówień dominują wywołania systemowe (operacje sieciowe i~bazodanowe), a~spośród operacji obliczeniowych wyróżniają się weryfikacja JWT oraz~kodowanie JSON --- profil potwierdza, że~usługa jest~ograniczona wejściem--wyjściem. (źródło: opracowanie własne)}
+    \caption{Flamegraph profilu procesora serwisu produktów (\code{pprof}) w~szczycie obciążenia profilu \emph{max}. Podobnie jak w~serwisie zamówień dominują wywołania systemowe (operacje sieciowe i~bazodanowe), a~spośród operacji obliczeniowych wyróżniają się weryfikacja JWT oraz~kodowanie JSON - profil potwierdza, że~usługa jest~ograniczona wejściem-wyjściem. (źródło: opracowanie własne)}
     \label{fig:product-service-flamegraph}
 \end{figure}
 
@@ -234,9 +234,9 @@ Analiza zachowania systemu pod~obciążeniem oraz~jego architektury pozwala wska
 i~rekomendacje:
 
 \begin{itemize}
-    \item \textbf{Pamięć węzłów, nie~procesor.} W~spoczynku węzły wykorzystują~53--76\% pamięci przy~znikomym
+    \item \textbf{Pamięć węzłów, nie~procesor.} W~spoczynku węzły wykorzystują~53-76\% pamięci przy~znikomym
     zużyciu procesora; głównym konsumentem pamięci jest broker Kafka (ok.~570~MiB), podczas gdy~mikroserwisy~Go
-    zużywają zaledwie~po~10--35~MiB. Na~instancjach \code{t3.small} (2~GiB) to~pamięć, a~nie~procesor, ogranicza
+    zużywają zaledwie~po~10-35~MiB. Na~instancjach \code{t3.small} (2~GiB) to~pamięć, a~nie~procesor, ogranicza
     gęstość podów. Co~oznacza, że~skalowane przez~HPA według~procesora repliki mogą~w~skrajnym przypadku
     nie~znaleźć węzła z~wolną pamięcią.
 
@@ -247,7 +247,7 @@ i~rekomendacje:
 
     \item \textbf{Pojedynczy broker Kafka.} Broker działa w~jednej replice z~woluminem o~dostępie wyłącznym
     (sekcja~\ref{sec:wdrozenie-do-klastra}). Jego awaria wstrzymuje całą asynchroniczną walidację zamówień.
-    W~środowisku produkcyjnym wymagałby klastra wielowęzłowego lub~usługi zarządzanej (Amazon~MSK).
+    W~środowisku produkcyjnym wymagałby klastra lub~usługi zarządzanej (Amazon~MSK).
 
     \item \textbf{Współdzielona instancja bazy danych.} Wszystkie serwisy korzystają z~jednej instancji RDS
     (sekcja~\ref{sec:architektura-systemu}), co~przy~rosnącym obciążeniu czyni ją~wspólnym punktem rywalizacji
